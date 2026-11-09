@@ -1496,6 +1496,7 @@ addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>set
 document.addEventListener('focusout',()=>setTimeout(fitPhone,350));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(fitPhone,100)});
 setInterval(fitPhone,1500);
 
+if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 /* ========== 启动 ========== */
 (async()=>{
   try{await load()}catch(e){toast('本地存储打不开：'+e.message,6000);for(const k in DEFAULTS)S[k]??=structuredClone(DEFAULTS[k])}
