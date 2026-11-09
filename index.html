@@ -43,7 +43,7 @@ input,textarea,select{font:inherit;color:var(--text)}
 @keyframes float{50%{transform:translateY(-6px)}}
 
 /* home */
-#home{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--top) + 14px) 18px calc(var(--bot) + 6px);overflow:hidden}
+#home{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--top) + 14px) 18px max(8px,calc(var(--bot) - 12px));overflow:hidden}
 #home .glass{background:rgba(10,28,62,.30);border-color:rgba(255,255,255,.28)}
 #home,#home .appbtn{text-shadow:0 1px 6px rgba(0,20,60,.45)}
 #home{container-type:inline-size;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
@@ -115,6 +115,162 @@ input,textarea,select{font:inherit;color:var(--text)}
 .w-game .gt{position:absolute;left:7cqmin;bottom:6cqmin;right:7cqmin;z-index:1}
 .w-game .gt b{display:block;font-family:"Songti SC","STSong",serif;font-size:max(14px,14cqmin);letter-spacing:.2em;color:#ffe9c4}
 .w-game .gt small{font-size:max(10px,6.5cqmin);opacity:.85}
+/* 主题配色 */
+.wg.th{backdrop-filter:none;-webkit-backdrop-filter:none;border:1px solid rgba(0,0,0,.05);box-shadow:0 8px 22px rgba(0,20,60,.18);text-shadow:none}
+.wg.th-cream{background:#fbf3e4;color:#4a3a2a;--acc:#c98b4a}.wg.th-ink{background:#161b28;color:#ece6d8;--acc:#e8c27a}
+.wg.th-blush{background:#f9dfe2;color:#6b3440;--acc:#e0607e}.wg.th-sage{background:#dfe8dc;color:#33473a;--acc:#5f8a4e}
+.wg.th-sky{background:#dcebfa;color:#23405e;--acc:#3f7fd0}.wg.th-lilac{background:#e7def5;color:#46375f;--acc:#8a6cc4}
+.wg{--acc:var(--gold)}
+.wsq{padding:0 18px 10px}.wsq input{width:100%;padding:10px 14px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.08);outline:none;font-size:15px}
+#sheet .sht{margin:6px 6px 12px;font-size:16px;color:var(--accent)}
+#sheet .field{padding:0 6px}
+.fimg{height:120px;border-radius:14px;border:1px dashed var(--line);display:grid;place-items:center;color:var(--muted);font-size:13px;background:center/cover no-repeat rgba(255,255,255,.05);margin-bottom:6px}
+.fchips{display:flex;flex-wrap:wrap;gap:8px}
+.fchips button{padding:6px 12px;border-radius:99px;border:1px solid var(--line);font-size:13px;display:flex;align-items:center;gap:6px}
+.fchips button.on{background:#e8f0ff;color:#0b1a33;font-weight:600}
+.fchips i{width:14px;height:14px;border-radius:50%;display:inline-block;border:1px solid rgba(0,0,0,.15)}
+/* 圆形时钟 */
+.w-rclock{display:grid;place-items:center;padding:6cqmin}
+.w-rclock svg{width:100%;height:100%;overflow:visible}
+.w-rclock .face{fill:rgba(255,255,255,.1);stroke:rgba(255,255,255,.35)}
+.th .w-rclock .face{fill:rgba(255,255,255,.55);stroke:rgba(0,0,0,.08)}
+.w-rclock .tk{stroke:currentColor;opacity:.55;stroke-linecap:round}
+.w-rclock .hd{stroke:currentColor;stroke-linecap:round}
+.w-rclock .sc{stroke:var(--acc)}
+.w-rclock g{transform-origin:50px 50px;animation:spin linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* 新消息 & 资料 & 情侣 */
+.fill.w-nm{flex-direction:row;align-items:center;gap:4cqw;padding:0 5cqw}
+.w-nm .av{width:56cqh;height:56cqh;border-radius:16cqh;font-size:22cqh;flex:none}
+.w-nm .tx{min-width:0;flex:1}.w-nm b{display:flex;justify-content:space-between;font-size:max(12px,19cqh)}.w-nm b small{font-weight:400;opacity:.7;font-size:max(10px,15cqh)}
+.w-nm span{display:block;font-size:max(11px,17cqh);opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w-nm .badge{position:static;flex:none}
+.fill.w-prof{flex-direction:row;align-items:center;gap:6cqw}
+.w-prof .av{width:46cqh;height:46cqh;border-radius:50%;font-size:18cqh;flex:none;box-shadow:0 0 0 1.5cqh rgba(255,255,255,.6)}
+.w-prof .nm{font-size:max(15px,14cqh);font-weight:600}.w-prof .sig{font-size:max(11px,8.5cqh);opacity:.85;margin-top:2cqh;line-height:1.45}
+.w-prof .st{display:inline-flex;align-items:center;gap:4px;margin-top:5cqh;font-size:max(10px,7.5cqh);padding:1.5cqh 4cqh;border-radius:99px;background:rgba(255,255,255,.16)}
+.w-prof .st::before{content:'';width:7px;height:7px;border-radius:50%;background:#7be08f}
+.w-cp{align-items:center;justify-content:center;text-align:center}
+.w-cp .avs{display:flex;align-items:center;justify-content:center}
+.w-cp .av{width:30cqmin;height:30cqmin;border-radius:50%;font-size:12cqmin;box-shadow:0 0 0 1.2cqmin rgba(255,255,255,.7)}
+.w-cp .ht{font-size:13cqmin;margin:0 2cqmin;color:#ff8fa8;animation:beat 1.4s ease-in-out infinite}
+@keyframes beat{50%{transform:scale(1.18)}}
+.w-cp .nn{font-size:max(11px,7.5cqmin);opacity:.85;margin-top:4cqmin}
+.w-cp .dd{font-size:max(13px,10cqmin);margin-top:1cqmin}.w-cp .dd b{font-size:17cqmin;font-weight:300;margin:0 1cqmin}
+.w-cp.wide .av{width:40cqh;height:40cqh;font-size:16cqh}.w-cp.wide .ht{font-size:18cqh}.w-cp.wide .nn{font-size:max(12px,9cqh)}.w-cp.wide .dd{font-size:max(13px,11cqh)}.w-cp.wide .dd b{font-size:24cqh}
+/* 简约日历 / 一周 / 进度 / 倒数 */
+.w-mc{justify-content:space-between}
+.w-mc .wd{font-size:max(11px,8.5cqmin);color:var(--acc);font-weight:600}
+.w-mc .dn{font-size:36cqmin;font-weight:300;line-height:1}
+.w-mc .ym{font-size:max(10px,7.5cqmin);opacity:.85}.w-mc .ln{font-size:max(10px,7.5cqmin);opacity:.7}
+.w-mc.row{flex-direction:row;align-items:center;padding:0 7cqw;gap:5cqw}.w-mc.row .dn{font-size:62cqh}.w-mc.row .wd,.w-mc.row .ym,.w-mc.row .ln{font-size:max(11px,15cqh)}
+.fill.w-wk{flex-direction:row;align-items:center;justify-content:space-between;padding:0 4cqw}
+.w-wk .d{display:flex;flex-direction:column;align-items:center;gap:2cqh;width:11cqw;padding:5cqh 0;border-radius:99px}
+.w-wk .d i{font-style:normal;font-size:max(10px,13cqh);opacity:.7}.w-wk .d b{font-size:max(13px,24cqh);font-weight:500}.w-wk .d small{font-size:max(8px,10cqh);opacity:.65}
+.w-wk .d.td{background:var(--acc);color:#0b1a33}.w-wk .d.td i,.w-wk .d.td small{opacity:.85}
+.w-pg{gap:4cqmin;justify-content:center}
+.w-pg .r{font-size:max(10px,7.5cqmin)}.w-pg .r div{display:flex;justify-content:space-between;margin-bottom:1.5cqmin}
+.w-pg .bar{height:3.6cqmin;border-radius:9px;background:rgba(255,255,255,.18);overflow:hidden}.th .w-pg .bar,.th .w-cd .bar{background:rgba(0,0,0,.08)}
+.w-pg .bar b{display:block;height:100%;background:var(--acc);border-radius:9px}
+.w-pg.row{padding:0 6cqw}.w-pg.row .r{font-size:max(11px,15cqh)}.w-pg.row .bar{height:9cqh}.w-pg.row .r div{margin-bottom:5cqh}
+.w-cd{justify-content:space-between}
+.w-cd .tt{font-size:max(11px,9cqmin);opacity:.9}.w-cd .n{font-size:34cqmin;font-weight:300;line-height:1}.w-cd .n small{font-size:9cqmin;margin-left:2cqmin}
+.w-cd .dt{font-size:max(10px,7.5cqmin);opacity:.7}
+.w-cd.row{flex-direction:row;align-items:center;padding:0 7cqw}.w-cd.row .n{font-size:58cqh}.w-cd.row .n small{font-size:17cqh}.w-cd.row .tt{font-size:max(12px,17cqh)}.w-cd.row .dt{font-size:max(10px,13cqh)}
+/* 月相 */
+.w-moon{align-items:center;justify-content:center;text-align:center;background:radial-gradient(circle at 50% 35%,rgba(255,244,216,.12),transparent 60%)}
+.w-moon svg{width:52cqmin;height:52cqmin;filter:drop-shadow(0 0 4cqmin rgba(255,244,216,.35))}
+.w-moon b{font-size:max(12px,10cqmin);font-weight:500;margin-top:4cqmin;font-family:"Songti SC","STSong",serif;letter-spacing:.15em}
+.w-moon small{font-size:max(9px,7cqmin);opacity:.75;margin-top:1cqmin}
+.w-moon.tiny b,.w-moon.tiny small{display:none}.w-moon.tiny svg{width:74cqmin;height:74cqmin}
+/* 天气 */
+.w-wx{justify-content:space-between}
+.w-wx .ct{font-size:max(11px,9cqmin);font-weight:600}.w-wx .tp{font-size:30cqmin;font-weight:200;line-height:1}
+.w-wx .ic{font-size:14cqmin;line-height:1}.w-wx .ds{font-size:max(10px,7.5cqmin);opacity:.85}
+.w-wx.big .tp{font-size:30cqh}.w-wx.big .ic{font-size:16cqh}.w-wx.big .ct{font-size:max(12px,9cqh)}.w-wx.big .ds{font-size:max(11px,7.5cqh)}
+.w-wx .fc{display:flex;justify-content:space-between;border-top:1px solid rgba(255,255,255,.18);padding-top:3cqh;text-align:center;font-size:max(10px,7cqh)}
+.w-wx .fc div{display:flex;flex-direction:column;gap:1.5cqh}.w-wx .fc span{font-size:11cqh}
+/* 运势 */
+.w-horo .hd2{display:flex;align-items:center;gap:3cqmin;font-size:max(12px,9cqmin);font-weight:600}.w-horo .hd2 span{font-size:15cqmin;color:var(--acc)}
+.w-horo .stars{color:var(--acc);font-size:max(11px,8cqmin);letter-spacing:.1em;margin-top:2cqmin}
+.w-horo p{margin:2cqmin 0 0;font-size:max(10.5px,7.6cqmin);line-height:1.5;opacity:.9;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.w-horo.big p{font-size:max(11px,7cqh);-webkit-line-clamp:2}.w-horo.big .hd2{font-size:max(13px,10cqh)}.w-horo.big .hd2 span{font-size:16cqh}.w-horo.big .stars{font-size:max(11px,8cqh)}
+.w-horo .lk{display:flex;gap:4cqw;font-size:max(10px,7cqh);opacity:.85;margin-top:auto}
+/* 待办 & 打卡 */
+.w-todo .tt{font-size:max(12px,9cqmin);font-weight:600;margin-bottom:2cqmin;display:flex;justify-content:space-between}.w-todo .tt small{font-weight:400;opacity:.7}
+.w-todo .it{display:flex;align-items:center;gap:2.5cqmin;font-size:max(11px,8cqmin);padding:1.4cqmin 0;text-align:left;width:100%;color:inherit}
+.w-todo .it i{width:6.5cqmin;height:6.5cqmin;min-width:12px;min-height:12px;border-radius:50%;border:1.5px solid currentColor;opacity:.7;flex:none;display:grid;place-items:center;font-style:normal;font-size:8px}
+.w-todo .it.dn{opacity:.5;text-decoration:line-through}.w-todo .it.dn i{background:var(--acc);border-color:var(--acc);opacity:1}
+.w-todo.big .tt{font-size:max(13px,9cqh)}.w-todo.big .it{font-size:max(12px,8cqh);padding:1.5cqh 0}.w-todo.big .ls{columns:2;column-gap:5cqw}
+.w-ck{justify-content:space-between}
+.w-ck .tt{font-size:max(12px,9cqmin);font-weight:600}.w-ck .sk{font-size:28cqmin;font-weight:300;line-height:1}.w-ck .sk small{font-size:8cqmin;margin-left:1cqmin}
+.w-ck .ckd{display:flex;gap:2.5cqmin}.w-ck .ckd i{flex:none;width:8.5cqmin;height:8.5cqmin;border-radius:50%;background:rgba(255,255,255,.18)}.th .w-ck .ckd i{background:rgba(0,0,0,.08)}
+.w-ck .ckd i.on{background:var(--acc)}
+.w-ck .bt{font-size:max(10px,7.5cqmin);opacity:.85}
+.w-ck.v{align-items:center;text-align:center;padding:7cqw 4cqw}.w-ck.v .tt{writing-mode:vertical-rl;font-size:max(13px,22cqw);letter-spacing:.2em;font-family:"Songti SC","STSong",serif}.w-ck.v .sk{font-size:40cqw}.w-ck.v .sk small{font-size:14cqw}
+.w-ck.v .ok{width:34cqw;height:34cqw;border-radius:50%;border:1.5px solid currentColor;display:grid;place-items:center;font-size:18cqw;opacity:.6}.w-ck.v .ok.on{background:var(--acc);border-color:var(--acc);color:#0b1a33;opacity:1}
+.w-ck.row{flex-direction:row;align-items:center;gap:5cqw;padding:0 6cqw}.w-ck.row .tt{font-size:max(12px,17cqh)}.w-ck.row .sk{font-size:44cqh}.w-ck.row .sk small{font-size:14cqh}.w-ck.row .ckd{flex:1;justify-content:space-between}.w-ck.row .ckd i{width:20cqh;height:20cqh}
+/* 便签 & 摘句 */
+.w-note{background:#fff3b8;color:#5b4a1e;border-radius:6px 22px 22px 22px;box-shadow:0 8px 20px rgba(0,20,60,.22);text-shadow:none}
+.w-note::before{content:'';position:absolute;left:50%;top:-1cqmin;width:34cqmin;height:9cqmin;transform:translateX(-50%) rotate(-3deg);background:rgba(255,255,255,.55);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.w-note .fill{padding:12cqmin 9cqmin 8cqmin;font-family:"Kaiti SC","STKaiti","KaiTi",serif;font-size:max(12px,9.5cqmin);line-height:1.6;white-space:pre-wrap;background:repeating-linear-gradient(transparent 0 calc(9.5cqmin*1.6 - 1px),rgba(91,74,30,.15) calc(9.5cqmin*1.6 - 1px) calc(9.5cqmin*1.6));background-position:0 12cqmin;background-clip:content-box}
+.w-qt{justify-content:center;font-family:"Songti SC","STSong","Noto Serif SC",serif}
+.w-qt .q{font-size:max(12px,9cqmin);line-height:1.65;white-space:pre-wrap}.w-qt .q::before{content:'“';display:block;font-size:20cqmin;line-height:.6;color:var(--acc);opacity:.8}
+.w-qt .a{font-size:max(10px,7cqmin);opacity:.7;margin-top:3cqmin;text-align:right}
+.w-qt.row .q{font-size:max(12px,16cqh)}.w-qt.row .q::before{display:none}.w-qt.row .a{font-size:max(10px,12cqh);margin-top:2cqh}
+.w-qt.big .q{font-size:max(13px,9.5cqh)}
+/* 相片类 */
+.w-pol{display:grid;place-items:center}
+.pol{position:absolute;background:#fbfaf6;padding:4cqmin 4cqmin 13cqmin;box-shadow:0 3cqmin 8cqmin rgba(0,20,60,.3);border-radius:1.5cqmin}
+.pol div{width:100%;aspect-ratio:1;background:center/cover no-repeat #d9dde6;display:grid;place-items:center;color:#8893a6;font-size:max(9px,6cqmin)}
+.pol span{position:absolute;left:0;right:0;bottom:3cqmin;text-align:center;color:#4a4a4a;font-size:max(10px,6.5cqmin);font-family:"Kaiti SC","STKaiti",serif;text-shadow:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4cqmin}
+.w-mag{background:center/cover no-repeat #2b2b38}
+.w-mag::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.35),transparent 35%,transparent 55%,rgba(0,0,0,.6))}
+.w-mag .mt{position:absolute;left:6cqmin;right:6cqmin;top:4cqmin;z-index:1;font-family:"Didot","Bodoni 72","Songti SC",serif;font-size:min(16cqh,13cqw);font-weight:700;letter-spacing:.06em;color:#fff;line-height:1.05;text-transform:uppercase}
+.w-mag .ms{position:absolute;left:6cqmin;right:6cqmin;bottom:5cqmin;z-index:1;color:#fff;font-size:max(10px,min(8cqh,6cqw));line-height:1.4}
+.w-mag .ms small{display:block;opacity:.75;font-size:.8em;letter-spacing:.2em}
+.w-mag .ph{z-index:1;color:#fff}
+.mheart{-webkit-mask:var(--heart) center/contain no-repeat;mask:var(--heart) center/contain no-repeat}
+#phone{--heart:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 92'%3E%3Cpath d='M50 90C20 68 2 50 2 28 2 13 14 2 28 2c9 0 17 5 22 13C55 7 63 2 72 2c14 0 26 11 26 26 0 22-18 40-48 62z'/%3E%3C/svg%3E")}
+.w-hf{display:grid;place-items:center}
+.w-hf .hw{width:86cqmin;height:80cqmin;background:linear-gradient(135deg,#ffd0dc,#ff8fa8);padding:3.5cqmin;filter:drop-shadow(0 3cqmin 5cqmin rgba(200,60,100,.35))}
+.w-hf .hw div{width:100%;height:100%;background:center/cover no-repeat #f6c6d2;display:grid;place-items:center;color:#a14d63;font-size:max(9px,6cqmin)}
+.w-hf .lv{position:absolute;bottom:4cqmin;left:0;right:0;text-align:center;font-family:"Didot","Bodoni 72",serif;font-weight:700;letter-spacing:.35em;color:#fff;font-size:max(10px,8cqmin);text-shadow:0 1px 4px rgba(160,40,80,.6)}
+.w-hb{display:grid;place-items:center}
+.w-hb .hw{width:92cqmin;height:85cqmin;background:linear-gradient(135deg,#fff,#ffc4d2);padding:5cqmin;position:relative}
+.w-hb .hw div{width:100%;height:100%;background:center/cover no-repeat linear-gradient(135deg,#ffb3c6,#e0607e);display:grid;place-items:center;color:#fff;font-size:max(9px,9cqmin)}
+.w-hb .hw::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.7),rgba(255,255,255,.1) 35%,transparent 55%)}
+/* 黑胶 */
+.w-vin{background:linear-gradient(135deg,#2a2233,#141019);color:#f2e9ff}
+.w-vin .rec{position:absolute;top:50%;width:74cqh;height:74cqh;border-radius:50%;transform:translateY(-50%);background:radial-gradient(circle,transparent 31%,#111 31.5%,#1d1d1d 33%,#111 36%,#222 40%,#0e0e0e 46%,#202020 52%,#0f0f0f 60%,#1c1c1c 68%,#0d0d0d 100%);box-shadow:0 2cqh 6cqh rgba(0,0,0,.5);display:grid;place-items:center}
+.w-vin .rec::after{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 30deg,transparent,rgba(255,255,255,.1) 8%,transparent 16%,transparent 50%,rgba(255,255,255,.08) 58%,transparent 66%)}
+.w-vin .lb{width:31%;height:31%;border-radius:50%;background:center/cover no-repeat linear-gradient(135deg,#e0a3c8,#8a6cc4);box-shadow:inset 0 0 0 1px rgba(0,0,0,.3)}
+.w-vin.spin .rec{animation:spin 6s linear infinite}
+.w-vin .arm{position:absolute;width:3px;height:44cqh;background:linear-gradient(#ddd,#999);border-radius:3px;transform-origin:50% 4%;transform:rotate(18deg);transition:transform .6s;z-index:2}
+.w-vin .arm::before{content:'';position:absolute;top:-3px;left:-5px;width:13px;height:13px;border-radius:50%;background:#ccc}
+.w-vin.spin .arm{transform:rotate(30deg)}
+.w-vin .meta{position:absolute;z-index:1}
+.w-vin .meta b{display:block;font-size:max(12px,10cqh);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.w-vin .meta small{font-size:max(10px,8cqh);opacity:.7}
+.w-vin .pb{display:inline-grid;place-items:center;width:22cqh;height:22cqh;border-radius:50%;background:rgba(255,255,255,.15);margin-top:4cqh;font-size:9cqh}
+/* 游戏机 */
+.w-gb{background:linear-gradient(160deg,#c9c3d8,#9d96b3);border-radius:22px 22px 40px 22px;color:#3d3554;text-shadow:none;box-shadow:0 8px 22px rgba(0,20,60,.25)}
+.w-gb .scr{position:absolute;left:9cqmin;right:9cqmin;top:8cqmin;height:44cqmin;border-radius:3cqmin 3cqmin 9cqmin 3cqmin;background:#4b4560;padding:3.5cqmin}
+.w-gb .scr div{width:100%;height:100%;border-radius:1.5cqmin;background:center/cover no-repeat #8bac0f}
+.w-gb .dp{position:absolute;left:12cqmin;bottom:13cqmin;width:20cqmin;height:20cqmin}
+.w-gb .dp::before,.w-gb .dp::after{content:'';position:absolute;background:#3d3554;border-radius:1.5cqmin}
+.w-gb .dp::before{left:35%;width:30%;height:100%}.w-gb .dp::after{top:35%;height:30%;width:100%}
+.w-gb .ab{position:absolute;right:10cqmin;bottom:15cqmin;display:flex;gap:3cqmin;transform:rotate(-25deg)}
+.w-gb .ab i{width:10cqmin;height:10cqmin;border-radius:50%;background:#a3305e;box-shadow:inset 0 -1cqmin 0 rgba(0,0,0,.25)}
+.w-gb .nm2{position:absolute;left:0;right:0;bottom:4cqmin;text-align:center;font-size:max(9px,6cqmin);font-weight:700;letter-spacing:.3em;opacity:.7}
+/* 木鱼 */
+.w-wf{align-items:center;justify-content:center;text-align:center;user-select:none}
+.w-wf svg{width:62cqmin;height:50cqmin;transition:transform .08s}
+.w-wf.hit svg{transform:scale(.92)}
+.w-wf b{font-size:max(10px,8cqmin);font-weight:500;margin-top:2cqmin;opacity:.9}
+.w-wf.tiny b{display:none}.w-wf.tiny svg{width:78cqmin;height:64cqmin}
+.wf-plus{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-size:12px;font-weight:600;color:var(--gold);pointer-events:none;animation:wfup .9s ease-out forwards;white-space:nowrap;z-index:3}
+@keyframes wfup{to{transform:translate(-50%,-40px);opacity:0}}
+
 /* 编辑模式 */
 .editbar{display:none;justify-content:space-between;align-items:center;margin:-4px 0 10px}
 .editbar button{padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;background:rgba(255,255,255,.88);color:#0b1a33;box-shadow:0 4px 14px rgba(0,20,60,.25)}
@@ -245,7 +401,7 @@ input,textarea,select{font:inherit;color:var(--text)}
 /* sheet & toast */
 #mask{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.45);display:none}
 #mask.show{display:block}
-#sheet{position:absolute;left:10px;right:10px;bottom:calc(var(--bot) + 10px);z-index:91;border-radius:22px;padding:8px;transform:translateY(calc(100% + 80px));visibility:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;background:rgba(20,36,66,.92)}
+#sheet{position:absolute;left:10px;right:10px;bottom:calc(var(--bot) + 10px);z-index:91;border-radius:22px;padding:8px;max-height:84%;overflow-y:auto;overscroll-behavior:contain;transform:translateY(calc(100% + 80px));visibility:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;background:rgba(20,36,66,.92)}
 #sheet.show{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 #sheet button.opt{display:block;width:100%;padding:14px;border-radius:14px;font-size:16px;text-align:center}
 #sheet button.opt:active{background:var(--glass2)}
@@ -411,7 +567,7 @@ input,textarea,select{font:inherit;color:var(--text)}
     <div style="flex:none;height:var(--bot);background:#0e1311"></div>
   </section>
 
-  <div id="wsheet"><div class="grab"></div><div class="top"><h2>添加小组件</h2><button id="wsClose">✕</button></div><div class="chips" id="wsChips"></div><div class="list" id="wsList"></div></div>
+  <div id="wsheet"><div class="grab"></div><div class="top"><h2>添加小组件</h2><button id="wsClose">✕</button></div><div class="wsq"><input id="wsSearch" placeholder="搜索小组件" autocomplete="off"></div><div class="chips" id="wsChips"></div><div class="list" id="wsList"></div></div>
 
   <div id="lock"><div class="t" id="lockTime">--:--</div><div class="d" id="lockDate"></div><div id="lockNote"></div><div class="hint">轻点或上滑解锁</div></div>
   <div id="mask"></div>
@@ -471,7 +627,7 @@ const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar
 /* ========== 主屏 & 主题 ========== */
 function applyTheme(){
   const t=S.theme,ph=$('#phone');
-  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';
+  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.background=t.wallpaper?`#040a16 center bottom/cover no-repeat url(${t.wallpaper})`:'#0a2040';
   $('#lock').style.background=t.lockWallpaper?`center/cover url(${t.lockWallpaper})`:(t.wallpaper?`center/cover url(${t.wallpaper})`:'');
   for(const id of ['chat','story']){const a=$('#app-'+id);if(t.chatBg){a.classList.add('bg');a.style.backgroundImage=`linear-gradient(rgba(7,17,35,.55),rgba(7,17,35,.55)),url(${t.chatBg})`}else{a.classList.remove('bg');a.style.backgroundImage=''}}
 }
@@ -486,27 +642,168 @@ const dayKey=()=>new Date().toDateString();
 const fmtHM=d=>d.toTimeString().slice(0,5), fmtMD=d=>`${d.getMonth()+1}月${d.getDate()}日 星期${'日一二三四五六'[d.getDay()]}`;
 function daysTogether(){const f=S.messages[0]?.ts;return f?Math.floor((Date.now()-new Date(new Date(f).toDateString()))/864e5)+1:0}
 const DICE_PIPS={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+const TH={glass:['玻璃','rgba(140,170,220,.5)'],cream:['奶油','#fbf3e4'],ink:['墨夜','#161b28'],blush:['蜜桃','#f9dfe2'],sage:['鼠尾草','#dfe8dc'],sky:['晴空','#dcebfa'],lilac:['丁香','#e7def5']};
+const box=(it,cls='',style='')=>`<div class="wg ${it.data?.th&&it.data.th!=='glass'?'th th-'+it.data.th:'glass'} ${cls}"${style?` style="${style}"`:''}>`;
+const LUNAR_D=['初一','初二','初三','初四','初五','初六','初七','初八','初九','初十','十一','十二','十三','十四','十五','十六','十七','十八','十九','二十','廿一','廿二','廿三','廿四','廿五','廿六','廿七','廿八','廿九','三十'];
+function lunar(d){try{const p=new Intl.DateTimeFormat('zh-CN-u-ca-chinese',{month:'long',day:'numeric'}).formatToParts(d);const m=p.find(x=>x.type==='month')?.value||'',dd=+p.find(x=>x.type==='day')?.value;return {m,d:LUNAR_D[dd-1]||''}}catch(_){return {m:'',d:''}}}
+const ymd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const day0=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate());
+function moonInfo(t=Date.now()){
+  const syn=29.530588853,p=(((t-Date.UTC(2000,0,6,18,14))/864e5)%syn+syn)%syn/syn,ill=Math.round((1-Math.cos(2*Math.PI*p))/2*100);
+  const names=['新月','娥眉月','上弦月','盈凸月','满月','亏凸月','下弦月','残月'],name=names[Math.floor((p*8+.5))%8];
+  const toFull=Math.round(((.5-p+1)%1)*syn);return {p,ill,name,toFull};
+}
+function moonSVG(p){
+  const r=45,c=50,rx=Math.abs(r*Math.cos(2*Math.PI*p)),cosv=Math.cos(2*Math.PI*p);
+  const lit=p<.5?`M${c},${c-r}A${r},${r} 0 0 1 ${c},${c+r}A${rx},${r} 0 0 ${cosv>0?0:1} ${c},${c-r}Z`:`M${c},${c-r}A${r},${r} 0 0 0 ${c},${c+r}A${rx},${r} 0 0 ${cosv>0?1:0} ${c},${c-r}Z`;
+  return `<svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="#2a3352"/><path d="${lit}" fill="#fff4d8"/><circle cx="38" cy="35" r="6" fill="rgba(200,190,160,.25)"/><circle cx="60" cy="62" r="8" fill="rgba(200,190,160,.2)"/></svg>`;
+}
+const WX={0:['☀️','晴'],1:['🌤️','大致晴朗'],2:['⛅','多云'],3:['☁️','阴'],45:['🌫️','雾'],48:['🌫️','雾凇'],51:['🌦️','毛毛雨'],53:['🌦️','毛毛雨'],55:['🌧️','毛毛雨'],61:['🌧️','小雨'],63:['🌧️','中雨'],65:['🌧️','大雨'],66:['🌧️','冻雨'],67:['🌧️','冻雨'],71:['🌨️','小雪'],73:['🌨️','中雪'],75:['❄️','大雪'],77:['🌨️','雪粒'],80:['🌦️','阵雨'],81:['🌧️','阵雨'],82:['⛈️','暴雨'],85:['🌨️','阵雪'],86:['❄️','阵雪'],95:['⛈️','雷雨'],96:['⛈️','雷雨冰雹'],99:['⛈️','雷雨冰雹']};
+const wxOf=c=>WX[c]||['🌡️',''];
+const SIGNS=['白羊座','金牛座','双子座','巨蟹座','狮子座','处女座','天秤座','天蝎座','射手座','摩羯座','水瓶座','双鱼座'],SIGN_SYM='♈♉♊♋♌♍♎♏♐♑♒♓';
+function streak(days){const set=new Set(days||[]);let n=0,d=day0(new Date());if(!set.has(ymd(d)))d.setDate(d.getDate()-1);while(set.has(ymd(d))){n++;d.setDate(d.getDate()-1)}return n}
+function lastN(days,n){const set=new Set(days||[]),out=[],d=day0(new Date());d.setDate(d.getDate()-n+1);for(let i=0;i<n;i++){out.push(set.has(ymd(d)));d.setDate(d.getDate()+1)}return out}
+function rclockHTML(){const d=new Date(),h=d.getHours()%12,m=d.getMinutes(),sec=d.getSeconds()+d.getMilliseconds()/1e3;
+  const hand=(dur,ang,x2,cls,w)=>`<g style="animation-duration:${dur}s;animation-delay:-${(ang/360*dur).toFixed(2)}s"><line class="hd ${cls}" x1="50" y1="${cls==='sc'?60:54}" x2="50" y2="${x2}" stroke-width="${w}"/></g>`;
+  let ticks='';for(let i=0;i<12;i++){const a=i*30*Math.PI/180,r1=i%3?40:37;ticks+=`<line class="tk" x1="${50+r1*Math.sin(a)}" y1="${50-r1*Math.cos(a)}" x2="${50+43*Math.sin(a)}" y2="${50-43*Math.cos(a)}" stroke-width="${i%3?1.4:2.4}"/>`}
+  return `<svg viewBox="0 0 100 100"><circle class="face" cx="50" cy="50" r="47"/>${ticks}${hand(43200,(h+m/60+sec/3600)*30,26,'hh',4)}${hand(3600,(m+sec/60)*6,15,'mh',2.6)}${hand(60,sec*6,12,'sc',1.2)}<circle cx="50" cy="50" r="2.6" fill="var(--acc)"/></svg>`}
+let player=null,playingId=null;
+let audioCtx=null;function tok(){try{audioCtx||=new (window.AudioContext||window.webkitAudioContext)();const a=audioCtx,t=a.currentTime,o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.setValueAtTime(780,t);o.frequency.exponentialRampToValueAtTime(420,t+.09);g.gain.setValueAtTime(.35,t);g.gain.exponentialRampToValueAtTime(.001,t+.16);o.connect(g).connect(a.destination);o.start(t);o.stop(t+.18)}catch(_){}}
 const WG={
-  clock:{name:'时钟',sizes:[[4,1],[2,2],[4,2]],render:it=>{const d=new Date();return `<div class="wg glass"><div class="fill w-clock ${it.h===1?'row':''}"><div class="t js-time">${fmtHM(d)}</div><div class="d js-date">${fmtMD(d).replace(' ',it.h===1?'<br>':' ')}</div></div></div>`}},
-  ta:{name:'TA的消息',sizes:[[2,2],[4,2]],tap:()=>openApp('chat'),render:it=>{const last=[...S.messages].reverse().find(m=>m.role==='assistant');
-    return `<div class="wg glass"><div class="fill w-ta ${it.w===4?'wide':''}">${avHTML('char')}<div style="min-width:0"><div class="nm">${esc(S.char.name)}</div><div class="last">${last?esc(last.content):'还没有聊过天，点这里打个招呼吧。'}</div></div></div></div>`}},
-  days:{name:'相识天数',sizes:[[2,2],[4,1],[1,1]],tap:()=>openApp('memory'),render:it=>{const n=daysTogether();
-    const on=S.messages.filter(m=>m.mode==='online'&&m.role!=='event').length,off=S.messages.filter(m=>m.mode==='offline'&&m.role!=='event').length;
-    if(it.w===1)return `<div class="wg glass"><div class="fill w-days tiny"><div class="big">${n}</div><div class="lbl">天</div></div></div>`;
-    if(it.h===1)return `<div class="wg glass"><div class="fill w-days row"><div class="lbl">和 ${esc(S.char.name)} 相识</div><div class="big">${n}<small>天</small></div></div></div>`;
-    return `<div class="wg glass"><div class="fill w-days"><div class="lbl">${n?`和 ${esc(S.char.name)} 相识`:'我们的故事'}</div><div class="big">${n}<small>天</small></div><div class="stat">${n?`消息 ${on} 条 · 见面 ${off} 段`:'从第一句话开始计算'}</div></div></div>`}},
-  photo:{name:'图片',sizes:[[1,1],[2,2],[4,2],[2,1],[1,2]],cfg:'img',render:it=>it.data?.img?`<div class="wg w-photo" style="background-image:url(${it.data.img})"></div>`:`<div class="wg glass"><div class="ph">🖼<br>点击放图片</div></div>`},
-  badge:{name:'吧唧',sizes:[[1,1],[2,2]],cfg:'img',render:it=>`<div class="wg w-badge"><div class="disc" style="${it.data?.img?`background-image:url(${it.data.img})`:''}">${it.data?.img?'':'Badge'}</div></div>`},
-  text:{name:'语录',sizes:[[1,2],[2,2],[4,1]],cfg:'text',render:it=>{const t=it.data?.text||'月亮不睡\n我也不睡';return `<div class="wg glass"><div class="fill w-text ${it.w===1?'v':it.h===1?'row':''}">${esc(t)}</div></div>`}},
-  dice:{name:'骰子',sizes:[[1,1]],tap:(it,el)=>{const n=1+Math.floor(Math.random()*6);it.data={n};save('home');const d=el.querySelector('.die');d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll');setTimeout(()=>{d.innerHTML=pips(n)},180)},
-    render:it=>`<div class="wg glass w-dice"><div class="die">${pips(it.data?.n||6)}</div></div>`},
-  water:{name:'喝水',sizes:[[1,2]],tap:(it,el)=>{const w=S.widgets.water;if(w.day!==dayKey()){w.day=dayKey();w.n=0}w.n=w.n>=8?0:w.n+1;save('widgets');el.outerHTML=WG.water.render(it);if(w.n===8)toast('今天的 8 杯水喝完啦 💧')},
-    render:()=>{const w=S.widgets.water,n=w.day===dayKey()?w.n:0;return `<div class="wg glass"><div class="fill w-water"><div class="lbl">水</div><div class="tube"><b style="height:${n/8*100}%"></b></div><div class="n">${n}/8</div></div></div>`}},
-  cal:{name:'日历',sizes:[[2,2]],render:()=>{const d=new Date(),y=d.getFullYear(),m=d.getMonth(),first=new Date(y,m,1).getDay(),len=new Date(y,m+1,0).getDate();
+  clock:{name:'时钟',th:1,sizes:[[4,1],[2,2],[4,2]],render:it=>{const d=new Date();return `${box(it)}<div class="fill w-clock ${it.h===1?'row':''}"><div class="t js-time">${fmtHM(d)}</div><div class="d js-date">${fmtMD(d).replace(' ',it.h===1?'<br>':' ')}</div></div></div>`}},
+  rclock:{name:'圆形时钟',th:1,sizes:[[2,2],[1,1]],render:it=>`${box(it)}<div class="fill w-rclock js-rclock">${rclockHTML()}</div></div>`},
+  minical:{name:'简约日历',th:1,sizes:[[2,2],[4,1]],render:it=>{const d=new Date(),l=lunar(d),wd='星期'+'日一二三四五六'[d.getDay()];
+    return it.h===1?`${box(it)}<div class="fill w-mc row"><div class="dn">${d.getDate()}</div><div><div class="wd">${wd}</div><div class="ym">${d.getFullYear()}年${d.getMonth()+1}月</div><div class="ln">农历${l.m}${l.d}</div></div></div></div>`
+      :`${box(it)}<div class="fill w-mc"><div class="wd">${wd}</div><div class="dn">${d.getDate()}</div><div><div class="ym">${d.getFullYear()}年${d.getMonth()+1}月</div><div class="ln">农历${l.m}${l.d}</div></div></div></div>`}},
+  week:{name:'一周日期',th:1,sizes:[[4,1]],render:it=>{const t=day0(new Date()),mon=new Date(t);mon.setDate(t.getDate()-((t.getDay()+6)%7));let h='';
+    for(let i=0;i<7;i++){const d=new Date(mon);d.setDate(mon.getDate()+i);h+=`<div class="d ${+d===+t?'td':''}"><i>${'一二三四五六日'[i]}</i><b>${d.getDate()}</b><small>${lunar(d).d}</small></div>`}
+    return `${box(it)}<div class="fill w-wk">${h}</div></div>`}},
+  cal:{name:'月历',th:1,sizes:[[2,2]],render:it=>{const d=new Date(),y=d.getFullYear(),m=d.getMonth(),first=new Date(y,m,1).getDay(),len=new Date(y,m+1,0).getDate();
     let g='日一二三四五六'.split('').map(c=>`<i class="wk">${c}</i>`).join('');for(let i=0;i<first;i++)g+='<i></i>';for(let i=1;i<=len;i++)g+=`<i class="${i===d.getDate()?'td':''}">${i}</i>`;
-    return `<div class="wg glass"><div class="fill w-cal"><div class="mh">${m+1}月<span>${y}</span></div><div class="g">${g}</div></div></div>`}},
-  game:{name:'登临',sizes:[[2,2],[4,2]],tap:()=>openGame('denglin'),render:it=>`<div class="wg w-game" style="background-image:url(${GAMES[0].cover})"><div class="gt"><b>登临</b><small>${it.w===4?'范德林谋杀案 · 文字冒险':'文字冒险'}</small></div></div>`}
+    return `${box(it)}<div class="fill w-cal"><div class="mh">${m+1}月<span>${y}</span></div><div class="g">${g}</div></div></div>`}},
+  progress:{name:'时间进度',th:1,sizes:[[2,2],[4,1]],render:it=>{const n=new Date(),t0=day0(n),mon=new Date(t0);mon.setDate(t0.getDate()-((t0.getDay()+6)%7));
+    const ms=new Date(n.getFullYear(),n.getMonth(),1),me=new Date(n.getFullYear(),n.getMonth()+1,1),ys=new Date(n.getFullYear(),0,1),ye=new Date(n.getFullYear()+1,0,1);
+    const pc=(a,b)=>Math.min(100,Math.max(0,(n-a)/(b-a)*100));const row=(l,v)=>`<div class="r"><div><span>${l}</span><span>${v.toFixed(0)}%</span></div><div class="bar"><b style="width:${v}%"></b></div></div>`;
+    if(it.h===1){const doy=Math.floor((t0-ys)/864e5)+1;return `${box(it)}<div class="fill w-pg row"><div class="r"><div><span>${n.getFullYear()} 已过去 ${pc(ys,ye).toFixed(1)}%</span><span>今年第 ${doy} 天</span></div><div class="bar"><b style="width:${pc(ys,ye)}%"></b></div></div></div></div>`}
+    return `${box(it)}<div class="fill w-pg">${row('今天',pc(t0,new Date(+t0+864e5)))}${row('本周',pc(mon,new Date(+mon+7*864e5)))}${row('本月',pc(ms,me))}${row('今年',pc(ys,ye))}</div></div>`}},
+  countdown:{name:'倒数日',th:1,sizes:[[2,2],[4,1]],fields:[{k:'title',t:'text',l:'名称',ph:'比如：生日、见面、纪念日'},{k:'date',t:'date',l:'日期（不填就倒数到新年）'}],
+    render:it=>{const t0=day0(new Date());let tgt,ttl=it.data?.title;if(it.data?.date){tgt=new Date(it.data.date+'T00:00')}else{tgt=new Date(t0.getFullYear()+1,0,1);ttl||='新年'}ttl||='倒数日';
+      const n=Math.round((tgt-t0)/864e5),lbl=n>0?`距离${esc(ttl)}还有`:n<0?`${esc(ttl)}已经`:`${esc(ttl)}`;const num=n===0?'今天':Math.abs(n),dt=`${tgt.getFullYear()}.${tgt.getMonth()+1}.${tgt.getDate()}`;
+      return it.h===1?`${box(it)}<div class="fill w-cd row"><div style="flex:1"><div class="tt">${lbl}</div><div class="dt">${dt}</div></div><div class="n">${num}${n?'<small>天</small>':''}</div></div></div>`
+        :`${box(it)}<div class="fill w-cd"><div class="tt">${lbl}</div><div class="n">${num}${n?'<small>天</small>':''}</div><div class="dt">${dt}</div></div></div>`}},
+  moon:{name:'今夜月相',sizes:[[2,2],[1,1]],render:it=>{const m=moonInfo();return `<div class="wg glass w-moon ${it.w===1?'tiny':''}" style="background-color:rgba(8,16,38,.55)"><div class="fill w-moon ${it.w===1?'tiny':''}" style="background:none">${moonSVG(m.p)}<b>${m.name}</b><small>亮度 ${m.ill}%${m.toFull&&m.ill<97?` · 距满月 ${m.toFull} 天`:m.ill>=97?' · 今晚满月':''}</small></div></div>`}},
+  weather:{name:'天气',th:1,sizes:[[2,2],[4,2]],fields:[{k:'city',t:'text',l:'城市',ph:'比如：上海、香港、Tokyo'}],tap:it=>{if(!it.data?.city)return toast('长按桌面进入编辑，点它填城市');it.data.wx=null;refreshWeather(it,true)},
+    render:it=>{const D=it.data||{},w=D.wx;
+      if(!w)return `${box(it)}<div class="fill w-wx"><div class="ct">${esc(D.place||D.city||'天气')}</div><div class="ic">⛅</div><div class="ds">${D.city?(D.err||'加载中…'):'编辑时填上城市'}</div></div></div>`;
+      const [ic,ds]=wxOf(w.code);
+      if(it.w===4)return `${box(it)}<div class="fill w-wx big"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><div class="ct">${esc(D.place||D.city)}</div><div class="tp">${Math.round(w.t)}°</div></div><div style="text-align:right"><div class="ic">${ic}</div><div class="ds">${ds}<br>最高 ${Math.round(w.hi)}° 最低 ${Math.round(w.lo)}°</div></div></div><div class="fc">${(w.days||[]).slice(1,6).map(x=>`<div><small>${'日一二三四五六'[new Date(x.d+'T00:00').getDay()]}</small><span>${wxOf(x.c)[0]}</span><small>${Math.round(x.hi)}°/${Math.round(x.lo)}°</small></div>`).join('')}</div></div></div>`;
+      return `${box(it)}<div class="fill w-wx"><div class="ct">${esc(D.place||D.city)}</div><div class="tp">${Math.round(w.t)}°</div><div><div class="ic">${ic}</div><div class="ds">${ds} · ${Math.round(w.hi)}°/${Math.round(w.lo)}°</div></div></div></div>`}},
+  horo:{name:'星座运势',th:1,sizes:[[2,2],[4,2]],fields:[{k:'sign',t:'select',l:'你的星座',opts:SIGNS}],tap:it=>{if(!it.data?.sign)return toast('长按桌面进入编辑，点它选星座');it.data.hx=null;refreshHoro(it,true)},
+    render:it=>{const D=it.data||{},x=D.hx,sg=D.sign,sym=sg?SIGN_SYM[SIGNS.indexOf(sg)]:'✦';
+      if(!sg)return `${box(it)}<div class="fill w-horo"><div class="hd2"><span>✦</span>星座运势</div><p>编辑时选好你的星座，TA 会每天帮你看一次运势。</p></div></div>`;
+      if(!x)return `${box(it)}<div class="fill w-horo"><div class="hd2"><span>${sym}</span>${sg}</div><p>${D.err?esc(D.err):'点一下，看看今天的运势'}</p></div></div>`;
+      const st='★'.repeat(x.star||3)+'☆'.repeat(5-(x.star||3));
+      if(it.w===4)return `${box(it)}<div class="fill w-horo big"><div class="hd2"><span>${sym}</span>${sg} · 今日 <span class="stars" style="font-size:inherit;margin:0 0 0 auto">${st}</span></div><p>💫 ${esc(x.all)}</p><p>💗 ${esc(x.love)}</p><p>💼 ${esc(x.work)}</p><div class="lk"><span>幸运色 ${esc(x.color)}</span><span>幸运数字 ${esc(x.num)}</span></div></div></div>`;
+      return `${box(it)}<div class="fill w-horo"><div class="hd2"><span>${sym}</span>${sg}</div><div class="stars">${st}</div><p>${esc(x.all)}</p></div></div>`}},
+  ta:{name:'TA的消息',th:1,sizes:[[2,2],[4,2]],tap:()=>openApp('chat'),render:it=>{const last=[...S.messages].reverse().find(m=>m.role==='assistant');
+    return `${box(it)}<div class="fill w-ta ${it.w===4?'wide':''}">${avHTML('char')}<div style="min-width:0"><div class="nm">${esc(S.char.name)}</div><div class="last">${last?esc(last.content):'还没有聊过天，点这里打个招呼吧。'}</div></div></div></div>`}},
+  newmsg:{name:'新消息提示',th:1,sizes:[[4,1]],tap:()=>openApp('chat'),render:it=>{const m=[...S.messages].reverse().find(x=>x.role==='assistant'&&x.mode==='online'),n=S.state?.unread||0;
+    return `${box(it)}<div class="fill w-nm">${avHTML('char')}<div class="tx"><b>${esc(S.char.name)}<small>${m?fmtTime(m.ts):''}</small></b><span>${m?esc(m.content):'还没有新消息'}</span></div>${n?`<span class="badge">${n}</span>`:''}</div></div>`}},
+  days:{name:'相识天数',th:1,sizes:[[2,2],[4,1],[1,1]],tap:()=>openApp('memory'),render:it=>{const n=daysTogether();
+    const on=S.messages.filter(m=>m.mode==='online'&&m.role!=='event').length,off=S.messages.filter(m=>m.mode==='offline'&&m.role!=='event').length;
+    if(it.w===1)return `${box(it)}<div class="fill w-days tiny"><div class="big">${n}</div><div class="lbl">天</div></div></div>`;
+    if(it.h===1)return `${box(it)}<div class="fill w-days row"><div class="lbl">和 ${esc(S.char.name)} 相识</div><div class="big">${n}<small>天</small></div></div></div>`;
+    return `${box(it)}<div class="fill w-days"><div class="lbl">${n?`和 ${esc(S.char.name)} 相识`:'我们的故事'}</div><div class="big">${n}<small>天</small></div><div class="stat">${n?`消息 ${on} 条 · 见面 ${off} 段`:'从第一句话开始计算'}</div></div></div>`}},
+  couple:{name:'情侣纪念日',th:1,sizes:[[4,2],[2,2]],fields:[{k:'date',t:'date',l:'在一起的日子（不填就从第一句话算）'},{k:'word',t:'text',l:'下面那行字',ph:'在一起'}],
+    render:it=>{const D=it.data||{},start=D.date?new Date(D.date+'T00:00'):(S.messages[0]?day0(new Date(S.messages[0].ts)):null),n=start?Math.floor((day0(new Date())-start)/864e5)+1:0;
+      return `${box(it)}<div class="fill w-cp ${it.w===4?'wide':''}"><div class="avs">${avHTML('user')}<span class="ht">♥</span>${avHTML('char')}</div><div class="nn">${esc(S.user.name)} & ${esc(S.char.name)}</div><div class="dd">${esc(D.word||'在一起')}<b>${n}</b>天</div></div></div>`}},
+  profile:{name:'个人资料',th:1,sizes:[[4,2]],fields:[{k:'sig',t:'textarea',l:'个性签名',ph:'写一句签名'}],tap:()=>openApp('char'),
+    render:it=>`${box(it)}<div class="fill w-prof">${avHTML('user')}<div style="min-width:0"><div class="nm">${esc(S.user.name)}</div><div class="sig">${esc(it.data?.sig||'今天也要被好好爱着。')}</div><div class="st">和 ${esc(S.char.name)} 聊天中</div></div></div></div>`},
+  todo:{name:'待办清单',th:1,sizes:[[2,2],[4,2]],fields:[{k:'title',t:'text',l:'标题',ph:'今日待办'},{k:'list',t:'lines',l:'事项（一行一件，行首写 √ 表示已完成）'}],
+    tap:(it,el,ev)=>{const b=ev.target.closest('[data-td]');if(!b)return toast('长按桌面进入编辑，点它写待办');const x=it.data.items[+b.dataset.td];x.done=!x.done;save('home');refreshItem(it)},
+    render:it=>{const D=it.data||{},L=D.items||[],done=L.filter(x=>x.done).length;
+      return `${box(it)}<div class="fill w-todo ${it.w===4?'big':''}"><div class="tt">${esc(D.title||'今日待办')}<small>${L.length?done+'/'+L.length:''}</small></div><div class="ls">${L.length?L.slice(0,it.w===4?10:5).map((x,i)=>`<button class="it ${x.done?'dn':''}" data-td="${i}"><i>${x.done?'✓':''}</i>${esc(x.t)}</button>`).join(''):'<div class="it" style="opacity:.6">长按桌面编辑，写下要做的事</div>'}</div></div></div>`}},
+  checkin:{name:'打卡',th:1,sizes:[[2,2],[1,2],[4,1]],fields:[{k:'title',t:'text',l:'打卡内容',ph:'早睡 / 背单词 / 运动'}],
+    tap:it=>{const D=it.data||(it.data={}),k=ymd(new Date());D.days||=[];const i=D.days.indexOf(k);if(i>=0)D.days.splice(i,1);else{D.days.push(k);toast(`打卡成功，已连续 ${streak(D.days)} 天 ✨`)}save('home');refreshItem(it)},
+    render:it=>{const D=it.data||{},t=D.title||'早睡',sk=streak(D.days),today=(D.days||[]).includes(ymd(new Date()));
+      if(it.w===1)return `${box(it)}<div class="fill w-ck v"><div class="tt">${esc(t)}</div><div class="sk">${sk}<small>天</small></div><div class="ok ${today?'on':''}">✓</div></div></div>`;
+      if(it.h===1)return `${box(it)}<div class="fill w-ck row"><div class="tt">${esc(t)}</div><div class="ckd">${lastN(D.days,7).map(x=>`<i class="${x?'on':''}"></i>`).join('')}</div><div class="sk">${sk}<small>天</small></div></div></div>`;
+      return `${box(it)}<div class="fill w-ck"><div class="tt">${esc(t)}</div><div class="sk">${sk}<small>天连续</small></div><div class="ckd">${lastN(D.days,7).map(x=>`<i class="${x?'on':''}"></i>`).join('')}</div><div class="bt">${today?'今天已打卡 ✓':'点一下打卡'}</div></div></div>`}},
+  water:{name:'喝水',th:1,sizes:[[1,2]],tap:it=>{const w=S.widgets.water;if(w.day!==dayKey()){w.day=dayKey();w.n=0}w.n=w.n>=8?0:w.n+1;save('widgets');refreshItem(it);if(w.n===8)toast('今天的 8 杯水喝完啦 💧')},
+    render:it=>{const w=S.widgets.water,n=w.day===dayKey()?w.n:0;return `${box(it)}<div class="fill w-water"><div class="lbl">水</div><div class="tube"><b style="height:${n/8*100}%"></b></div><div class="n">${n}/8</div></div></div>`}},
+  note:{name:'便签',sizes:[[2,2],[4,2]],fields:[{k:'text',t:'textarea',l:'便签内容'}],render:it=>`<div class="wg w-note"><div class="fill">${esc(it.data?.text||'记得给 TA 回消息\n周末去看海')}</div></div>`},
+  quote:{name:'摘句卡',th:1,sizes:[[2,2],[4,2],[4,1]],fields:[{k:'text',t:'textarea',l:'句子'},{k:'by',t:'text',l:'出处（可以不填）',ph:'作者 / 书名 / 歌名'}],
+    render:it=>{const D=it.data||{};return `${box(it)}<div class="fill w-qt ${it.h===1?'row':it.w===4?'big':''}"><div class="q">${esc(D.text||'我喜欢你，像风走了八千里，不问归期。')}</div><div class="a">${D.by?'—— '+esc(D.by):''}</div></div></div>`}},
+  text:{name:'竖向文字',th:1,sizes:[[1,2],[2,2],[4,1]],fields:[{k:'text',t:'textarea',l:'文字'}],render:it=>{const t=it.data?.text||'月亮不睡\n我也不睡';return `${box(it)}<div class="fill w-text ${it.w===1?'v':it.h===1?'row':''}">${esc(t)}</div></div>`}},
+  photo:{name:'图片',sizes:[[1,1],[2,2],[4,2],[2,1],[1,2]],fields:[{k:'img',t:'image',l:'图片'}],render:it=>it.data?.img?`<div class="wg w-photo" style="background-image:url(${it.data.img})"></div>`:`<div class="wg glass"><div class="ph">🖼<br>放一张图片</div></div>`},
+  polaroid:{name:'拍立得',sizes:[[2,2]],fields:[{k:'img',t:'image',l:'照片'},{k:'cap',t:'text',l:'手写备注',ph:'夏天的海'}],
+    render:it=>`<div class="wg w-pol"><div class="pol" style="width:74cqmin;transform:rotate(-4deg)"><div ${it.data?.img?`style="background-image:url(${it.data.img})"`:''}>${it.data?.img?'':'放照片'}</div><span>${esc(it.data?.cap||'')}</span></div></div>`},
+  pstack:{name:'拍立得堆叠',sizes:[[2,2]],fields:[{k:'img1',t:'image',l:'第一张'},{k:'img2',t:'image',l:'第二张'},{k:'img3',t:'image',l:'第三张（最上面）'}],
+    render:it=>{const D=it.data||{};return `<div class="wg w-pol">${[['img1',-12,-6,-4],['img2',9,5,-2],['img3',-2,0,3]].map(([k,r,x,y])=>`<div class="pol" style="width:62cqmin;transform:translate(${x}cqmin,${y}cqmin) rotate(${r}deg)"><div ${D[k]?`style="background-image:url(${D[k]})"`:''}>${D[k]?'':'照片'}</div></div>`).join('')}</div>`}},
+  three:{name:'三张相片',th:1,sizes:[[4,2]],fields:[{k:'img1',t:'image',l:'左'},{k:'img2',t:'image',l:'中'},{k:'img3',t:'image',l:'右'}],
+    render:it=>{const D=it.data||{};return `${box(it,'w-pol')}${[['img1',-6,-28],['img2',3,0],['img3',-2,28]].map(([k,r,x])=>`<div class="pol" style="width:28cqw;transform:translateX(${x}cqw) rotate(${r}deg)"><div ${D[k]?`style="background-image:url(${D[k]})"`:''}>${D[k]?'':'照片'}</div></div>`).join('')}</div>`}},
+  mag:{name:'杂志相片',sizes:[[4,2],[2,2]],fields:[{k:'img',t:'image',l:'照片'},{k:'title',t:'text',l:'大标题',ph:'MOONLIGHT'},{k:'sub',t:'text',l:'副标题',ph:'一句小注解'}],
+    render:it=>{const D=it.data||{},d=new Date();return `<div class="wg w-mag" ${D.img?`style="background-image:url(${D.img})"`:''}>${D.img?'':'<div class="ph">放一张照片</div>'}<div class="mt">${esc(D.title||'MOONLIGHT')}</div><div class="ms"><small>${d.getFullYear()} · ${String(d.getMonth()+1).padStart(2,'0')} ISSUE</small>${esc(D.sub||'月光落在海上，也落在你身上')}</div></div>`}},
+  heartframe:{name:'LOVE 相框',sizes:[[2,2]],fields:[{k:'img',t:'image',l:'照片'}],render:it=>`<div class="wg w-hf"><div class="hw mheart"><div class="mheart" ${it.data?.img?`style="background-image:url(${it.data.img})"`:''}>${it.data?.img?'':'放照片'}</div></div><div class="lv">LOVE</div></div>`},
+  badge:{name:'吧唧',sizes:[[1,1],[2,2]],fields:[{k:'img',t:'image',l:'图片',max:500}],render:it=>`<div class="wg w-badge"><div class="disc" style="${it.data?.img?`background-image:url(${it.data.img})`:''}">${it.data?.img?'':'Badge'}</div></div>`},
+  hbadge:{name:'爱心吧唧',sizes:[[1,1],[2,2]],fields:[{k:'img',t:'image',l:'图片',max:500}],render:it=>`<div class="wg w-hb"><div class="hw mheart"><div class="mheart" ${it.data?.img?`style="background-image:url(${it.data.img})"`:''}>${it.data?.img?'':'♥'}</div></div></div>`},
+  vinyl:{name:'黑胶唱片',sizes:[[4,2],[2,2]],fields:[{k:'img',t:'image',l:'封面',max:500},{k:'title',t:'text',l:'歌名'},{k:'artist',t:'text',l:'歌手'},{k:'audio',t:'audio',l:'歌曲文件（可选，放了就能播）'}],
+    tap:it=>{if(playingId===it.id){player?.pause();playingId=null}else{if(it.data?.audio){player||=new Audio();player.loop=true;player.src=it.data.audio;player.play().catch(()=>{})}else toast('长按桌面编辑，放一首歌进来就能播放');playingId=it.id}$$('.w-vin').forEach(e=>e.classList.remove('spin'));refreshItem(it)},
+    render:it=>{const D=it.data||{},on=playingId===it.id&&it.id;
+      return `<div class="wg w-vin ${on?'spin':''}"><div class="rec" style="${it.w===4?'left:6cqh':'left:50%;transform:translate(-50%,-50%);width:78cqmin;height:78cqmin'}"><div class="lb" ${D.img?`style="background-image:url(${D.img})"`:''}></div></div><div class="arm" style="${it.w===4?'left:76cqh;top:8cqh':'right:12cqmin;top:6cqmin;height:46cqmin'}"></div>${it.w===4?`<div class="meta" style="left:92cqh;right:5cqw;top:50%;transform:translateY(-50%)"><b>${esc(D.title||'月光海')}</b><small>${esc(D.artist||'未知歌手')}</small><div class="pb">${on?'❚❚':'▶'}</div></div>`:''}</div>`}},
+  gamebox:{name:'游戏机',sizes:[[2,2]],tap:()=>openApp('games'),render:()=>`<div class="wg w-gb"><div class="scr"><div style="background-image:url(${GAMES[0].cover})"></div></div><div class="dp"></div><div class="ab"><i></i><i></i></div><div class="nm2">MOONSEA</div></div>`},
+  game:{name:'登临',sizes:[[2,2],[4,2]],tap:()=>openGame('denglin'),render:it=>`<div class="wg w-game" style="background-image:url(${GAMES[0].cover})"><div class="gt"><b>登临</b><small>${it.w===4?'范德林谋杀案 · 文字冒险':'文字冒险'}</small></div></div>`},
+  woodfish:{name:'敲木鱼',th:1,sizes:[[1,1],[2,2]],tap:(it,el)=>{it.data||={};it.data.n=(it.data.n||0)+1;save('home');tok();el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),90);
+      const b=el.querySelector('b');if(b)b.textContent=`功德 ${it.data.n}`;el.insertAdjacentHTML('beforeend','<span class="wf-plus">功德 +1</span>');setTimeout(()=>el.querySelector('.wf-plus')?.remove(),900)},
+    render:it=>`${box(it,'w-wf '+(it.w===1?'tiny':''))}<div class="fill w-wf ${it.w===1?'tiny':''}"><svg viewBox="0 0 120 96"><ellipse cx="60" cy="56" rx="52" ry="36" fill="#b5651d"/><ellipse cx="60" cy="52" rx="48" ry="31" fill="#d4873a"/><path d="M22 58q38 14 76 0" stroke="#7a3e10" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="42" r="5" fill="#7a3e10"/><rect x="80" y="2" width="8" height="40" rx="4" transform="rotate(35 84 22)" fill="#8b5a2b"/><ellipse cx="98" cy="10" rx="10" ry="7" transform="rotate(35 98 10)" fill="#a0522d"/></svg><b>功德 ${it.data?.n||0}</b></div></div>`},
+  dice:{name:'骰子',th:1,sizes:[[1,1]],tap:(it,el)=>{const n=1+Math.floor(Math.random()*6);it.data={...it.data,n};save('home');const d=el.querySelector('.die');d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll');setTimeout(()=>{d.innerHTML=pips(n)},180)},
+    render:it=>`${box(it,'w-dice')}<div class="die">${pips(it.data?.n||6)}</div></div>`}
 };
+function refreshItem(it){const hi=document.querySelector(`.hi[data-id="${it.id}"]`);if(!hi)return;const old=hi.querySelector('.wg');if(old)old.outerHTML=WG[it.kind].render(it)}
+async function refreshWeather(it,force){
+  const D=it.data;if(!D?.city)return;if(!force&&D.wx&&Date.now()-D.wx.at<30*6e4)return;
+  try{
+    if(!D.lat||D.geo!==D.city){const g=await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(D.city)}&count=1&language=zh`)).json();const r=g.results?.[0];if(!r)throw new Error('找不到这个城市');D.lat=r.latitude;D.lon=r.longitude;D.place=r.name;D.geo=D.city}
+    const j=await (await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${D.lat}&longitude=${D.lon}&current=temperature_2m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto&forecast_days=6`)).json();
+    D.wx={t:j.current.temperature_2m,code:j.current.weather_code,hi:j.daily.temperature_2m_max[0],lo:j.daily.temperature_2m_min[0],days:j.daily.time.map((d,i)=>({d,c:j.daily.weather_code[i],hi:j.daily.temperature_2m_max[i],lo:j.daily.temperature_2m_min[i]})),at:Date.now()};D.err='';
+  }catch(e){D.err=e.message==='找不到这个城市'?e.message:'天气加载失败，点一下重试'}
+  save('home');refreshItem(it);
+}
+async function refreshHoro(it,force){
+  const D=it.data;if(!D?.sign)return;const today=ymd(new Date());if(!force&&D.hx?.day===today)return;
+  const st=S.settings;if(!st.apiKey||!st.baseUrl||!st.model){D.err='先在设置里填好 API';refreshItem(it);return}
+  D.err='正在看今天的星星…';refreshItem(it);
+  try{const out=await callAPI([{role:'user',content:`为${D.sign}写一份${today}的今日运势，语气温柔有趣。只输出 JSON，不要别的文字：{"star":1到5的整数,"all":"综合运势一句话(30字内)","love":"爱情一句话(25字内)","work":"事业学业一句话(25字内)","color":"幸运色","num":"幸运数字"}`}],{temperature:1,max_tokens:400});
+    const j=JSON.parse(clean(out).replace(/^```(json)?|```$/g,'').match(/\{[\s\S]*\}/)[0]);D.hx={...j,star:Math.max(1,Math.min(5,+j.star||3)),day:today};D.err=''}
+  catch(e){D.err='没看成，点一下重试'}
+  save('home');refreshItem(it);
+}
+function refreshLive(){for(const it of S.home.pages.flat()){if(it.kind==='weather')refreshWeather(it);if(it.kind==='horo')refreshHoro(it)}}
+function weatherLine(){const it=S.home.pages?.flat().find(i=>i.kind==='weather'&&i.data?.wx);if(!it)return '';const w=it.data.wx;return `${it.data.place||it.data.city}现在${wxOf(w.code)[1]}，${Math.round(w.t)}°C（今天${Math.round(w.lo)}~${Math.round(w.hi)}°C）`}
+
+/* 编辑表单 */
+function formSheet(title,fields,data){return new Promise(res=>{
+  const d=structuredClone(data||{}),s=$('#sheet');
+  const draw=()=>{s.innerHTML=`<h3 class="sht">${esc(title)}</h3>`+fields.map(f=>{const v=d[f.k]??'';switch(f.t){
+    case 'text':return `<div class="field"><label>${f.l}</label><input data-f="${f.k}" value="${esc(v)}" placeholder="${esc(f.ph||'')}"></div>`;
+    case 'textarea':case 'lines':return `<div class="field"><label>${f.l}</label><textarea data-f="${f.k}" placeholder="${esc(f.ph||'')}">${esc(v)}</textarea></div>`;
+    case 'date':return `<div class="field"><label>${f.l}</label><input type="date" data-f="${f.k}" value="${esc(v)}"></div>`;
+    case 'image':return `<div class="field"><label>${f.l}</label><div class="fimg" data-fimg="${f.k}" style="${v?`background-image:url(${v})`:''}">${v?'':'点击选择图片'}</div>${v?`<button class="btn" data-fclr="${f.k}">移除</button>`:''}</div>`;
+    case 'audio':return `<div class="field"><label>${f.l}</label><div class="btns"><button class="btn" data-faud="${f.k}">${v?'换一首':'选择歌曲文件'}</button>${v?`<button class="btn" data-fclr="${f.k}">移除</button>`:''}</div>${d[f.k+'_name']?`<div class="hint">已选：${esc(d[f.k+'_name'])}</div>`:''}</div>`;
+    case 'select':return `<div class="field"><label>${f.l}</label><div class="fchips">${f.opts.map(o=>`<button data-fsel="${f.k}" data-v="${esc(o)}" class="${v===o?'on':''}">${esc(o)}</button>`).join('')}</div></div>`;
+    case 'theme':return `<div class="field"><label>${f.l}</label><div class="fchips">${Object.entries(TH).map(([k,[n,c]])=>`<button data-fsel="${f.k}" data-v="${k}" class="${(v||'glass')===k?'on':''}"><i style="background:${c}"></i>${n}</button>`).join('')}</div></div>`}}).join('')+
+    `<div class="btns" style="justify-content:flex-end;margin:8px 6px 4px"><button class="btn" id="fNo">取消</button><button class="btn pri" id="fOk">保存</button></div>`;
+    s.querySelectorAll('[data-f]').forEach(el=>el.addEventListener('input',()=>d[el.dataset.f]=el.value));
+    $('#fNo').onclick=()=>{closeSheet();res(null)};$('#fOk').onclick=()=>{closeSheet();res(d)};};
+  s.onclick=async e=>{
+    const im=e.target.closest('[data-fimg]'),cl=e.target.closest('[data-fclr]'),au=e.target.closest('[data-faud]'),se=e.target.closest('[data-fsel]');
+    if(im){const f=fields.find(x=>x.k===im.dataset.fimg),file=await pickFile('image/*');if(!file)return;d[f.k]=await fileToImg(file,f.max||1000);draw()}
+    if(cl){d[cl.dataset.fclr]='';delete d[cl.dataset.fclr+'_name'];draw()}
+    if(au){const file=await pickFile('audio/*');if(!file)return;if(file.size>25e6)return toast('歌曲文件太大了（最多 25MB）');toast('正在读取歌曲…');d[au.dataset.faud]=await new Promise(r=>{const fr=new FileReader();fr.onload=()=>r(fr.result);fr.readAsDataURL(file)});d[au.dataset.faud+'_name']=file.name;draw()}
+    if(se){d[se.dataset.fsel]=se.dataset.v;draw()}
+  };
+  draw();$('#mask').classList.add('show');s.classList.add('show');s.scrollTop=0;
+})}
 function pips(n){return [...Array(9)].map((_,i)=>`<i class="${DICE_PIPS[n].includes(i)?'on':''}"></i>`).join('')}
 const appById=id=>APPS.find(a=>a.id===id);
 const appBtn=a=>`<button class="appbtn" data-app="${a.id}">${appIcon(a.id)}<span>${a.name}</span>${a.id==='chat'&&S.state?.unread?`<b class="badge">${S.state.unread>99?'99+':S.state.unread}</b>`:''}</button>`;
@@ -558,9 +855,10 @@ function renderHome(){
   hp.scrollLeft=keep;renderDots();
   $('#dock').innerHTML=DOCK.map(id=>appBtn(appById(id))).join('');
   renderLockNote();
+  clearTimeout(window.__lv);window.__lv=setTimeout(refreshLive,800);
 }
 addEventListener('resize',()=>{clearTimeout(window.__rz);window.__rz=setTimeout(renderHome,200)});
-function tickWidgets(){const d=new Date();$$('.js-time').forEach(e=>e.textContent=fmtHM(d));$$('.js-date').forEach(e=>{const row=e.closest('.row');e.innerHTML=fmtMD(d).replace(' ',row?'<br>':' ')})}
+function tickWidgets(){const d=new Date();$$('.js-rclock').forEach(e=>e.innerHTML=rclockHTML());$$('.js-time').forEach(e=>e.textContent=fmtHM(d));$$('.js-date').forEach(e=>{const row=e.closest('.row');e.innerHTML=fmtMD(d).replace(' ',row?'<br>':' ')})}
 function findItem(id){for(let pi=0;pi<S.home.pages.length;pi++){const it=S.home.pages[pi].find(i=>i.id===id);if(it)return {it,pi}}return {}}
 
 /* 点击、长按、拖动 */
@@ -624,36 +922,42 @@ hp.addEventListener('click',async e=>{
   if(!hi){if(editing()&&e.target.classList.contains('hpage'))setEdit(false);return}
   const {it}=findItem(hi.dataset.id);if(!it)return;
   if(editing()){
-    const cfg=it.type==='w'&&WG[it.kind].cfg;
-    if(cfg==='img'){const f=await pickFile('image/*');if(!f)return;it.data={...it.data,img:await fileToImg(f,it.kind==='badge'?500:1000)};save('home');renderHome()}
-    if(cfg==='text'){const v=await editor(it.data?.text||'月亮不睡\n我也不睡');if(v!==null){it.data={...it.data,text:v.trim()};save('home');renderHome()}}
-    return;
+    if(it.type!=='w')return;
+    const W=WG[it.kind],fields=[...(W.fields||[])];if(W.th)fields.push({k:'th',t:'theme',l:'配色'});
+    if(!fields.length)return toast('这个小组件没有可以编辑的内容');
+    const data={...it.data};if(it.kind==='todo')data.list=(data.items||[]).map(x=>(x.done?'√ ':'')+x.t).join('\n');
+    const r=await formSheet(W.name,fields,data);if(!r)return;
+    if(it.kind==='todo'){r.items=String(r.list||'').split('\n').map(l=>l.trim()).filter(Boolean).map(l=>({done:/^[√✓✔]/.test(l)||/^\[x\]/i.test(l),t:l.replace(/^([√✓✔]|\[x\]|\[ \])\s*/i,'')}));delete r.list}
+    if(it.kind==='weather'&&r.city!==it.data?.city){r.wx=null;r.err=''}
+    if(it.kind==='horo'&&r.sign!==it.data?.sign)r.hx=null;
+    it.data=r;save('home');renderHome();return;
   }
   if(it.type==='app')return openApp(it.app);
   const w=WG[it.kind];
-  if(w.tap)w.tap(it,hi.querySelector('.wg'));
-  else if(w.cfg==='img'&&!it.data?.img)toast('长按桌面进入编辑，再点它就能换图');
+  if(w.tap)w.tap(it,hi.querySelector('.wg'),e);
+  else if(w.fields&&!Object.keys(it.data||{}).length)toast('长按桌面进入编辑，再点它就能编辑内容');
 });
 $('#dock').addEventListener('click',e=>{const b=e.target.closest('[data-app]');if(b&&!editing())openApp(b.dataset.app)});
 
 /* 添加小组件面板 */
 let wsFilter='all';
-function openWS(){renderWS();$('#mask').classList.add('show');$('#wsheet').classList.add('show')}
+function openWS(){$('#wsSearch').value='';renderWS();$('#mask').classList.add('show');$('#wsheet').classList.add('show')}
 function closeWS(){$('#wsheet').classList.remove('show');$('#mask').classList.remove('show')}
 $('#addW').onclick=openWS;$('#wsClose').onclick=closeWS;
 function renderWS(){
   const sizes=['all','1×1','1×2','2×1','2×2','4×1','4×2'];
   $('#wsChips').innerHTML=sizes.map(z=>`<button data-z="${z}" class="${z===wsFilter?'on':''}">${z==='all'?'全部尺寸':z}</button>`).join('');
   const groups={};
-  for(const k in WG)for(const [w,h] of WG[k].sizes){const z=`${w}×${h}`;if(wsFilter!=='all'&&wsFilter!==z)continue;(groups[z]||=[]).push({k,w,h})}
+  const q=($('#wsSearch').value||'').trim();for(const k in WG){if(q&&!WG[k].name.includes(q))continue;for(const [w,h] of WG[k].sizes){const z=`${w}×${h}`;if(wsFilter!=='all'&&wsFilter!==z)continue;(groups[z]||=[]).push({k,w,h})}}
   let html='';
   const all=S.home.pages.flat();
   const hidden=APPS.filter(a=>!DOCK.includes(a.id)&&!all.some(i=>i.type==='app'&&i.app===a.id));
-  if(hidden.length&&(wsFilter==='all'||wsFilter==='1×1'))html+=`<h4>应用</h4><div class="pvs">${hidden.map(a=>`<button class="pv" data-addapp="${a.id}"><div class="box" style="--w:1;--h:1">${appBtn(a)}</div></button>`).join('')}</div>`;
+  if(hidden.length&&!q&&(wsFilter==='all'||wsFilter==='1×1'))html+=`<h4>应用</h4><div class="pvs">${hidden.map(a=>`<button class="pv" data-addapp="${a.id}"><div class="box" style="--w:1;--h:1">${appBtn(a)}</div></button>`).join('')}</div>`;
   for(const z of sizes.slice(1)){if(!groups[z])continue;
     html+=`<h4>${z}</h4><div class="pvs">${groups[z].map(g=>`<button class="pv" data-addw="${g.k}" data-w="${g.w}" data-h="${g.h}"><div class="box" style="--w:${g.w};--h:${g.h}">${WG[g.k].render({w:g.w,h:g.h,data:{}})}</div>${WG[g.k].name}</button>`).join('')}</div>`}
   $('#wsList').innerHTML=html||'<div class="evt">这个尺寸暂时还没有小组件</div>';
 }
+$('#wsSearch').addEventListener('input',renderWS);
 $('#wsChips').onclick=e=>{const b=e.target.closest('[data-z]');if(b){wsFilter=b.dataset.z;renderWS()}};
 $('#wsList').onclick=e=>{
   const a=e.target.closest('[data-addapp]'),w=e.target.closest('[data-addw]');
@@ -827,7 +1131,7 @@ async function checkProactive(){
   await generate('online',`距离上一次互动已经过去${fmtGap(at-lastRealTs())}，现在是${fmtFull(at)}。${c}主动给${u}发消息：可以分享此刻在做的事、想念、关心，或者接着你们最近聊过的事，要符合当下的时间和${c}的性格，自然得像真人。${unansweredBursts()?`${u}还没回${c}上次发的消息，${c}可以表现出在意。`:''}`,{ts,pro:true});
 }
 setInterval(checkProactive,60e3);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkProactive();if(chatOpen())clearUnread()}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkProactive();tickWidgets();refreshLive();if(chatOpen())clearUnread()}});
 function updateBadges(){$('#dock').innerHTML=DOCK.map(id=>appBtn(appById(id))).join('');renderLockNote();try{S.state.unread?navigator.setAppBadge?.(S.state.unread):navigator.clearAppBadge?.()}catch(_){}}
 function clearUnread(){if(S.state.unread){S.state.unread=0;save('state');updateBadges()}}
 function renderLockNote(){
@@ -893,7 +1197,7 @@ function buildPrompt(mode,extra,now=Date.now()){
   if(c.mes_example)sys+=`\n【说话风格示例】\n${c.mes_example}\n`;
   if(S.memory.summary)sys+=`\n【长期记忆：之前发生过的事】\n${S.memory.summary}\n`;
   const lastTs=lastRealTs();
-  if(st.timeAware)sys+=`\n【现在的时间】${fmtFull(now)}${lastTs&&now-lastTs>60e3?`\n距离上一条消息过去了${fmtGap(now-lastTs)}。`:''}\n${c.name}的作息、状态和话题要符合这个时间。\n`;
+  if(st.timeAware)sys+=`\n【现在的时间】${fmtFull(now)}${lastTs&&now-lastTs>60e3?`\n距离上一条消息过去了${fmtGap(now-lastTs)}。`:''}\n${weatherLine()?`\n天气：${weatherLine()}。`:''}\n${c.name}的作息、状态和话题要符合这个时间。\n`;
   sys+=`\n对话记录中，${u.name}的话会带有[线上·手机消息]、[线下·见面]或[场景]标记，用来说明当时在哪里${st.timeAware?'、过了多久':''}；你的回复不要带这些标记。\n`;
   sys+=mode==='online'?`\n【当前：线上】${P.online||DEFAULT_PRESET.online}`:`\n【当前：线下】${P.offline||DEFAULT_PRESET.offline}`;
   const arr=[];let prev=0;
@@ -1105,10 +1409,19 @@ $('#importBk').onclick=async()=>{
 $('#clearChat').onclick=async()=>{if(await actionSheet([{label:'确定清空所有聊天和剧情',danger:true}])!==0)return;S.messages=[];S.memory.upTo=0;save('messages');save('memory');toast('已清空')};
 $('#clearMem').onclick=async()=>{if(await actionSheet([{label:'确定清空长期记忆',danger:true}])!==0)return;S.memory={summary:'',upTo:0};save('memory');toast('长期记忆已清空')};
 
+/* iOS 主屏模式底部空隙修正 */
+function fitPhone(){
+  const ph=$('#phone');ph.style.height='';
+  if(!(navigator.standalone||matchMedia('(display-mode: standalone)').matches))return;
+  if(innerWidth>=520||innerHeight<innerWidth||document.activeElement?.matches?.('input,textarea'))return;
+  const gap=screen.height-innerHeight;if(gap>0&&gap<=140)ph.style.height=screen.height+'px';
+}
+addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>setTimeout(fitPhone,300));document.addEventListener('focusout',()=>setTimeout(fitPhone,300));
+
 /* ========== 启动 ========== */
 (async()=>{
   try{await load()}catch(e){toast('本地存储打不开：'+e.message,6000);for(const k in DEFAULTS)S[k]??=structuredClone(DEFAULTS[k])}
-  presetList();tick();applyTheme();renderHome();
+  presetList();fitPhone();tick();applyTheme();renderHome();
   if(!S.settings.showLock)$('#lock').classList.add('hide');
   setTimeout(checkProactive,2500);
 })();
