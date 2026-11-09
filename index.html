@@ -21,10 +21,10 @@
          linear-gradient(180deg,#081329 0%,#12294f 40%,#1d4677 60%,#0f2e52 61%,#0a2040 78%,#06142a 100%);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#040a16;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overflow:hidden}
+html,body{margin:0;padding:0;background:#06142a;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overscroll-behavior:none}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 input,textarea,select{font:inherit;color:var(--text)}
-#phone{position:fixed;inset:0;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
+#phone{position:fixed;inset:0;min-height:-webkit-fill-available;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
 @media (min-width:520px){
   #phone{position:relative;inset:auto;width:440px;height:min(900px,96dvh);margin:2dvh auto 0;border-radius:46px;box-shadow:0 0 0 10px #0d1424,0 30px 80px rgba(0,0,0,.6)}
   :root{--top:34px;--bot:14px}
@@ -627,7 +627,7 @@ const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar
 /* ========== 主屏 & 主题 ========== */
 function applyTheme(){
   const t=S.theme,ph=$('#phone');
-  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.background=t.wallpaper?`#040a16 center bottom/cover no-repeat url(${t.wallpaper})`:'#0a2040';
+  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.background=t.wallpaper?`#06142a center top/100% var(--app-h,100%) no-repeat url(${t.wallpaper})`:'';
   $('#lock').style.background=t.lockWallpaper?`center/cover url(${t.lockWallpaper})`:(t.wallpaper?`center/cover url(${t.wallpaper})`:'');
   for(const id of ['chat','story']){const a=$('#app-'+id);if(t.chatBg){a.classList.add('bg');a.style.backgroundImage=`linear-gradient(rgba(7,17,35,.55),rgba(7,17,35,.55)),url(${t.chatBg})`}else{a.classList.remove('bg');a.style.backgroundImage=''}}
 }
@@ -1420,7 +1420,7 @@ function fitPhone(){
   const top=pad?24:notch?(sh>=852&&sw>=393?59:47):20,bot=pad?20:notch?34:0;
   rs.setProperty('--top',`max(env(safe-area-inset-top,0px),${top}px)`);rs.setProperty('--bot',`max(env(safe-area-inset-bottom,0px),${bot}px)`);
   const de=document.documentElement,portrait=innerHeight>=innerWidth,typing=document.activeElement?.matches?.('input,textarea');
-  if(portrait&&!typing&&!pad)ph.style.height=Math.max(sh,de.clientHeight,innerHeight)+'px';
+  if(portrait&&!typing&&!pad){const H=Math.max(sh,de.clientHeight,innerHeight);ph.style.height=H+'px';rs.setProperty('--app-h',H+'px')}
 }
 addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>setTimeout(fitPhone,300));document.addEventListener('focusout',()=>setTimeout(fitPhone,300));
 
