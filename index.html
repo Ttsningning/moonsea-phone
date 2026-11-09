@@ -350,6 +350,26 @@ input,textarea,select{font:inherit;color:var(--text)}
 .gift b{display:block;font-size:14.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:140px}.gift small{font-size:12px;opacity:.9}
 .gift .gb{padding:5px 12px;font-size:11px;color:#8a8a8a;background:#fff}
 .gift.done .gt{filter:saturate(.45) brightness(1.08)}
+.gift2{width:250px;cursor:pointer;text-shadow:none}
+.gift2 .g2a{aspect-ratio:3.72;background:center/contain no-repeat;position:relative;filter:drop-shadow(0 3px 8px rgba(40,20,70,.28))}
+.gift2.rp .g2a{aspect-ratio:3.27}
+.gift2 .g2a b{position:absolute;left:41%;right:24%;top:65%;font-size:13px;font-weight:700;color:#b0503f;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center;line-height:1}
+.gift2.rp .g2a b{left:38%;right:17%;top:70%;color:#c0443a;font-size:11px}
+.gift2 small{display:block;font-size:11px;color:var(--muted);margin:2px 10px 0;text-shadow:0 1px 3px rgba(0,0,0,.35)}
+.me .gift2 small{text-align:right}
+.gift2.done .g2a{filter:saturate(.35) brightness(1.04) opacity(.82)}
+.rpopen.art,.rpopen.art.tf{background:none;color:var(--text);padding:14px 12px 10px;gap:6px}
+.rpopen.art b{font-size:16px}.rpopen.art p{font-size:14px;color:var(--muted)}.rpopen.art .rpamt{color:var(--gold);font-size:30px}
+.rpart{width:min(230px,58vw);aspect-ratio:481/1040;background:center/contain no-repeat;position:relative;margin:4px auto 6px;filter:drop-shadow(0 8px 20px rgba(20,10,40,.45));animation:rpin .5s cubic-bezier(.3,1.4,.5,1)}
+.rpopen.tf .rpart{aspect-ratio:300/396;width:min(190px,50vw)}
+@keyframes rpin{from{transform:scale(.7) rotate(-4deg);opacity:0}}
+.rpseal{position:absolute;left:50%;top:56.6%;width:24%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,236,170,.0) 40%,rgba(255,226,140,.55) 70%,transparent 72%);color:#9b2c25;font-size:0;animation:rpglow 1.6s ease-in-out infinite}
+@keyframes rpglow{50%{box-shadow:0 0 0 8px rgba(255,226,140,.35),0 0 24px 8px rgba(255,226,140,.45)}}
+.rpopen.art .btn{background:var(--glass2);color:var(--text)}
+.rpopen.art.tf .rpbtn{background:linear-gradient(#ffe6b0,#f3c47e);color:#7a3c00}
+.pk-prince .dpage{background:none;border-style:solid;border-width:84px 21px 136px 21px;border-image:url(themes/prince/paper.jpg) 190 46 308 46 fill / 84px 21px 136px 21px round stretch;border-radius:0;padding:0 14px 0 14px;box-shadow:none;filter:drop-shadow(0 8px 18px rgba(20,10,40,.35))}
+.pk-prince .dpage::before{display:none}
+.pk-prince .dpage .dt{background-image:repeating-linear-gradient(transparent 0 29px,rgba(170,120,90,.22) 29px 30px)}
 .plusb{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--glass);font-size:22px;color:var(--accent);line-height:1}
 #plusPanel{display:none;flex:none;background:var(--inbg);border-top:1px solid var(--line);padding-bottom:var(--bot);max-height:46%;overflow-y:auto}
 #plusPanel.on{display:block}
@@ -843,13 +863,14 @@ const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar
 const PRINCE_ST=['a00','a01','a02','a03','a04','a05','a08','a09','a10','a11','a12','a13','a16','a17','a18','a19','a20','a21','a22','a23','a25','a28','a29','a30','a32','a33','a35','a36','b00','b01','b02','b03','b04','b05','b07','b08','b09','b12','b13','b14','b15','b16','b17','b18','b19','b21','b22','b23','b24','b27','b28','b30','b32'].map(n=>`themes/prince/st/${n}.webp`);
 const PACKS={
   moonsea:{name:'月光海',desc:'玻璃质感的月夜海面',vars:{}},
-  prince:{name:'小王子',desc:'毛线星球、狐狸与玫瑰',cover:'themes/prince/wall.jpg',wall:'themes/prince/wall.jpg',chat:'themes/prince/sq2.jpg',
+  prince:{name:'小王子',desc:'毛线星球、狐狸与玫瑰',cover:'themes/prince/wall.jpg',wall:'themes/prince/wall.jpg',chat:'themes/prince/chat.jpg',mcover:'themes/prince/cover.jpg',
+    art:{rpOpen:'themes/prince/rp-open.webp',tfOpen:'themes/prince/rp-fox.webp',bnTf:'themes/prince/bn-transfer.webp',bnRp:'themes/prince/bn-redpack.webp'},
     icons:Object.fromEntries(['chat','story','memory','char','world','preset','theme','games','settings'].map(k=>[k,`themes/prince/i-${k}.png`])),
     stickers:PRINCE_ST,walls:['themes/prince/wall.jpg','themes/prince/wall2.jpg'],woodfish:{idle:'themes/prince/wf-idle.webp',hit:'themes/prince/wf-hit.webp'},
     decor:[['a17',2,2],['b19',1,1],['a13',1,1],['a08',2,1],['b24',2,2],['a10',2,1]],
     vars:{'--accent':'#f6d79a','--gold':'#ffe4a3','--muted':'#dccfe9','--text':'#fff9f0','--line':'rgba(255,236,200,.30)','--glass':'rgba(255,240,220,.12)','--glass2':'rgba(255,240,220,.2)',
       '--wglass':'rgba(76,58,128,.36)','--appbg':'rgba(42,32,78,.82)','--hdbg':'rgba(56,43,98,.62)','--inbg':'rgba(56,43,98,.78)','--sheetbg':'rgba(60,46,104,.96)',
-      '--me1':'#ffe9c2','--me2':'#f7c393','--meink':'#4a2a1a','--tabub':'rgba(255,245,232,.17)','--chatov':'rgba(42,32,78,.7)','--lblsh':'rgba(48,28,82,.9)',
+      '--me1':'#ffe9c2','--me2':'#f7c393','--meink':'#4a2a1a','--tabub':'rgba(255,245,232,.17)','--chatov':'rgba(52,38,96,.42)','--lblsh':'rgba(48,28,82,.9)',
       '--icobg':'linear-gradient(160deg,rgba(255,250,240,.95),rgba(248,226,238,.88))'}}
 };
 const curPack=()=>PACKS[S.theme.pack]||PACKS.moonsea;
@@ -859,6 +880,7 @@ function applyTheme(){
   const P=curPack(),root=document.documentElement.style;
   for(const pk of Object.values(PACKS))for(const k in pk.vars)root.removeProperty(k);
   for(const k in P.vars)root.setProperty(k,P.vars[k]);
+  const H=document.documentElement;for(const k in PACKS)H.classList.toggle('pk-'+k,P===PACKS[k]);
   const t={...S.theme,wallpaper:S.theme.wallpaper||P.wall||'',lockWallpaper:S.theme.lockWallpaper||P.lock||'',chatBg:S.theme.chatBg||P.chat||''},ph=$('#phone');
   ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.backgroundImage='';bottomColor(t.wallpaper);
   $('#lock').style.background=t.lockWallpaper?`center/cover url(${t.lockWallpaper})`:(t.wallpaper?`center/cover url(${t.wallpaper})`:'');
@@ -1454,7 +1476,9 @@ function pickFile(accept,multiple){return new Promise(res=>{const i=document.cre
 function fileToImg(file,max=1280,type='image/jpeg',q=.86){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{let w=im.width,h=im.height;const r=Math.min(1,max/Math.max(w,h));w=Math.round(w*r);h=Math.round(h*r);const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(im,0,0,w,h);res(cv.toDataURL(type,q))};im.onerror=()=>rej(new Error('图片读取失败'));im.src=fr.result};fr.onerror=()=>rej(fr.error);fr.readAsDataURL(file)})}
 
 /* ========== 表情包 ========== */
-const BUILTIN_MEMES=[['a17','抱抱'],['b24','贴贴'],['b19','爱你'],['a05','困了睡觉'],['a10','晚安'],['b01','开心抱星星'],['a13','珍惜你'],['a08','飞奔过来'],['b21','给你写信'],['a20','喝茶放松'],['a30','骄傲'],['b14','乖巧'],['a36','许愿'],['a33','咩'],['b07','送你'],['a12','偷偷看你']].map(([f,n])=>({id:'b_'+f,name:n,img:`themes/prince/st/${f}.webp`,builtin:1}));
+const PM_NAMES=['开心','抱抱','生气','哭哭','害羞','委屈','得意','疑惑','震惊','嫌弃','比心','晚安','早安','在吗','收到','睡觉','辛苦啦','加油','谢谢','爱你'],PX_NAMES=['好的','无语','唉','送你星星','嘿嘿','好喜欢'];
+const BUILTIN_MEMES=[...PM_NAMES.map((n,i)=>({id:'pm'+i,name:n,img:`themes/prince/memes/m${String(i).padStart(2,'0')}.webp`,builtin:1})),...PX_NAMES.map((n,i)=>({id:'px'+i,name:n,img:`themes/prince/memes/x${i}.webp`,builtin:1}))];
+const OLD_MEMES=[['a17','抱抱'],['b24','贴贴'],['b19','爱你'],['a05','困了睡觉'],['a10','晚安'],['b01','开心抱星星'],['a13','珍惜你'],['a08','飞奔过来'],['b21','给你写信'],['a20','喝茶放松'],['a30','骄傲'],['b14','乖巧'],['a36','许愿'],['a33','咩'],['b07','送你'],['a12','偷偷看你']].map(([f,n])=>({id:'b_'+f,name:n,img:`themes/prince/st/${f}.webp`,builtin:1})).filter(o=>!PM_NAMES.includes(o.name));BUILTIN_MEMES.push(...OLD_MEMES);
 const allMemes=()=>[...(S.stickers||[]),...BUILTIN_MEMES];
 const memeByName=n=>{n=String(n||'').trim();const L=allMemes();return L.find(x=>x.name===n)||L.find(x=>n&&(x.name.includes(n)||n.includes(x.name)))};
 
@@ -1671,7 +1695,9 @@ function bubbleHTML(T,m,i){
   if(m.type==='image')return photoHTML(m,i);
   if(m.type==='sticker')return `<div class="stk" data-i="${i}"><img src="${D.img||memeByName(m.content)?.img||''}" alt="${esc(m.content)}"></div>`;
   if(m.type==='voice'){const sec=Math.max(1,Math.min(60,Math.round(m.content.length/4)));return `<div class="bubble voice" data-i="${i}" data-voice="${i}" style="width:${Math.min(70+sec*5,210)}px"><span class="vw"><i></i><i></i><i></i></span><span class="vs">${sec}''</span></div>${m.showText?`<div class="vtext">${esc(m.content)}</div>`:''}`}
-  if(m.type==='redpacket'||m.type==='transfer'){const rp=m.type==='redpacket',st=D.status;
+  if(m.type==='redpacket'||m.type==='transfer'){const rp=m.type==='redpacket',st=D.status,A=curPack().art;
+    if(A){const sub=st==='claimed'?(rp?'已被领取':'已收款'):st==='returned'?'已退还':rp?(me?'等待对方领取':'点开领取红包'):(me?'等待对方收款':'点开收款');
+      return `<div class="gift2 ${rp?'rp':'tf'} ${st!=='pending'?'done':''}" data-i="${i}" data-gift="${i}"><div class="g2a" style="background-image:url(${rp?A.bnRp:A.bnTf})"><b>${rp?esc(D.note||'大吉大利'):'¥'+(+D.amount).toFixed(2)}</b></div><small>${rp?'🧧':'¥'} ${sub}${!rp&&D.note&&D.note!=='转账给你'?' · '+esc(D.note):''}</small></div>`}
     return `<div class="gift ${rp?'rp':'tf'} ${st!=='pending'?'done':''}" data-i="${i}" data-gift="${i}"><div class="gt"><span class="gi">${rp?'🧧':'¥'}</span><span><b>${rp?esc(D.note||'恭喜发财，大吉大利'):'¥'+(+D.amount).toFixed(2)}</b><small>${st==='claimed'?(rp?'已被领取':'已收款'):st==='returned'?'已退还':rp?(me?'等待对方领取':'领取红包'):(me?'等待对方收款':(D.note||'转账给你'))}</small></span></div><div class="gb">${rp?'月光海红包':'月光海转账'}</div></div>`}
   return `<div class="bubble" data-i="${i}">${esc(m.content)}</div>`;
 }
@@ -1784,7 +1810,8 @@ async function msgMenu(i){
 async function openGift(i){
   const T=curT(),m=T.msgs[i],D=m.data,rp=m.type==='redpacket',who=charById(m.who)||charById(T.members[0]);
   if(m.role==='user'||D.status!=='pending')return msgMenu(i);
-  const ok=await new Promise(res=>{const s=$('#sheet');s.innerHTML=`<div class="rpopen ${rp?'':'tf'}"><div class="rpav">${charAv(who)}</div><b>${esc(who?.name||'')}${rp?'的红包':'的转账'}</b><p>${esc(D.note||(rp?'恭喜发财，大吉大利':'转账给你'))}</p>${rp?'':`<div class="rpamt">¥${(+D.amount).toFixed(2)}</div>`}<button class="rpbtn" id="rpGo">${rp?'開':'收款'}</button><button class="btn" id="rpBack" style="margin-top:6px">${rp?'先不领':'退还'}</button></div>`;s.onclick=null;
+  const A=curPack().art;
+  const ok=await new Promise(res=>{const s=$('#sheet');s.innerHTML=A?`<div class="rpopen art ${rp?'':'tf'}"><b>${esc(who?.name||'')}${rp?'的红包':'的转账'}</b><p>${esc(D.note||(rp?'恭喜发财，大吉大利':'转账给你'))}</p>${rp?'':`<div class="rpamt">¥${(+D.amount).toFixed(2)}</div>`}<div class="rpart" style="background-image:url(${rp?A.rpOpen:A.tfOpen})">${rp?'<button class="rpseal" id="rpGo">開</button>':''}</div>${rp?'':'<button class="rpbtn" id="rpGo">收款</button>'}<button class="btn" id="rpBack">${rp?'先不领':'退还'}</button></div>`:`<div class="rpopen ${rp?'':'tf'}"><div class="rpav">${charAv(who)}</div><b>${esc(who?.name||'')}${rp?'的红包':'的转账'}</b><p>${esc(D.note||(rp?'恭喜发财，大吉大利':'转账给你'))}</p>${rp?'':`<div class="rpamt">¥${(+D.amount).toFixed(2)}</div>`}<button class="rpbtn" id="rpGo">${rp?'開':'收款'}</button><button class="btn" id="rpBack" style="margin-top:6px">${rp?'先不领':'退还'}</button></div>`;s.onclick=null;
     $('#rpGo').onclick=()=>{closeSheet();res(1)};$('#rpBack').onclick=()=>{closeSheet();res(rp?0:-1)};$('#mask').classList.add('show');s.classList.add('show')});
   if(!ok)return;
   if(ok===-1){D.status='returned';saveMsgs(T);pushMsg(T,'online','event',`你退还了${who?.name||'TA'}的转账`);renderChat();return}
@@ -1877,7 +1904,7 @@ const pName=w=>w==='user'?S.user.name:(charById(w)?.name||'？');
 const pAv=w=>w==='user'?avHTML('user'):charAv(charById(w));
 let momentBusy=false;
 function renderMoments(){
-  const L=S.moments||[],cover=S.theme.wallpaper||curPack().wall||'';
+  const L=S.moments||[],cover=curPack().mcover||S.theme.wallpaper||curPack().wall||'';
   $('#msgsBody').innerHTML=`<div class="mcover" ${cover?`style="background-image:url(${cover})"`:''}><div class="mme"><b>${esc(S.user.name)}</b>${avHTML('user')}</div></div>
     <div class="mtool"><button class="btn" id="mGen">${momentBusy?'TA们正在发动态…':'✨ 看看TA们最近在干嘛'}</button></div>
     ${L.map(p=>`<div class="post" data-p="${p.id}">${pAv(p.who)}<div class="pc"><b>${esc(pName(p.who))}</b><div class="ptx">${esc(p.text)}</div>
