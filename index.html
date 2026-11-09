@@ -1477,19 +1477,24 @@ $('#clearChat').onclick=async()=>{if(await actionSheet([{label:'确定清空所�
 $('#clearMem').onclick=async()=>{if(await actionSheet([{label:'确定清空长期记忆',danger:true}])!==0)return;S.memory={summary:'',upTo:0};save('memory');toast('长期记忆已清空')};
 
 /* iOS 主屏模式底部空隙修正 */
+let fitH=0;
 function fitPhone(){
   const ph=$('#phone'),rs=document.documentElement.style,ua=navigator.userAgent||'';
-  ph.style.height='';
   const ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   const pwa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches;
-  if(!ios||!pwa)return;
+  if(!ios||!pwa){ph.style.height='';return}
   const sw=Math.min(screen.width,screen.height),sh=Math.max(screen.width,screen.height),notch=sh/sw>=1.9,pad=/iPad/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   const top=pad?24:notch?(sh>=852&&sw>=393?59:47):20,bot=pad?20:notch?34:0;
   rs.setProperty('--top',`max(env(safe-area-inset-top,0px),${top}px)`);rs.setProperty('--bot',`max(env(safe-area-inset-bottom,0px),${bot}px)`);
-  const de=document.documentElement,portrait=innerHeight>=innerWidth,typing=document.activeElement?.matches?.('input,textarea');
-  if(portrait&&!typing&&!pad){const H=Math.max(sh,de.clientHeight,innerHeight);ph.style.height=H+'px';rs.setProperty('--app-h',H+'px')}
+  if(pad||innerHeight<innerWidth*.9){ph.style.height='';fitH=0;return}
+  const typing=document.activeElement?.matches?.('input:not([type=file]),textarea');
+  if(typing&&fitH)return;
+  const de=document.documentElement,H=Math.max(sh,de.clientHeight,innerHeight);
+  if(H!==fitH||ph.style.height!==H+'px'){fitH=H;ph.style.height=H+'px';rs.setProperty('--app-h',H+'px')}
 }
-addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>setTimeout(fitPhone,300));document.addEventListener('focusout',()=>setTimeout(fitPhone,300));
+addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>setTimeout(fitPhone,300));addEventListener('pageshow',fitPhone);
+document.addEventListener('focusout',()=>setTimeout(fitPhone,350));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(fitPhone,100)});
+setInterval(fitPhone,1500);
 
 /* ========== 启动 ========== */
 (async()=>{
