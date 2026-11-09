@@ -677,7 +677,7 @@ function applyTheme(){
   for(const pk of Object.values(PACKS))for(const k in pk.vars)root.removeProperty(k);
   for(const k in P.vars)root.setProperty(k,P.vars[k]);
   const t={...S.theme,wallpaper:S.theme.wallpaper||P.wall||'',lockWallpaper:S.theme.lockWallpaper||P.lock||'',chatBg:S.theme.chatBg||P.chat||''},ph=$('#phone');
-  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.background=t.wallpaper?`#06142a center top/100% var(--app-h,100%) no-repeat url(${t.wallpaper})`:'';
+  ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.backgroundImage='';bottomColor(t.wallpaper);
   $('#lock').style.background=t.lockWallpaper?`center/cover url(${t.lockWallpaper})`:(t.wallpaper?`center/cover url(${t.wallpaper})`:'');
   for(const id of ['chat','story']){const a=$('#app-'+id);if(t.chatBg){a.classList.add('bg');a.style.backgroundImage=`linear-gradient(var(--chatov),var(--chatov)),url(${t.chatBg})`}else{a.classList.remove('bg');a.style.backgroundImage=''}}
 }
@@ -1492,9 +1492,29 @@ function fitPhone(){
   const de=document.documentElement,H=Math.max(sh,de.clientHeight,innerHeight);
   if(H!==fitH||ph.style.height!==H+'px'){fitH=H;ph.style.height=H+'px';rs.setProperty('--app-h',H+'px')}
 }
-addEventListener('resize',fitPhone);addEventListener('orientationchange',()=>setTimeout(fitPhone,300));addEventListener('pageshow',fitPhone);
-document.addEventListener('focusout',()=>setTimeout(fitPhone,350));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(fitPhone,100)});
+/* 键盘收起后 iOS 会把视口卡在缩小的状态（底部出现黑边），把整个手机隐藏再显示一次，逼它重新量 */
+let peakH=innerHeight;
+function remeasure(){
+  if(document.activeElement?.matches?.('input:not([type=file]),textarea'))return fitPhone();
+  const ph=$('#phone'),full=Math.max(screen.width,screen.height);
+  if(peakH-innerHeight>4||(navigator.standalone&&full-innerHeight>4&&innerHeight>innerWidth)){
+    const keep=[...ph.querySelectorAll('.body,.hpages,#chatList,#storyList,.list')].map(e=>[e,e.scrollTop,e.scrollLeft]);
+    ph.style.display='none';void ph.offsetHeight;void document.documentElement.offsetHeight;ph.style.display='';
+    for(const [e,t,l] of keep){e.scrollTop=t;e.scrollLeft=l}
+  }
+  fitPhone();
+}
+addEventListener('resize',()=>{peakH=Math.max(peakH,innerHeight);fitPhone()});
+addEventListener('orientationchange',()=>setTimeout(remeasure,300));addEventListener('pageshow',()=>setTimeout(remeasure,60));
+document.addEventListener('focusout',()=>setTimeout(remeasure,180));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(remeasure,100)});
 setInterval(fitPhone,1500);
+/* 万一还有缝，用壁纸最底下那一行的颜色填上 */
+function bottomColor(url){
+  if(!url){document.documentElement.style.backgroundColor='';return}
+  const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=16;c.height=16;const x=c.getContext('2d');x.drawImage(im,0,0,16,16);
+    const d=x.getImageData(0,15,16,1).data;let r=0,g=0,b=0;for(let i=0;i<64;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2]}
+    document.documentElement.style.backgroundColor=`rgb(${r>>4},${g>>4},${b>>4})`}catch(_){}};im.src=url;
+}
 
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});
 /* ========== 启动 ========== */
