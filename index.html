@@ -304,6 +304,18 @@ input,textarea,select{font:inherit;color:var(--text)}
 .wpgal button{flex:none;width:58px;aspect-ratio:9/16;border-radius:10px;background:center/cover no-repeat;border:2px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 .wpgal button.on{border-color:var(--accent)}
 
+/* 2048 小组件 */
+.g4e{flex:none;height:100%;aspect-ratio:1;border-radius:6cqmin;display:grid;place-items:center}.g4e img{width:80%}
+.w-2048{display:flex;align-items:center;gap:5cqw;padding:6cqmin;box-shadow:0 8px 22px rgba(0,20,60,.22);text-shadow:none}
+.w-2048.sq{padding:7cqmin}
+.g4b{flex:none;height:100%;aspect-ratio:1;border-radius:6cqmin;padding:2.5cqmin;display:grid;grid-template:repeat(4,1fr)/repeat(4,1fr);gap:2cqmin;box-sizing:border-box}
+.w-2048.sq .g4b{width:100%;height:100%;border-radius:8cqmin}
+.g4b i{border-radius:2cqmin;display:grid;place-items:center;overflow:hidden}
+.g4b img{width:112%;height:112%;object-fit:contain}
+.g4i{flex:1;min-width:0;display:flex;flex-direction:column;gap:2cqh;font-size:max(11px,9cqh)}
+.g4i img{width:70%;max-height:38cqh;object-fit:contain;align-self:flex-start;margin-bottom:2cqh}
+.g4i b{font-size:max(13px,12cqh)}.g4i small{opacity:.7;font-size:max(10px,7.5cqh)}
+
 /* 编辑模式 */
 .editbar{display:none;justify-content:space-between;align-items:center;margin:-4px 0 10px}
 .editbar button{padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;background:rgba(255,255,255,.88);color:#0b1a33;box-shadow:0 4px 14px rgba(0,20,60,.25)}
@@ -663,7 +675,7 @@ const SVG={
   settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>'};
 const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'world',name:'世界书'},{id:'preset',name:'预设'},{id:'games',name:'游戏'},{id:'settings',name:'设置'}];
 const DOCK=['chat','story','memory','settings'];
-const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'}];
+const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'},{id:'2048',name:'2048',sub:'毛绒猫猫陪你凑 2048。四套皮肤：粉色毛绒、红格子田园、金棕酒馆、珍珠玫瑰。',src:'games/2048.html',cover:'games/2048/pink/t2048.webp',fit:'contain',bg:'radial-gradient(120% 90% at 50% 0%,#fff6f1,#f8dcd6 55%,#eec6c4)'}];
 const appIcon=id=>{const c=S.theme.icons[id],p=curPack().icons?.[id];return c?`<div class="ico"><img src="${c}"></div>`:p?`<div class="ico pk"><img src="${p}" alt=""></div>`:`<div class="ico">${SVG[id]}</div>`};
 const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar?`<img class="${cls}" src="${p.avatar}">`:`<div class="${cls}">${esc((p.name||'?').slice(0,1))}</div>`};
 
@@ -820,11 +832,18 @@ const WG={
     render:it=>{const st=it.data?.style||'跟随主题',P=PACKS.prince.woodfish,art=st==='小王子'||(st==='跟随主题'&&curPack().woodfish)?(curPack().woodfish||P):null;
       if(art)return `<div class="wg w-wfp ${it.w===1?'tiny':''}"><img class="i" src="${art.idle}" alt=""><img class="h" src="${art.hit}" alt=""><b>功德 ${it.data?.n||0}</b></div>`;
       return `${box(it,'w-wf '+(it.w===1?'tiny':''))}<div class="fill w-wf ${it.w===1?'tiny':''}"><svg viewBox="0 0 120 96"><ellipse cx="60" cy="56" rx="52" ry="36" fill="#b5651d"/><ellipse cx="60" cy="52" rx="48" ry="31" fill="#d4873a"/><path d="M22 58q38 14 76 0" stroke="#7a3e10" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="42" r="5" fill="#7a3e10"/><rect x="80" y="2" width="8" height="40" rx="4" transform="rotate(35 84 22)" fill="#8b5a2b"/><ellipse cx="98" cy="10" rx="10" ry="7" transform="rotate(35 98 10)" fill="#a0522d"/></svg><b>功德 ${it.data?.n||0}</b></div></div>`}},
+  g2048:{name:'2048',sizes:[[2,2],[4,2]],tap:()=>openGame('2048'),render:it=>{
+      const ls=k=>{try{return localStorage.getItem('w2048_'+k)}catch(_){return null}};let st=null;try{st=JSON.parse(ls('state')||'null')}catch(_){}
+      const sk=['pink','gingham','gold','pearl'].includes(ls('skin'))?ls('skin'):'pink',C=G2048C[sk],best=+(ls('best')||0),T=v=>`games/2048/${sk}/t${Math.min(v,2048)}.webp`;
+      const board=st&&st.c?.some(Boolean)?`<div class="g4b" style="background:${C.bg}">${st.c.map(v=>`<i style="background:${C.cell}">${v?`<img src="${T(v)}" alt="">`:''}</i>`).join('')}</div>`:'';
+      if(it.w===4)return `<div class="wg w-2048" style="background:${C.page};color:${C.ink}">${board||`<div class="g4e" style="background:${C.bg}"><img src="${T(2048)}" alt=""></div>`}<div class="g4i"><img src="${T(2048)}" alt=""><div>分数 <b>${st?.s||0}</b></div><div>最高 <b>${best}</b></div><small>${board?'点我继续玩':'点我开一局'}</small></div></div>`;
+      return board?`<div class="wg w-2048 sq" style="background:${C.page}">${board}</div>`:`<div class="wg w-2048 sq" style="background:${C.page};display:grid;place-items:center"><img src="${T(2048)}" style="width:82%" alt=""><small style="position:absolute;bottom:6cqmin;color:${C.ink};font-size:max(10px,7cqmin)">点我开玩</small></div>`}},
   sticker:{name:'贴纸',sizes:[[1,1],[2,2],[2,1],[1,2],[4,2]],fields:[{k:'src',t:'gallery',l:'选一张贴纸'},{k:'img',t:'image',l:'或者放自己的图（透明 PNG 最好）',max:600,png:1}],
     render:it=>`<div class="wg w-st"><img src="${it.data?.img||it.data?.src||STICKERS()[13]}" alt=""></div>`},
   dice:{name:'骰子',th:1,sizes:[[1,1]],tap:(it,el)=>{const n=1+Math.floor(Math.random()*6);it.data={...it.data,n};save('home');const d=el.querySelector('.die');d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll');setTimeout(()=>{d.innerHTML=pips(n)},180)},
     render:it=>`${box(it,'w-dice')}<div class="die">${pips(it.data?.n||6)}</div></div>`}
 };
+const G2048C={pink:{page:'radial-gradient(120% 90% at 50% 0%,#fff6f1,#f8dcd6 55%,#eec6c4)',bg:'#efc9c5',cell:'#fff3ee',ink:'#8a4848'},gingham:{page:'radial-gradient(120% 90% at 50% 0%,#fffaf0,#f5e6cf 60%,#e9cfae)',bg:'#e3c9a4',cell:'#fff8ec',ink:'#6b3a24'},gold:{page:'radial-gradient(120% 90% at 50% 0%,#5a3a22,#3a2414 60%,#24150b)',bg:'#2a190d',cell:'#4a2e1a',ink:'#f6dfae'},pearl:{page:'radial-gradient(120% 90% at 50% 0%,#6a2131,#40121d 60%,#260a11)',bg:'#2e0c14',cell:'#5a1a28',ink:'#fbe2e6'}};
 function refreshItem(it){const hi=document.querySelector(`.hi[data-id="${it.id}"]`);if(!hi)return;const old=hi.querySelector('.wg');if(old)old.outerHTML=WG[it.kind].render(it)}
 async function refreshWeather(it,force){
   const D=it.data;if(!D?.city)return;if(!force&&D.wx&&Date.now()-D.wx.at<30*6e4)return;
@@ -1216,7 +1235,7 @@ $('#banner').onclick=()=>{$('#banner').classList.remove('show');$('#lock').class
 $('#lockNote').addEventListener('click',e=>{e.stopPropagation();$('#lock').classList.add('hide');openApp('chat')});
 
 /* 游戏 */
-function renderGames(){$('#gameList').innerHTML=GAMES.map(g=>`<button class="gcard" data-game="${g.id}"><div class="cv" style="background-image:url(${g.cover})"></div><div class="in"><b>${g.name}</b><small>${esc(g.sub)}</small></div></button>`).join('')+'<div class="evt">更多游戏陆续搬进来～</div>'}
+function renderGames(){$('#gameList').innerHTML=GAMES.map(g=>`<button class="gcard" data-game="${g.id}"><div class="cv" style="background-image:url(${g.cover})${g.fit?`,${g.bg};background-size:auto 70%,cover;background-position:center;background-repeat:no-repeat`:''}"></div><div class="in"><b>${g.name}</b><small>${esc(g.sub)}</small></div></button>`).join('')+'<div class="evt">更多游戏陆续搬进来～</div>'}
 $('#gameList').onclick=e=>{const b=e.target.closest('[data-game]');if(b)openGame(b.dataset.game)};
 function openGame(id){const g=GAMES.find(x=>x.id===id);if(!g)return;$('#gameTitle').textContent=g.name;const f=$('#gameFrame');if(f.dataset.g!==id){f.src=g.src;f.dataset.g=id}$('#gameView').classList.add('open')}
 $('#gameClose').onclick=()=>{$('#gameView').classList.remove('open');const f=$('#gameFrame');setTimeout(()=>{f.src='about:blank';f.dataset.g=''},400);renderHome()};
