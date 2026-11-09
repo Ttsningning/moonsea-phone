@@ -294,6 +294,16 @@ input,textarea,select{font:inherit;color:var(--text)}
 .aicons img{width:62px;height:62px;border-radius:15px;border:2px solid transparent;object-fit:cover}
 .aicons button.on img{border-color:var(--accent)}.aicons button.on{color:var(--text)}
 
+/* 小王子木鱼 */
+.w-wfp{display:grid;place-items:center;overflow:visible!important;cursor:pointer}
+.w-wfp img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(60,30,80,.3));transition:opacity .08s,transform .14s cubic-bezier(.3,1.6,.5,1)}
+.w-wfp .h{opacity:0}.w-wfp.hit .h{opacity:1}.w-wfp.hit .i{opacity:0}.w-wfp.hit img{transform:scale(.94) rotate(-2deg)}
+.w-wfp b{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);font-size:11px;font-weight:600;padding:2px 9px;border-radius:99px;background:rgba(255,248,236,.92);color:#7a4a2a;white-space:nowrap;text-shadow:none;box-shadow:0 2px 6px rgba(60,30,80,.2)}
+.w-wfp.tiny b{display:none}
+.wpgal{display:flex;gap:10px;overflow-x:auto;margin-top:12px;padding-bottom:2px}
+.wpgal button{flex:none;width:58px;aspect-ratio:9/16;border-radius:10px;background:center/cover no-repeat;border:2px solid transparent;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.wpgal button.on{border-color:var(--accent)}
+
 /* 编辑模式 */
 .editbar{display:none;justify-content:space-between;align-items:center;margin:-4px 0 10px}
 .editbar button{padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;background:rgba(255,255,255,.88);color:#0b1a33;box-shadow:0 4px 14px rgba(0,20,60,.25)}
@@ -522,6 +532,7 @@ input,textarea,select{font:inherit;color:var(--text)}
           <div><div class="thumb" id="thChat"></div><div class="btns" style="margin-top:8px"><button class="btn" data-img="chatBg">聊天</button></div></div>
         </div>
         <div class="hint" style="margin-top:10px;font-size:11.5px;color:var(--muted)">长按对应按钮可恢复成主题自带的壁纸。</div>
+        <div class="hint" style="margin-top:12px;font-size:12px;color:var(--muted)">内置壁纸（点一下选择用在哪里）</div><div class="wpgal" id="wpGal"></div>
       </div>
       <div class="card glass">
         <h3>图标</h3>
@@ -662,7 +673,7 @@ const PACKS={
   moonsea:{name:'月光海',desc:'玻璃质感的月夜海面',vars:{}},
   prince:{name:'小王子',desc:'毛线星球、狐狸与玫瑰',cover:'themes/prince/wall.jpg',wall:'themes/prince/wall.jpg',chat:'themes/prince/sq2.jpg',
     icons:Object.fromEntries(['chat','story','memory','char','world','preset','theme','games','settings'].map(k=>[k,`themes/prince/i-${k}.png`])),
-    stickers:PRINCE_ST,
+    stickers:PRINCE_ST,walls:['themes/prince/wall.jpg','themes/prince/wall2.jpg'],woodfish:{idle:'themes/prince/wf-idle.webp',hit:'themes/prince/wf-hit.webp'},
     decor:[['a17',2,2],['b19',1,1],['a13',1,1],['a08',2,1],['b24',2,2],['a10',2,1]],
     vars:{'--accent':'#f6d79a','--gold':'#ffe4a3','--muted':'#dccfe9','--text':'#fff9f0','--line':'rgba(255,236,200,.30)','--glass':'rgba(255,240,220,.12)','--glass2':'rgba(255,240,220,.2)',
       '--wglass':'rgba(76,58,128,.36)','--appbg':'rgba(42,32,78,.82)','--hdbg':'rgba(56,43,98,.62)','--inbg':'rgba(56,43,98,.78)','--sheetbg':'rgba(60,46,104,.96)',
@@ -803,9 +814,12 @@ const WG={
       return `<div class="wg w-vin ${on?'spin':''}"><div class="rec" style="${it.w===4?'left:6cqh':'left:50%;transform:translate(-50%,-50%);width:78cqmin;height:78cqmin'}"><div class="lb" ${D.img?`style="background-image:url(${D.img})"`:''}></div></div><div class="arm" style="${it.w===4?'left:76cqh;top:8cqh':'right:12cqmin;top:6cqmin;height:46cqmin'}"></div>${it.w===4?`<div class="meta" style="left:92cqh;right:5cqw;top:50%;transform:translateY(-50%)"><b>${esc(D.title||'月光海')}</b><small>${esc(D.artist||'未知歌手')}</small><div class="pb">${on?'❚❚':'▶'}</div></div>`:''}</div>`}},
   gamebox:{name:'游戏机',sizes:[[2,2]],tap:()=>openApp('games'),render:()=>`<div class="wg w-gb"><div class="scr"><div style="background-image:url(${GAMES[0].cover})"></div></div><div class="dp"></div><div class="ab"><i></i><i></i></div><div class="nm2">MOONSEA</div></div>`},
   game:{name:'登临',sizes:[[2,2],[4,2]],tap:()=>openGame('denglin'),render:it=>`<div class="wg w-game" style="background-image:url(${GAMES[0].cover})"><div class="gt"><b>登临</b><small>${it.w===4?'范德林谋杀案 · 文字冒险':'文字冒险'}</small></div></div>`},
-  woodfish:{name:'敲木鱼',th:1,sizes:[[1,1],[2,2]],tap:(it,el)=>{it.data||={};it.data.n=(it.data.n||0)+1;save('home');tok();el.classList.add('hit');setTimeout(()=>el.classList.remove('hit'),90);
-      const b=el.querySelector('b');if(b)b.textContent=`功德 ${it.data.n}`;el.insertAdjacentHTML('beforeend','<span class="wf-plus">功德 +1</span>');setTimeout(()=>el.querySelector('.wf-plus')?.remove(),900)},
-    render:it=>`${box(it,'w-wf '+(it.w===1?'tiny':''))}<div class="fill w-wf ${it.w===1?'tiny':''}"><svg viewBox="0 0 120 96"><ellipse cx="60" cy="56" rx="52" ry="36" fill="#b5651d"/><ellipse cx="60" cy="52" rx="48" ry="31" fill="#d4873a"/><path d="M22 58q38 14 76 0" stroke="#7a3e10" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="42" r="5" fill="#7a3e10"/><rect x="80" y="2" width="8" height="40" rx="4" transform="rotate(35 84 22)" fill="#8b5a2b"/><ellipse cx="98" cy="10" rx="10" ry="7" transform="rotate(35 98 10)" fill="#a0522d"/></svg><b>功德 ${it.data?.n||0}</b></div></div>`},
+  woodfish:{name:'敲木鱼',th:1,sizes:[[1,1],[2,2]],fields:[{k:'style',t:'select',l:'样式',opts:['跟随主题','经典','小王子']}],
+    tap:(it,el)=>{it.data||={};it.data.n=(it.data.n||0)+1;save('home');tok();const art=el.classList.contains('w-wfp');el.classList.remove('hit');void el.offsetWidth;el.classList.add('hit');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('hit'),art?420:90);
+      const b=el.querySelector('b');if(b)b.textContent=`功德 ${it.data.n}`;if(!art){el.insertAdjacentHTML('beforeend','<span class="wf-plus">功德 +1</span>');setTimeout(()=>el.querySelector('.wf-plus')?.remove(),900)}},
+    render:it=>{const st=it.data?.style||'跟随主题',P=PACKS.prince.woodfish,art=st==='小王子'||(st==='跟随主题'&&curPack().woodfish)?(curPack().woodfish||P):null;
+      if(art)return `<div class="wg w-wfp ${it.w===1?'tiny':''}"><img class="i" src="${art.idle}" alt=""><img class="h" src="${art.hit}" alt=""><b>功德 ${it.data?.n||0}</b></div>`;
+      return `${box(it,'w-wf '+(it.w===1?'tiny':''))}<div class="fill w-wf ${it.w===1?'tiny':''}"><svg viewBox="0 0 120 96"><ellipse cx="60" cy="56" rx="52" ry="36" fill="#b5651d"/><ellipse cx="60" cy="52" rx="48" ry="31" fill="#d4873a"/><path d="M22 58q38 14 76 0" stroke="#7a3e10" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="42" r="5" fill="#7a3e10"/><rect x="80" y="2" width="8" height="40" rx="4" transform="rotate(35 84 22)" fill="#8b5a2b"/><ellipse cx="98" cy="10" rx="10" ry="7" transform="rotate(35 98 10)" fill="#a0522d"/></svg><b>功德 ${it.data?.n||0}</b></div></div>`}},
   sticker:{name:'贴纸',sizes:[[1,1],[2,2],[2,1],[1,2],[4,2]],fields:[{k:'src',t:'gallery',l:'选一张贴纸'},{k:'img',t:'image',l:'或者放自己的图（透明 PNG 最好）',max:600,png:1}],
     render:it=>`<div class="wg w-st"><img src="${it.data?.img||it.data?.src||STICKERS()[13]}" alt=""></div>`},
   dice:{name:'骰子',th:1,sizes:[[1,1]],tap:(it,el)=>{const n=1+Math.floor(Math.random()*6);it.data={...it.data,n};save('home');const d=el.querySelector('.die');d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll');setTimeout(()=>{d.innerHTML=pips(n)},180)},
@@ -1430,6 +1444,8 @@ function renderTheme(){
   const t=S.theme,P=curPack(),set=(el,img)=>el.style.background=img?`center/cover url(${img})`:'';
   set($('#thWall'),t.wallpaper||P.wall);set($('#thLock'),t.lockWallpaper||P.lock||t.wallpaper||P.wall);set($('#thChat'),t.chatBg||P.chat);
   $('#packList').innerHTML=Object.entries(PACKS).map(([k,p])=>`<button class="pack ${(t.pack||'moonsea')===k?'on':''}" data-pack="${k}"><div class="pc" ${p.cover?`style="background-image:url(${p.cover})"`:''}></div><b>${p.name}</b><small>${p.desc}</small>${(t.pack||'moonsea')===k?'<span class="on2">使用中</span>':''}</button>`).join('');
+  const walls=[...new Set(Object.values(PACKS).flatMap(p=>p.walls||[]))],usedW=t.wallpaper||P.wall;
+  $('#wpGal').innerHTML=walls.map(w=>`<button data-wall="${w}" class="${usedW===w?'on':''}" style="background-image:url(${w})" aria-label="壁纸"></button>`).join('');
   let cur='icon.png';try{cur=localStorage.getItem('ms-appicon')||'icon.png'}catch(_){}
   $('#appIcons').innerHTML=APP_ICONS.map(([f,n])=>`<button data-aicon="${f}" class="${cur===f?'on':''}"><img src="${f}" alt="">${n}</button>`).join('');
   $('#iconGrid').innerHTML=APPS.map(a=>`<button class="appbtn" data-icon="${a.id}">${appIcon(a.id)}<span>${a.name}</span></button>`).join('');
@@ -1446,6 +1462,9 @@ $('#packList').addEventListener('click',async e=>{
   if(i===1){const pg=[];for(const [n,w,h] of P.decor)pg.push({id:uid(),type:'w',kind:'sticker',w,h,data:{src:`themes/${k}/st/${n}.webp`}});S.home.pages.push(pg);save('home')}
   applyTheme();renderHome();renderTheme();toast(i===1?`「${P.name}」换好啦，贴纸放在了最后一页`:`「${P.name}」换好啦`);
 });
+$('#wpGal').addEventListener('click',async e=>{const b=e.target.closest('[data-wall]');if(!b)return;const w=b.dataset.wall;
+  const i=await actionSheet([{label:'设为桌面壁纸'},{label:'设为锁屏壁纸'},{label:'桌面和锁屏都用'}]);if(i<0)return;
+  if(i!==1)S.theme.wallpaper=w;if(i>=1)S.theme.lockWallpaper=w;save('theme');applyTheme();renderTheme();toast('壁纸换好啦')});
 $('#appIcons').addEventListener('click',e=>{const b=e.target.closest('[data-aicon]');if(!b)return;const f=b.dataset.aicon;
   try{localStorage.setItem('ms-appicon',f)}catch(_){}document.getElementById('touchIcon').href=f;renderTheme();
   toast((navigator.standalone?'选好了。要在 Safari 里打开小手机、再添加到主屏幕，新图标才会出现':'选好了，现在点分享 →「添加到主屏幕」就是新图标'),5000)});
