@@ -47,8 +47,12 @@ input,textarea,select{font:inherit;color:var(--text)}
 #home .glass{background:rgba(10,28,62,.30);border-color:rgba(255,255,255,.28)}
 #home,#home .appbtn{text-shadow:0 1px 6px rgba(0,20,60,.45)}
 #home{container-type:inline-size;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-.hgrid{--gx:12px;--cw:calc((100cqw - 36px - 3*var(--gx))/4);--row:calc(var(--cw) + 12px);position:relative;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:var(--row);grid-auto-flow:row dense;gap:14px var(--gx);align-content:start;padding:10px 8px 16px;margin:0 -8px;scrollbar-width:none}
-.hgrid::-webkit-scrollbar{display:none}
+.hpages{flex:1;min-height:0;display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;margin:0 -18px;overscroll-behavior-x:contain}
+.hpages::-webkit-scrollbar{display:none}
+.hpage{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;position:relative;display:grid;grid-template-columns:repeat(4,var(--cw,70px));grid-auto-rows:var(--row,82px);column-gap:var(--gx,12px);row-gap:var(--gy,14px);align-content:start;justify-content:center;padding:10px 18px 0;overflow:hidden}
+.hdots{flex:none;display:flex;justify-content:center;gap:7px;height:22px;align-items:center}
+.hdots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.38);transition:background .2s}
+.hdots i.on{background:#fff}
 .hi{position:relative;min-width:0;grid-column:span var(--w,1);grid-row:span var(--h,1);display:flex;align-items:flex-start;justify-content:center}
 .hi>.appbtn{width:100%}
 .wg{position:relative;width:100%;height:100%;border-radius:22px;overflow:hidden;container-type:size;cursor:pointer;color:var(--text)}
@@ -115,7 +119,7 @@ input,textarea,select{font:inherit;color:var(--text)}
 .editbar{display:none;justify-content:space-between;align-items:center;margin:-4px 0 10px}
 .editbar button{padding:7px 16px;border-radius:999px;font-size:14px;font-weight:600;background:rgba(255,255,255,.88);color:#0b1a33;box-shadow:0 4px 14px rgba(0,20,60,.25)}
 #home.editing .editbar{display:flex}
-#home.editing .hgrid{touch-action:none}
+#home.editing .hi{touch-action:none}
 #home.editing .hi{animation:wig .32s ease-in-out infinite alternate}
 #home.editing .hi:nth-child(2n){animation-delay:-.16s}
 @keyframes wig{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
@@ -187,6 +191,38 @@ input,textarea,select{font:inherit;color:var(--text)}
 .gcard .in{padding:12px 14px 14px}
 .gcard b{display:block;font-family:"Songti SC","STSong",serif;font-size:20px;letter-spacing:.2em;color:#ffe9c4}
 .gcard small{font-size:12.5px;color:var(--muted);line-height:1.6;display:block;margin-top:4px}
+/* lists */
+.li{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:12px 14px;border-radius:16px;background:var(--glass);border:1px solid var(--line);margin-bottom:10px}
+.li .t{flex:1;min-width:0}
+.li .t b{display:block;font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li .t small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.li.off{opacity:.55}
+.sw{flex:none;width:46px;height:28px;border-radius:99px;background:rgba(255,255,255,.18);position:relative;transition:background .2s}
+.sw::after{content:'';position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw.on{background:#7fb3f0}.sw.on::after{transform:translateX(18px)}
+.tag{font-size:11px;padding:2px 8px;border-radius:99px;background:rgba(255,233,184,.16);color:var(--gold);flex:none}
+.tag.blue{background:rgba(188,215,255,.16);color:var(--accent)}
+.radio{width:22px;height:22px;border-radius:50%;border:2px solid var(--accent);flex:none;position:relative}
+.radio.on::after{content:'';position:absolute;inset:3px;border-radius:50%;background:var(--accent)}
+.chk{display:flex;align-items:center;gap:8px;font-size:14px;margin-bottom:12px}
+.chk input{width:18px;height:18px;accent-color:#9dc2f5}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.muted{font-size:12.5px;color:var(--muted);line-height:1.7}
+/* 通知 */
+#banner{position:absolute;left:10px;right:10px;top:calc(var(--top) + 8px);z-index:96;display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:20px;background:rgba(20,36,66,.94);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.35);transform:translateY(-150%);visibility:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),visibility 0s .35s;text-align:left}
+#banner.show{transform:none;visibility:visible;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+#banner .av{width:42px;height:42px}
+#banner .bt{min-width:0;flex:1}
+#banner b{display:flex;justify-content:space-between;font-size:14px}
+#banner b small{font-weight:400;color:var(--muted);font-size:12px}
+#banner span{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:2px}
+.appbtn{position:relative}
+.badge{position:absolute;top:-6px;left:calc(50% + 18px);min-width:21px;height:21px;padding:0 6px;border-radius:99px;background:#ff5a6e;color:#fff;font-size:12px;font-weight:700;line-height:21px;text-align:center;z-index:2;text-shadow:none;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#lockNote{width:calc(100% - 32px);max-width:400px;margin-top:26px}
+#lockNote .n{display:flex;gap:10px;align-items:center;padding:12px;border-radius:20px;background:rgba(20,36,66,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid var(--line);text-align:left}
+#lockNote .av{width:40px;height:40px}
+#lockNote b{font-size:14px;display:flex;justify-content:space-between}#lockNote b small{font-weight:400;color:var(--muted);font-size:12px}
+#lockNote span{font-size:13.5px;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* forms */
 .card{border-radius:20px;padding:14px;margin-bottom:14px}
 .card h3{margin:0 0 10px;font-size:15px;color:var(--accent);font-weight:600}
@@ -226,7 +262,8 @@ input,textarea,select{font:inherit;color:var(--text)}
 
   <div id="home">
     <div class="editbar"><button id="addW">＋ 添加</button><button id="doneEdit">完成</button></div>
-    <div class="hgrid" id="hgrid"></div>
+    <div class="hpages" id="hpages"></div>
+    <div class="hdots" id="hdots"></div>
     <div class="dock glass" id="dock"></div>
   </div>
 
@@ -335,6 +372,14 @@ input,textarea,select{font:inherit;color:var(--text)}
         <div class="field"><label>累计多少条未整理时自动整理记忆</label><input data-s="summaryEvery" type="number"></div>
       </div>
       <div class="card glass">
+        <h3>活人感</h3>
+        <label class="chk"><input type="checkbox" data-s="timeAware">让 TA 知道现在几点、隔了多久</label>
+        <label class="chk"><input type="checkbox" data-s="proactive">TA 会主动找你</label>
+        <div class="field"><label>多久没聊，TA 会想来找你（小时，在这个范围里随机）</label><div class="two"><input data-s="proMin" type="number" step="0.5" min="0.5"><input data-s="proMax" type="number" step="0.5" min="0.5"></div></div>
+        <div class="field"><label>免打扰时段（几点到几点不主动找你）</label><div class="two"><input data-s="quietStart" type="number" min="0" max="23"><input data-s="quietEnd" type="number" min="0" max="23"></div>
+          <div class="hint">小手机开着时，TA 到点会直接发来消息；关着的时候，下次打开会收到 TA 这段时间发的消息。你一直没回的话，TA 最多连着找你两次。</div></div>
+      </div>
+      <div class="card glass">
         <h3>其他</h3>
         <div class="field"><label><input type="checkbox" data-s="showLock" style="width:auto;margin-right:6px">打开时显示锁屏</label></div>
         <div class="btns"><button class="btn" id="exportBk">导出备份</button><button class="btn" id="importBk">导入备份</button></div>
@@ -342,6 +387,17 @@ input,textarea,select{font:inherit;color:var(--text)}
         <div class="btns"><button class="btn danger" id="clearChat">清空聊天和剧情</button><button class="btn danger" id="clearMem">清空长期记忆</button></div>
       </div>
     </div>
+  </section>
+
+  <!-- 世界书 -->
+  <section class="app" id="app-world">
+    <header><button class="hbtn" id="wbBack">‹ 返回</button><div class="title" id="wbTitle">世界书</div><button class="hbtn" id="wbAct">导入</button></header>
+    <div class="body pad" id="wbBody"></div>
+  </section>
+  <!-- 预设 -->
+  <section class="app" id="app-preset">
+    <header><button class="hbtn" id="psBack">‹ 返回</button><div class="title" id="psTitle">预设</div><button class="hbtn" id="psAct">导入</button></header>
+    <div class="body pad" id="psBody"></div>
   </section>
 
   <!-- 游戏 -->
@@ -357,10 +413,11 @@ input,textarea,select{font:inherit;color:var(--text)}
 
   <div id="wsheet"><div class="grab"></div><div class="top"><h2>添加小组件</h2><button id="wsClose">✕</button></div><div class="chips" id="wsChips"></div><div class="list" id="wsList"></div></div>
 
-  <div id="lock"><div class="t" id="lockTime">--:--</div><div class="d" id="lockDate"></div><div class="hint">轻点或上滑解锁</div></div>
+  <div id="lock"><div class="t" id="lockTime">--:--</div><div class="d" id="lockDate"></div><div id="lockNote"></div><div class="hint">轻点或上滑解锁</div></div>
   <div id="mask"></div>
   <div id="sheet" class="glass"></div>
   <div id="toast"></div>
+  <button id="banner"></button>
 </div>
 
 <script>
@@ -378,13 +435,16 @@ const DB={db:null,
   get(k){return new Promise((res,rej)=>{const q=this.db.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})},
   set(k,v){return new Promise((res,rej)=>{const t=this.db.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error)})}};
 const DEFAULTS={
-  settings:{baseUrl:'',apiKey:'',model:'',temperature:0.9,maxTokens:1200,contextSize:40,summaryEvery:50,storyLength:400,replyDelay:2,showLock:true},
+  settings:{baseUrl:'',apiKey:'',model:'',temperature:0.9,maxTokens:1200,contextSize:40,summaryEvery:50,storyLength:400,replyDelay:2,showLock:true,timeAware:true,proactive:true,proMin:2,proMax:6,quietStart:1,quietEnd:8},
   char:{name:'TA',avatar:'',description:'',personality:'',scenario:'',first_mes:'',mes_example:'',book:null},
   user:{name:'我',persona:'',avatar:''},
   messages:[],
   memory:{summary:'',upTo:0},
   theme:{wallpaper:'',lockWallpaper:'',chatBg:'',icons:{}},
-  home:{items:null},
+  home:{pages:null},
+  world:{books:[],scanDepth:4,budget:4000,last:[]},
+  presets:{active:'default',list:null},
+  state:{nextPro:0,unread:0},
   widgets:{water:{day:'',n:0}}
 };
 const S={};
@@ -398,9 +458,11 @@ const SVG={
   memory:'<svg viewBox="0 0 24 24"><path d="M12 3l2.3 4.8 5.2.7-3.8 3.6.9 5.2L12 14.8 7.4 17.3l.9-5.2L4.5 8.5l5.2-.7z"/></svg>',
   char:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="3.8"/><path d="M4.5 20c1.2-4 4-5.6 7.5-5.6s6.3 1.6 7.5 5.6"/></svg>',
   theme:'<svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 1.8-1 1.3-2-.6-1.2.2-2.5 1.6-2.5H17a4 4 0 0 0 4-4C21 6.9 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>',
+  world:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5s1.2-6.1 3.8-8.5z"/></svg>',
+  preset:'<svg viewBox="0 0 24 24"><path d="M5 5v14M12 5v14M19 5v14"/><circle cx="5" cy="9" r="2" fill="#0b1a33"/><circle cx="12" cy="15" r="2" fill="#0b1a33"/><circle cx="19" cy="8" r="2" fill="#0b1a33"/></svg>',
   games:'<svg viewBox="0 0 24 24"><path d="M5 4.5h10.5a2 2 0 0 1 2 2V20H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h10.5"/><path d="M10.5 7.5l1 2.1 2.2.3-1.6 1.5.4 2.2-2-1.1-2 1.1.4-2.2-1.6-1.5 2.2-.3z"/></svg>',
   settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>'};
-const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'games',name:'游戏'},{id:'settings',name:'设置'}];
+const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'world',name:'世界书'},{id:'preset',name:'预设'},{id:'games',name:'游戏'},{id:'settings',name:'设置'}];
 const DOCK=['chat','story','memory','settings'];
 const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'}];
 const appIcon=id=>`<div class="ico">${S.theme.icons[id]?`<img src="${S.theme.icons[id]}">`:SVG[id]}</div>`;
@@ -418,7 +480,7 @@ const DEFAULT_HOME=()=>[
   {id:uid(),type:'w',kind:'clock',w:4,h:1},
   {id:uid(),type:'w',kind:'ta',w:2,h:2},
   {id:uid(),type:'w',kind:'days',w:2,h:2},
-  {id:uid(),type:'app',app:'char'},{id:uid(),type:'app',app:'theme'},{id:uid(),type:'app',app:'games'},
+  {id:uid(),type:'app',app:'char'},{id:uid(),type:'app',app:'world'},{id:uid(),type:'app',app:'preset'},{id:uid(),type:'app',app:'theme'},{id:uid(),type:'app',app:'games'},
   {id:uid(),type:'w',kind:'dice',w:1,h:1}];
 const dayKey=()=>new Date().toDateString();
 const fmtHM=d=>d.toTimeString().slice(0,5), fmtMD=d=>`${d.getMonth()+1}月${d.getDate()}日 星期${'日一二三四五六'[d.getDay()]}`;
@@ -447,67 +509,123 @@ const WG={
 };
 function pips(n){return [...Array(9)].map((_,i)=>`<i class="${DICE_PIPS[n].includes(i)?'on':''}"></i>`).join('')}
 const appById=id=>APPS.find(a=>a.id===id);
-const appBtn=a=>`<button class="appbtn" data-app="${a.id}">${appIcon(a.id)}<span>${a.name}</span></button>`;
-function itemHTML(it){
+const appBtn=a=>`<button class="appbtn" data-app="${a.id}">${appIcon(a.id)}<span>${a.name}</span>${a.id==='chat'&&S.state?.unread?`<b class="badge">${S.state.unread>99?'99+':S.state.unread}</b>`:''}</button>`;
+function itemHTML(it,ps){
   const inner=it.type==='app'?appBtn(appById(it.app)):WG[it.kind].render(it);
-  return `<div class="hi" data-id="${it.id}" style="--w:${it.w||1};--h:${it.h||1}"><button class="x" data-del="${it.id}" aria-label="移除">−</button>${inner}</div>`;
+  const w=Math.min(4,it.w||1),h=Math.min(MET.R,it.h||1);
+  return `<div class="hi" data-id="${it.id}" style="--w:${w};--h:${h};${ps?`grid-area:${ps[0]+1}/${ps[1]+1}/span ${h}/span ${w}`:'display:none'}"><button class="x" data-del="${it.id}" aria-label="移除">−</button>${inner}</div>`;
 }
-function homeItems(){
-  if(!Array.isArray(S.home.items)){S.home.items=DEFAULT_HOME();save('home')}
-  S.home.items=S.home.items.filter(it=>it.type==='app'?appById(it.app)&&!DOCK.includes(it.app):WG[it.kind]);
-  return S.home.items;
+const OLD_APPS=['chat','story','memory','char','theme','games','settings'];
+function homeMigrate(){
+  const H=S.home;let dirty=false;
+  if(!Array.isArray(H.pages)){H.pages=[Array.isArray(H.items)?H.items:DEFAULT_HOME()];H.known=Array.isArray(H.items)?OLD_APPS.slice():APPS.map(a=>a.id);delete H.items;dirty=true}
+  H.known||=APPS.map(a=>a.id);
+  H.pages=H.pages.map(p=>p.filter(it=>it.type==='app'?appById(it.app)&&!DOCK.includes(it.app):WG[it.kind]));
+  for(const a of APPS)if(!H.known.includes(a.id)){H.known.push(a.id);dirty=true;if(!DOCK.includes(a.id)&&!H.pages.flat().some(i=>i.type==='app'&&i.app===a.id))H.pages[H.pages.length-1].push({id:uid(),type:'app',app:a.id})}
+  if(!H.pages.length)H.pages=[[]];
+  if(dirty)save('home');
 }
+const MET={R:6};
+const hp=$('#hpages');
+function measure(){
+  const W=hp.clientWidth||390,H=hp.clientHeight||600,gx=12,gy=14,padX=18,padT=10;
+  const cw=(W-2*padX-3*gx)/4,row=cw+12;
+  home.style.setProperty('--cw',cw+'px');home.style.setProperty('--row',row+'px');home.style.setProperty('--gx',gx+'px');home.style.setProperty('--gy',gy+'px');
+  MET.R=Math.max(3,Math.floor((H-padT+gy)/(row+gy)));
+}
+function pack(items,R){
+  const occ=Array.from({length:R},()=>Array(4).fill(false)),pos={},over=[];
+  for(const it of items){const w=Math.min(4,it.w||1),h=Math.min(R,it.h||1);let ok=false;
+    for(let r=0;r<=R-h&&!ok;r++)for(let c=0;c<=4-w&&!ok;c++){let f=true;
+      for(let i=r;i<r+h&&f;i++)for(let j=c;j<c+w;j++)if(occ[i][j]){f=false;break}
+      if(f){for(let i=r;i<r+h;i++)for(let j=c;j<c+w;j++)occ[i][j]=true;pos[it.id]=[r,c];ok=true}}
+    if(!ok)over.push(it)}
+  return {pos,over};
+}
+function reflow(){
+  const P=S.home.pages;
+  for(let i=0;i<P.length;i++){const {over}=pack(P[i],MET.R);if(over.length){P[i]=P[i].filter(x=>!over.includes(x));(P[i+1]||(P[i+1]=[])).unshift(...over)}}
+  S.home.pages=P.filter((p,i)=>i===0||p.length);
+  if(editing()&&S.home.pages.at(-1).length)S.home.pages.push([]);
+}
+const curPage=()=>Math.round(hp.scrollLeft/(hp.clientWidth||1));
+function renderDots(){const n=hp.children.length,c=Math.min(curPage(),n-1);$('#hdots').innerHTML=n>1?[...Array(n)].map((_,i)=>`<i class="${i===c?'on':''}"></i>`).join(''):''}
+hp.addEventListener('scroll',()=>{renderDots();if(drag?.started)placeDrag()},{passive:true});
 function renderHome(){
-  $('#hgrid').innerHTML=homeItems().map(itemHTML).join('');
+  homeMigrate();measure();reflow();
+  const keep=hp.scrollLeft;
+  hp.innerHTML=S.home.pages.map((pg,pi)=>{const {pos}=pack(pg,MET.R);return `<div class="hpage" data-p="${pi}">${pg.map(it=>itemHTML(it,pos[it.id])).join('')}</div>`}).join('');
+  hp.scrollLeft=keep;renderDots();
   $('#dock').innerHTML=DOCK.map(id=>appBtn(appById(id))).join('');
+  renderLockNote();
 }
+addEventListener('resize',()=>{clearTimeout(window.__rz);window.__rz=setTimeout(renderHome,200)});
 function tickWidgets(){const d=new Date();$$('.js-time').forEach(e=>e.textContent=fmtHM(d));$$('.js-date').forEach(e=>{const row=e.closest('.row');e.innerHTML=fmtMD(d).replace(' ',row?'<br>':' ')})}
+function findItem(id){for(let pi=0;pi<S.home.pages.length;pi++){const it=S.home.pages[pi].find(i=>i.id===id);if(it)return {it,pi}}return {}}
 
 /* 点击、长按、拖动 */
-const home=$('#home'),hgrid=$('#hgrid');
+const home=$('#home');
 const editing=()=>home.classList.contains('editing');
-function setEdit(on){home.classList.toggle('editing',on);if(!on)save('home')}
+function setEdit(on){if(on===editing())return;home.classList.toggle('editing',on);renderHome();if(!on)save('home')}
 $('#doneEdit').onclick=()=>setEdit(false);
 let lp=null,drag=null,suppressClick=false;
-hgrid.addEventListener('pointerdown',e=>{
+const pageIdxOf=el=>[...hp.children].indexOf(el.parentNode);
+function placeDrag(){const pr=drag.hi.parentNode.getBoundingClientRect();drag.hi.style.transform=`translate(${drag.cx-drag.offX-(pr.left+drag.hi.offsetLeft)}px,${drag.cy-drag.offY-(pr.top+drag.hi.offsetTop)}px)`}
+function applyPos(pi){
+  const pg=S.home.pages[pi],el=hp.children[pi];if(!pg||!el)return;const {pos}=pack(pg,MET.R);
+  for(const c of el.children){const it=pg.find(i=>i.id===c.dataset.id);if(!it)continue;const ps=pos[it.id],w=Math.min(4,it.w||1),h=Math.min(MET.R,it.h||1);
+    if(ps){c.style.gridArea=`${ps[0]+1}/${ps[1]+1}/span ${h}/span ${w}`;c.style.display=''}else if(c!==drag?.hi)c.style.display='none'}
+}
+function crossPage(dir){
+  const pi=pageIdxOf(drag.hi),ni=pi+dir;if(ni<0)return;
+  const P=S.home.pages;
+  if(ni>=P.length){P.push([]);hp.insertAdjacentHTML('beforeend',`<div class="hpage" data-p="${ni}"></div>`)}
+  const k=P[pi].findIndex(i=>i.id===drag.id);const [it]=P[pi].splice(k,1);P[ni].push(it);
+  hp.children[ni].appendChild(drag.hi);applyPos(pi);applyPos(ni);
+  hp.scrollTo({left:ni*hp.clientWidth,behavior:'smooth'});placeDrag();
+}
+hp.addEventListener('pointerdown',e=>{
   if(e.target.closest('.x'))return;
   const hi=e.target.closest('.hi');
-  if(editing()){if(hi)drag={hi,x0:e.clientX,y0:e.clientY,started:false,pid:e.pointerId};return}
+  if(editing()){if(hi)drag={hi,id:hi.dataset.id,x0:e.clientX,y0:e.clientY,started:false};return}
   lp={x0:e.clientX,y0:e.clientY,t:setTimeout(()=>{lp=null;suppressClick=true;setEdit(true);navigator.vibrate?.(15)},520)};
 });
-hgrid.addEventListener('pointermove',e=>{
+hp.addEventListener('pointermove',e=>{
   if(lp&&Math.hypot(e.clientX-lp.x0,e.clientY-lp.y0)>8){clearTimeout(lp.t);lp=null}
   if(!drag)return;
   if(!drag.started){if(Math.hypot(e.clientX-drag.x0,e.clientY-drag.y0)<6)return;
-    drag.started=true;suppressClick=true;const r=hgrid.getBoundingClientRect();
-    drag.offX=e.clientX-(r.left+drag.hi.offsetLeft);drag.offY=e.clientY-(r.top+drag.hi.offsetTop-hgrid.scrollTop);
-    drag.hi.classList.add('drag');try{hgrid.setPointerCapture(e.pointerId)}catch(_){}}
-  const r=hgrid.getBoundingClientRect();
-  const place=()=>{drag.hi.style.transform=`translate(${e.clientX-drag.offX-(r.left+drag.hi.offsetLeft)}px,${e.clientY-drag.offY-(r.top+drag.hi.offsetTop-hgrid.scrollTop)}px)`};
+    drag.started=true;suppressClick=true;const pr=drag.hi.parentNode.getBoundingClientRect();
+    drag.offX=e.clientX-(pr.left+drag.hi.offsetLeft);drag.offY=e.clientY-(pr.top+drag.hi.offsetTop);
+    drag.hi.classList.add('drag');try{hp.setPointerCapture(e.pointerId)}catch(_){}}
+  drag.cx=e.clientX;drag.cy=e.clientY;
   drag.hi.style.visibility='hidden';const under=document.elementFromPoint(e.clientX,e.clientY);drag.hi.style.visibility='';
   const tgt=under?.closest?.('.hi');
-  if(tgt&&tgt!==drag.hi&&tgt.parentNode===hgrid){const kids=[...hgrid.children];
-    if(kids.indexOf(tgt)>kids.indexOf(drag.hi))tgt.after(drag.hi);else tgt.before(drag.hi)}
-  place();
-  if(e.clientY<r.top+30)hgrid.scrollTop-=8;else if(e.clientY>r.bottom-30)hgrid.scrollTop+=8;
+  if(tgt&&tgt!==drag.hi&&tgt.parentNode===drag.hi.parentNode){
+    if(tgt!==drag.lastT){drag.lastT=tgt;const pi=pageIdxOf(drag.hi),pg=S.home.pages[pi];
+      const from=pg.findIndex(i=>i.id===drag.id),to=pg.findIndex(i=>i.id===tgt.dataset.id);
+      if(from>=0&&to>=0){const [it]=pg.splice(from,1);pg.splice(to,0,it);applyPos(pi)}}
+  }else if(!tgt)drag.lastT=null;
+  placeDrag();
+  const r=hp.getBoundingClientRect(),edge=e.clientX<r.left+24?-1:e.clientX>r.right-24?1:0;
+  if(edge&&!drag.edgeT)drag.edgeT=setTimeout(()=>{if(drag){crossPage(edge);drag.edgeT=null}},480);
+  else if(!edge&&drag.edgeT){clearTimeout(drag.edgeT);drag.edgeT=null}
 });
 function endPress(){
   if(lp){clearTimeout(lp.t);lp=null}
-  if(drag){if(drag.started){drag.hi.classList.remove('drag');drag.hi.style.transform='';
-      const order=[...hgrid.children].map(c=>c.dataset.id);S.home.items.sort((a,b)=>order.indexOf(a.id)-order.indexOf(b.id));save('home')}
-    drag=null}
+  if(drag){clearTimeout(drag.edgeT);if(drag.started){drag.hi.classList.remove('drag');drag.hi.style.transform='';save('home');renderHome()}drag=null}
 }
-hgrid.addEventListener('pointerup',endPress);hgrid.addEventListener('pointercancel',endPress);
-hgrid.addEventListener('contextmenu',e=>e.preventDefault());
-hgrid.addEventListener('click',async e=>{
+hp.addEventListener('pointerup',endPress);hp.addEventListener('pointercancel',endPress);
+hp.addEventListener('contextmenu',e=>e.preventDefault());
+hp.addEventListener('click',async e=>{
   if(suppressClick){suppressClick=false;return}
   const del=e.target.closest('[data-del]');
-  if(del){S.home.items=S.home.items.filter(i=>i.id!==del.dataset.del);save('home');renderHome();return}
-  const hi=e.target.closest('.hi');if(!hi)return;
-  const it=S.home.items.find(i=>i.id===hi.dataset.id);if(!it)return;
+  if(del){const {pi}=findItem(del.dataset.del);if(pi!==undefined){S.home.pages[pi]=S.home.pages[pi].filter(i=>i.id!==del.dataset.del);save('home');renderHome()}return}
+  const hi=e.target.closest('.hi');
+  if(!hi){if(editing()&&e.target.classList.contains('hpage'))setEdit(false);return}
+  const {it}=findItem(hi.dataset.id);if(!it)return;
   if(editing()){
     const cfg=it.type==='w'&&WG[it.kind].cfg;
-    if(cfg==='img'){const f=await pickFile('image/*');if(!f)return;it.data={...it.data,img:await fileToImg(f,it.kind==='badge'?500:1000)};save('home');renderHome();home.classList.add('editing')}
+    if(cfg==='img'){const f=await pickFile('image/*');if(!f)return;it.data={...it.data,img:await fileToImg(f,it.kind==='badge'?500:1000)};save('home');renderHome()}
     if(cfg==='text'){const v=await editor(it.data?.text||'月亮不睡\n我也不睡');if(v!==null){it.data={...it.data,text:v.trim()};save('home');renderHome()}}
     return;
   }
@@ -517,7 +635,6 @@ hgrid.addEventListener('click',async e=>{
   else if(w.cfg==='img'&&!it.data?.img)toast('长按桌面进入编辑，再点它就能换图');
 });
 $('#dock').addEventListener('click',e=>{const b=e.target.closest('[data-app]');if(b&&!editing())openApp(b.dataset.app)});
-home.addEventListener('click',e=>{if(editing()&&e.target===home)setEdit(false)});
 
 /* 添加小组件面板 */
 let wsFilter='all';
@@ -530,7 +647,8 @@ function renderWS(){
   const groups={};
   for(const k in WG)for(const [w,h] of WG[k].sizes){const z=`${w}×${h}`;if(wsFilter!=='all'&&wsFilter!==z)continue;(groups[z]||=[]).push({k,w,h})}
   let html='';
-  const hidden=APPS.filter(a=>!DOCK.includes(a.id)&&!S.home.items.some(i=>i.type==='app'&&i.app===a.id));
+  const all=S.home.pages.flat();
+  const hidden=APPS.filter(a=>!DOCK.includes(a.id)&&!all.some(i=>i.type==='app'&&i.app===a.id));
   if(hidden.length&&(wsFilter==='all'||wsFilter==='1×1'))html+=`<h4>应用</h4><div class="pvs">${hidden.map(a=>`<button class="pv" data-addapp="${a.id}"><div class="box" style="--w:1;--h:1">${appBtn(a)}</div></button>`).join('')}</div>`;
   for(const z of sizes.slice(1)){if(!groups[z])continue;
     html+=`<h4>${z}</h4><div class="pvs">${groups[z].map(g=>`<button class="pv" data-addw="${g.k}" data-w="${g.w}" data-h="${g.h}"><div class="box" style="--w:${g.w};--h:${g.h}">${WG[g.k].render({w:g.w,h:g.h,data:{}})}</div>${WG[g.k].name}</button>`).join('')}</div>`}
@@ -539,11 +657,192 @@ function renderWS(){
 $('#wsChips').onclick=e=>{const b=e.target.closest('[data-z]');if(b){wsFilter=b.dataset.z;renderWS()}};
 $('#wsList').onclick=e=>{
   const a=e.target.closest('[data-addapp]'),w=e.target.closest('[data-addw]');
-  if(a)S.home.items.push({id:uid(),type:'app',app:a.dataset.addapp});
-  else if(w)S.home.items.unshift({id:uid(),type:'w',kind:w.dataset.addw,w:+w.dataset.w,h:+w.dataset.h,data:{}});
+  const cp=Math.min(curPage(),S.home.pages.length-1),pg=S.home.pages[cp];let it;
+  if(a){it={id:uid(),type:'app',app:a.dataset.addapp};pg.push(it)}
+  else if(w){it={id:uid(),type:'w',kind:w.dataset.addw,w:+w.dataset.w,h:+w.dataset.h,data:{}};pg.unshift(it)}
   else return;
-  save('home');closeWS();renderHome();hgrid.scrollTop=w?0:hgrid.scrollHeight;
+  closeWS();renderHome();save('home');
+  const {pi}=findItem(it.id);if(pi!==undefined)hp.scrollTo({left:pi*hp.clientWidth,behavior:'smooth'});
 };
+
+/* ========== 世界书 ========== */
+const toArr=v=>Array.isArray(v)?v.map(x=>String(x).trim()).filter(Boolean):String(v??'').split(/[,，]/).map(x=>x.trim()).filter(Boolean);
+function normEntries(src){
+  const arr=Array.isArray(src)?src:Object.values(src||{});
+  return arr.filter(e=>e&&typeof e==='object').map(e=>({id:uid(),keys:toArr(e.keys??e.key),content:String(e.content||''),constant:!!e.constant,
+    enabled:e.enabled!==undefined?!!e.enabled:!e.disable,comment:String(e.comment||e.name||''),order:+(e.insertion_order??e.order??100)||100}));
+}
+function addBook(json,name,src){
+  const entries=normEntries(json?.entries);if(!entries.length)throw new Error('里面没有找到世界书条目');
+  if(src){const old=S.world.books.findIndex(b=>b.src===src);if(old>=0)S.world.books.splice(old,1)}
+  const book={id:uid(),name:json.name||name||'未命名世界书',enabled:true,entries,src:src||''};S.world.books.push(book);save('world');return book;
+}
+function keyHit(k,text){
+  const m=k.match(/^\/(.+)\/([gimsuy]*)$/);
+  if(m){try{return new RegExp(m[1],m[2].replace('g','')).test(text)}catch(_){return false}}
+  return text.toLowerCase().includes(k.toLowerCase());
+}
+function worldInfo(extraText=''){
+  const W=S.world,recent=S.messages.filter(m=>m.role!=='event').slice(-(+W.scanDepth||4)).map(m=>m.content).join('\n')+'\n'+extraText;
+  const hits=[];
+  for(const b of W.books){if(!b.enabled)continue;for(const e of b.entries){if(!e.enabled||!e.content.trim())continue;
+    if(e.constant||e.keys.some(k=>keyHit(k,recent)))hits.push(e)}}
+  hits.sort((a,b)=>a.order-b.order);
+  let out='',used=0;const ids=[];
+  for(const e of hits){if(used+e.content.length>(+W.budget||4000))continue;out+=(out?'\n\n':'')+e.content.trim();used+=e.content.length;ids.push(e.id)}
+  W.last=ids;
+  return out;
+}
+const wb={book:null,entry:null};
+function wbRender(){
+  const W=S.world,body=$('#wbBody'),book=W.books.find(b=>b.id===wb.book),entry=book?.entries.find(e=>e.id===wb.entry);
+  if(entry){
+    $('#wbTitle').textContent=entry.comment||'条目';$('#wbAct').textContent='';
+    body.innerHTML=`<div class="card glass">
+      <div class="field"><label>备注名</label><input data-e="comment" value="${esc(entry.comment)}" placeholder="比如：重案组"></div>
+      <div class="field"><label>关键词（用逗号分隔，聊天里出现任意一个就会触发）</label><input data-e="keys" value="${esc(entry.keys.join('，'))}" placeholder="重案组，O记，警署"><div class="hint">想用正则就写成 /正则/ 的样子。</div></div>
+      <div class="field"><label>内容</label><textarea data-e="content" style="min-height:220px">${esc(entry.content)}</textarea></div>
+      <label class="chk"><input type="checkbox" data-e="constant" ${entry.constant?'checked':''}>常驻（不看关键词，每次都带上）</label>
+      <label class="chk"><input type="checkbox" data-e="enabled" ${entry.enabled?'checked':''}>启用</label>
+      <div class="field"><label>顺序（数字小的排前面）</label><input data-e="order" type="number" value="${entry.order}"></div>
+      <div class="btns"><button class="btn danger" id="wbDelE">删除这个条目</button></div></div>`;
+    $$('[data-e]').forEach(el=>el.addEventListener('change',()=>{const k=el.dataset.e;entry[k]=k==='keys'?toArr(el.value):el.type==='checkbox'?el.checked:k==='order'?+el.value||100:el.value;save('world')}));
+    $('#wbDelE').onclick=async()=>{if(await actionSheet([{label:'删除条目',danger:true}])!==0)return;book.entries=book.entries.filter(e=>e!==entry);save('world');wb.entry=null;wbRender()};
+    return;
+  }
+  if(book){
+    $('#wbTitle').textContent=book.name;$('#wbAct').textContent='＋条目';
+    body.innerHTML=`<div class="card glass"><div class="field"><label>世界书名字</label><input id="wbName" value="${esc(book.name)}"></div>
+      <div class="btns"><button class="btn danger" id="wbDelB">删除这本世界书</button></div></div>`+
+      (book.entries.map(e=>`<button class="li ${e.enabled?'':'off'}" data-entry="${e.id}"><span class="t"><b>${esc(e.comment||e.keys[0]||'（未命名）')}</b><small>${e.constant?'常驻':esc(e.keys.join('，')||'没有关键词')}</small></span>${W.last.includes(e.id)?'<span class="tag">刚触发</span>':''}${e.constant?'<span class="tag blue">常驻</span>':''}</button>`).join('')||'<div class="evt">还没有条目，点右上角「＋条目」添加</div>');
+    $('#wbName').onchange=e=>{book.name=e.target.value.trim()||book.name;save('world');$('#wbTitle').textContent=book.name};
+    $('#wbDelB').onclick=async()=>{if(await actionSheet([{label:`删除「${book.name}」`,danger:true}])!==0)return;W.books=W.books.filter(b=>b!==book);save('world');wb.book=null;wbRender()};
+    return;
+  }
+  $('#wbTitle').textContent='世界书';$('#wbAct').textContent='导入';
+  body.innerHTML=`<div class="card glass"><div class="muted">聊天里出现关键词时，相关设定会自动塞给 TA，没提到的不占篇幅。可以直接导入酒馆的世界书 JSON；角色卡自带的世界书，导入角色卡时会自动放进来。</div>
+    <div class="two" style="margin-top:12px"><div class="field"><label>扫描最近几条消息</label><input id="wbDepth" type="number" value="${W.scanDepth}"></div><div class="field"><label>最多塞多少字</label><input id="wbBudget" type="number" value="${W.budget}"></div></div>
+    <div class="btns"><button class="btn" id="wbNew">新建世界书</button></div></div>`+
+    (W.books.map(b=>`<div class="li ${b.enabled?'':'off'}" data-book="${b.id}"><span class="t"><b>${esc(b.name)}</b><small>${b.entries.length} 条${b.src?' · 来自角色卡':''}</small></span><button class="sw ${b.enabled?'on':''}" data-bsw="${b.id}" aria-label="启用"></button></div>`).join('')||'<div class="evt">还没有世界书</div>');
+  $('#wbDepth').onchange=e=>{W.scanDepth=+e.target.value||4;save('world')};$('#wbBudget').onchange=e=>{W.budget=+e.target.value||4000;save('world')};
+  $('#wbNew').onclick=()=>{const b={id:uid(),name:'新的世界书',enabled:true,entries:[],src:''};W.books.push(b);save('world');wb.book=b.id;wbRender()};
+}
+$('#wbBody').addEventListener('click',e=>{
+  const sw=e.target.closest('[data-bsw]');if(sw){const b=S.world.books.find(x=>x.id===sw.dataset.bsw);b.enabled=!b.enabled;save('world');wbRender();return}
+  const bk=e.target.closest('[data-book]');if(bk){wb.book=bk.dataset.book;wbRender();$('#wbBody').scrollTop=0;return}
+  const en=e.target.closest('[data-entry]');if(en){wb.entry=en.dataset.entry;wbRender();$('#wbBody').scrollTop=0}
+});
+$('#wbBack').onclick=()=>{if(wb.entry)wb.entry=null;else if(wb.book)wb.book=null;else return closeApps();wbRender()};
+$('#wbAct').onclick=async()=>{
+  const book=S.world.books.find(b=>b.id===wb.book);
+  if(wb.entry)return;
+  if(book){const e={id:uid(),keys:[],content:'',constant:false,enabled:true,comment:'',order:100};book.entries.push(e);save('world');wb.entry=e.id;wbRender();return}
+  const f=await pickFile('.json,application/json,.png,image/png');if(!f)return;
+  try{let j;
+    if(/\.png$/i.test(f.name)||f.type==='image/png'){const c=await parsePNGCard(await f.arrayBuffer());j=(c.data||c).character_book;if(!j)throw new Error('这张角色卡里没有世界书')}
+    else j=JSON.parse(await f.text());
+    if(j.data?.character_book)j=j.data.character_book;
+    const b=addBook(j,f.name.replace(/\.(json|png)$/i,''));toast(`导入了「${b.name}」，共 ${b.entries.length} 条`);wbRender()}
+  catch(e){toast('导入失败：'+e.message,4000)}
+};
+
+/* ========== 预设 ========== */
+const DEFAULT_PRESET={id:'default',name:'月光海默认',builtin:true,temperature:null,
+  main:'你将扮演「{{char}}」，与「{{user}}」进行一段线上（手机聊天）与线下（现实见面）交织的故事。线上和线下发生在同一条时间线上，你记得两边发生过的所有事，剧情要自然衔接：手机上聊过的事见面时会提起，见面发生的事之后也会在手机上延续。',
+  online:'{{char}}正在用手机和{{user}}发消息。像真人发消息那样回复：口语化、简短、有自己的语气习惯，可以连发几条，每条消息单独一行。只输出消息内容本身，不写动作描写、旁白或心理活动。',
+  offline:'{{char}}和{{user}}在现实中相处。用小说式叙述描写{{char}}的动作、神态、语言和周围环境，可以写{{char}}的心理活动；绝不替{{user}}说话或决定{{user}}的行动。篇幅约{{length}}字。',
+  post:''};
+function presetList(){if(!Array.isArray(S.presets.list)||!S.presets.list.length){S.presets.list=[structuredClone(DEFAULT_PRESET)];S.presets.active='default';save('presets')}return S.presets.list}
+const activePreset=()=>{const L=presetList();return L.find(p=>p.id===S.presets.active)||L[0]};
+function importSTPreset(j,name){
+  const prompts=j.prompts||[];if(!prompts.length)throw new Error('这不像是酒馆的预设文件');
+  const byId=Object.fromEntries(prompts.map(p=>[p.identifier,p]));
+  const po=j.prompt_order||[];const ord=(po.find(o=>o.character_id===100001)||po.at(-1))?.order||prompts.map(p=>({identifier:p.identifier,enabled:p.enabled!==false}));
+  const SKIP=['worldInfoBefore','worldInfoAfter','charDescription','charPersonality','scenario','personaDescription','dialogueExamples','enhanceDefinitions'];
+  const pre=[],post=[];let after=false;
+  for(const o of ord){if(o.identifier==='chatHistory'){after=true;continue}if(!o.enabled||SKIP.includes(o.identifier))continue;
+    const p=byId[o.identifier];if(!p||p.marker||!String(p.content||'').trim())continue;(after?post:pre).push(p.content.trim())}
+  const ps={id:uid(),name:j.name||name||'导入的预设',temperature:typeof j.temperature==='number'?j.temperature:null,
+    main:pre.join('\n\n')||DEFAULT_PRESET.main,online:DEFAULT_PRESET.online,offline:DEFAULT_PRESET.offline,post:post.join('\n\n')};
+  presetList().push(ps);save('presets');return ps;
+}
+const ps={edit:null};
+function psRender(){
+  const L=presetList(),body=$('#psBody'),P=L.find(p=>p.id===ps.edit);
+  if(P){
+    $('#psTitle').textContent=P.name;$('#psAct').textContent='';
+    const f=(k,label,hint,h=140)=>`<div class="field"><label>${label}</label><textarea data-p="${k}" style="min-height:${h}px">${esc(P[k]||'')}</textarea>${hint?`<div class="hint">${hint}</div>`:''}</div>`;
+    body.innerHTML=`<div class="card glass"><div class="field"><label>预设名字</label><input data-p="name" value="${esc(P.name)}"></div>
+      ${f('main','主提示（放在最前面）','可以用 {{char}}、{{user}} 代表名字。',160)}
+      ${f('online','线上聊天规则','TA 在手机上回消息时的要求。')}
+      ${f('offline','线下剧情规则','见面时的文风要求，{{length}} 会换成设置里的篇幅。')}
+      ${f('post','后置指令（放在对话最后，影响最强）','文风强调、禁词、破限之类放这里。留空就不加。',110)}
+      <div class="field"><label>温度（留空就用设置里的）</label><input data-p="temperature" type="number" step="0.05" value="${P.temperature??''}"></div>
+      <div class="btns"><button class="btn pri" id="psUse">${S.presets.active===P.id?'✓ 正在使用':'用这个预设'}</button><button class="btn" id="psDup">复制一份</button>${P.builtin?'<button class="btn" id="psReset">恢复默认内容</button>':'<button class="btn danger" id="psDel">删除</button>'}</div></div>`;
+    $$('[data-p]').forEach(el=>el.addEventListener('change',()=>{const k=el.dataset.p;P[k]=k==='temperature'?(el.value===''?null:+el.value):k==='name'?(el.value.trim()||P.name):el.value;save('presets');if(k==='name')$('#psTitle').textContent=P.name}));
+    $('#psUse').onclick=()=>{S.presets.active=P.id;save('presets');psRender();toast(`现在用「${P.name}」`)};
+    $('#psDup').onclick=()=>{const c={...structuredClone(P),id:uid(),name:P.name+' 副本',builtin:false};L.push(c);save('presets');ps.edit=c.id;psRender()};
+    if($('#psReset'))$('#psReset').onclick=async()=>{if(await actionSheet([{label:'恢复默认内容',danger:true}])!==0)return;Object.assign(P,structuredClone(DEFAULT_PRESET));save('presets');psRender()};
+    if($('#psDel'))$('#psDel').onclick=async()=>{if(await actionSheet([{label:`删除「${P.name}」`,danger:true}])!==0)return;S.presets.list=L.filter(x=>x!==P);if(S.presets.active===P.id)S.presets.active='default';save('presets');ps.edit=null;psRender()};
+    return;
+  }
+  $('#psTitle').textContent='预设';$('#psAct').textContent='导入';
+  body.innerHTML=`<div class="card glass"><div class="muted">预设决定 TA 怎么说话：文风、篇幅、规矩。点圆圈切换正在用的预设，点名字进去编辑。可以导入酒馆的预设 JSON（会读取里面开启的提示词）。</div>
+    <div class="btns" style="margin-top:12px"><button class="btn" id="psNew">新建预设</button></div></div>`+
+    L.map(p=>`<div class="li" data-pedit="${p.id}"><button class="radio ${S.presets.active===p.id?'on':''}" data-puse="${p.id}" aria-label="使用"></button><span class="t"><b>${esc(p.name)}</b><small>${esc((p.main||'').slice(0,40))}</small></span>${p.builtin?'<span class="tag blue">内置</span>':''}</div>`).join('');
+  $('#psNew').onclick=()=>{const c={...structuredClone(DEFAULT_PRESET),id:uid(),name:'我的预设',builtin:false};L.push(c);save('presets');ps.edit=c.id;psRender()};
+}
+$('#psBody').addEventListener('click',e=>{
+  const u=e.target.closest('[data-puse]');if(u){S.presets.active=u.dataset.puse;save('presets');psRender();toast(`现在用「${activePreset().name}」`);return}
+  const ed=e.target.closest('[data-pedit]');if(ed&&!ps.edit){ps.edit=ed.dataset.pedit;psRender();$('#psBody').scrollTop=0}
+});
+$('#psBack').onclick=()=>{if(ps.edit){ps.edit=null;psRender()}else closeApps()};
+$('#psAct').onclick=async()=>{if(ps.edit)return;const f=await pickFile('.json,application/json');if(!f)return;
+  try{const p=importSTPreset(JSON.parse(await f.text()),f.name.replace(/\.json$/i,''));toast(`导入了「${p.name}」`);psRender()}catch(e){toast('导入失败：'+e.message,4000)}};
+
+/* ========== 时间 & 主动消息 & 通知 ========== */
+const PERIOD=h=>h<5?'凌晨':h<8?'清晨':h<11?'上午':h<13?'中午':h<17?'下午':h<19?'傍晚':h<23?'晚上':'深夜';
+const fmtFull=ts=>{const d=new Date(ts);return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日 星期${'日一二三四五六'[d.getDay()]} ${fmtHM(d)}（${PERIOD(d.getHours())}）`};
+function fmtGap(ms){const m=Math.round(ms/6e4);if(m<1)return '不到1分钟';if(m<60)return `${m}分钟`;const h=Math.floor(m/60);if(h<24)return `${h}小时${m%60?m%60+'分钟':''}`;const d=Math.floor(h/24);return `${d}天${h%24?h%24+'小时':''}`}
+const lastRealTs=()=>[...S.messages].reverse().find(m=>m.role!=='event')?.ts||0;
+const chatOpen=()=>$('#app-chat').classList.contains('open')&&!document.hidden;
+function inQuiet(ts){const st=S.settings,d=new Date(ts),h=d.getHours()+d.getMinutes()/60,a=+st.quietStart,b=+st.quietEnd;if(a===b)return false;return a<b?(h>=a&&h<b):(h>=a||h<b)}
+function scheduleProactive(){
+  const st=S.settings,last=lastRealTs();if(!last)return;
+  const lo=Math.max(.25,+st.proMin||2),hi=Math.max(lo,+st.proMax||6);
+  let t=last+(lo+Math.random()*(hi-lo))*36e5;
+  if(inQuiet(t)){const d=new Date(t);d.setHours(+st.quietEnd,Math.floor(Math.random()*50),0,0);if(d.getTime()<t)d.setDate(d.getDate()+1);t=d.getTime()}
+  S.state.nextPro=t;save('state');
+}
+function unansweredBursts(){const ids=new Set();for(let i=S.messages.length-1;i>=0;i--){const m=S.messages[i];if(m.role==='user')break;if(m.pro)ids.add(m.pro)}return ids.size}
+async function checkProactive(){
+  const st=S.settings;if(!st.proactive||busy||!st.apiKey||!st.baseUrl||!st.model)return;
+  if(!S.messages.some(m=>m.role!=='event'))return;
+  if(!S.state.nextPro){scheduleProactive();return}
+  const now=Date.now(),due=S.state.nextPro;if(now<due)return;
+  if(unansweredBursts()>=2)return;
+  const ts=now-due>10*6e4?due:0,at=ts||now;
+  S.state.nextPro=0;save('state');
+  const c=S.char.name,u=S.user.name;
+  await generate('online',`距离上一次互动已经过去${fmtGap(at-lastRealTs())}，现在是${fmtFull(at)}。${c}主动给${u}发消息：可以分享此刻在做的事、想念、关心，或者接着你们最近聊过的事，要符合当下的时间和${c}的性格，自然得像真人。${unansweredBursts()?`${u}还没回${c}上次发的消息，${c}可以表现出在意。`:''}`,{ts,pro:true});
+}
+setInterval(checkProactive,60e3);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){checkProactive();if(chatOpen())clearUnread()}});
+function updateBadges(){$('#dock').innerHTML=DOCK.map(id=>appBtn(appById(id))).join('');renderLockNote();try{S.state.unread?navigator.setAppBadge?.(S.state.unread):navigator.clearAppBadge?.()}catch(_){}}
+function clearUnread(){if(S.state.unread){S.state.unread=0;save('state');updateBadges()}}
+function renderLockNote(){
+  const n=S.state?.unread,el=$('#lockNote');if(!el)return;
+  if(!n){el.innerHTML='';return}
+  const m=[...S.messages].reverse().find(x=>x.role==='assistant'&&x.mode==='online');if(!m){el.innerHTML='';return}
+  el.innerHTML=`<div class="n">${avHTML('char')}<div style="min-width:0;flex:1"><b>${esc(S.char.name)}<small>${n>1?n+' 条 · ':''}${fmtTime(m.ts)}</small></b><span>${esc(m.content)}</span></div></div>`;
+}
+let bannerT;
+function showBanner(text,n){
+  const b=$('#banner');b.innerHTML=`${avHTML('char')}<div class="bt"><b>${esc(S.char.name)}<small>${n>1?n+' 条新消息':'现在'}</small></b><span>${esc(text)}</span></div>`;
+  b.classList.add('show');clearTimeout(bannerT);bannerT=setTimeout(()=>b.classList.remove('show'),5000);
+}
+$('#banner').onclick=()=>{$('#banner').classList.remove('show');$('#lock').classList.add('hide');$('#gameView').classList.remove('open');openApp('chat')};
+$('#lockNote').addEventListener('click',e=>{e.stopPropagation();$('#lock').classList.add('hide');openApp('chat')});
 
 /* 游戏 */
 function renderGames(){$('#gameList').innerHTML=GAMES.map(g=>`<button class="gcard" data-game="${g.id}"><div class="cv" style="background-image:url(${g.cover})"></div><div class="in"><b>${g.name}</b><small>${esc(g.sub)}</small></div></button>`).join('')+'<div class="evt">更多游戏陆续搬进来～</div>'}
@@ -551,8 +850,8 @@ $('#gameList').onclick=e=>{const b=e.target.closest('[data-game]');if(b)openGame
 function openGame(id){const g=GAMES.find(x=>x.id===id);if(!g)return;$('#gameTitle').textContent=g.name;const f=$('#gameFrame');if(f.dataset.g!==id){f.src=g.src;f.dataset.g=id}$('#gameView').classList.add('open')}
 $('#gameClose').onclick=()=>{$('#gameView').classList.remove('open');const f=$('#gameFrame');setTimeout(()=>{f.src='about:blank';f.dataset.g=''},400);renderHome()};
 document.addEventListener('click',e=>{const o=e.target.closest('[data-open]');if(o&&!editing())openApp(o.dataset.open);if(e.target.closest('[data-back]'))closeApps()});
-const RENDER={games:renderGames,chat:renderChat,story:renderStory,memory:renderMemory,char:renderChar,theme:renderTheme,settings:renderSettings};
-function openApp(id){$$('.app').forEach(a=>a.classList.toggle('open',a.id==='app-'+id));RENDER[id]?.()}
+const RENDER={world:()=>{wb.book=wb.entry=null;wbRender()},preset:()=>{ps.edit=null;psRender()},games:renderGames,chat:renderChat,story:renderStory,memory:renderMemory,char:renderChar,theme:renderTheme,settings:renderSettings};
+function openApp(id){$$('.app').forEach(a=>a.classList.toggle('open',a.id==='app-'+id));RENDER[id]?.();if(id==='chat')clearUnread()}
 function closeApps(){$$('.app:not(#gameView)').forEach(a=>a.classList.remove('open'));renderHome()}
 
 /* ========== 锁屏 ========== */
@@ -569,37 +868,47 @@ function pickFile(accept){return new Promise(res=>{const i=document.createElemen
 function fileToImg(file,max=1280,type='image/jpeg',q=.86){return new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{let w=im.width,h=im.height;const r=Math.min(1,max/Math.max(w,h));w=Math.round(w*r);h=Math.round(h*r);const cv=document.createElement('canvas');cv.width=w;cv.height=h;cv.getContext('2d').drawImage(im,0,0,w,h);res(cv.toDataURL(type,q))};im.onerror=()=>rej(new Error('图片读取失败'));im.src=fr.result};fr.onerror=()=>rej(fr.error);fr.readAsDataURL(file)})}
 
 /* ========== 时间线 ========== */
-function pushMsg(mode,role,content){
+function pushMsg(mode,role,content,o={}){
+  const ts=o.ts||Date.now();
   const lastReal=[...S.messages].reverse().find(m=>m.role!=='event');
   if(lastReal&&lastReal.mode!==mode){
     const c=S.char.name,u=S.user.name;
-    S.messages.push({id:uid(),mode,role:'event',ts:Date.now(),content:mode==='offline'?`${u}和${c}见面了（从手机联系转到现实相处）`:`${u}和${c}分开了，回到手机上联系`});
+    S.messages.push({id:uid(),mode,role:'event',ts,content:mode==='offline'?`${u}和${c}见面了（从手机联系转到现实相处）`:`${u}和${c}分开了，回到手机上联系`});
   }
-  S.messages.push({id:uid(),mode,role,content,ts:Date.now()});save('messages');
+  const m={id:uid(),mode,role,content,ts};if(o.pro)m.pro=o.pro;
+  S.messages.push(m);save('messages');
+  if(role==='assistant'&&mode==='online'&&!chatOpen()){S.state.unread=(S.state.unread||0)+1;save('state');updateBadges()}
+  scheduleProactive();
 }
 const macro=t=>(t||'').replaceAll('{{char}}',S.char.name||'TA').replaceAll('{{user}}',S.user.name||'我').replace(/<user>/gi,S.user.name||'我').replace(/<bot>/gi,S.char.name||'TA');
-function buildPrompt(mode,extra){
-  const c=S.char,u=S.user,st=S.settings;
-  let sys=`你将扮演「${c.name}」，与「${u.name}」进行一段线上（手机聊天）与线下（现实见面）交织的故事。线上和线下发生在同一条时间线上，你记得两边发生过的所有事，剧情要自然衔接：手机上聊过的事见面时会提起，见面发生的事之后也会在手机上延续。\n`;
+function buildPrompt(mode,extra,now=Date.now()){
+  const c=S.char,u=S.user,st=S.settings,P=activePreset();
+  const mac=t=>macro(t).replaceAll('{{length}}',st.storyLength).replaceAll('{{time}}',fmtFull(now));
+  let sys=(P.main||DEFAULT_PRESET.main)+'\n';
   if(c.description)sys+=`\n【角色设定】\n${c.description}\n`;
   if(c.personality)sys+=`\n【性格】\n${c.personality}\n`;
   if(c.scenario)sys+=`\n【背景】\n${c.scenario}\n`;
   if(u.persona)sys+=`\n【${u.name}的设定】\n${u.persona}\n`;
+  const wi=worldInfo(extra||'');if(wi)sys+=`\n【世界设定】\n${wi}\n`;
   if(c.mes_example)sys+=`\n【说话风格示例】\n${c.mes_example}\n`;
   if(S.memory.summary)sys+=`\n【长期记忆：之前发生过的事】\n${S.memory.summary}\n`;
-  sys+=`\n对话记录中，${u.name}的话会带有[线上·手机消息]、[线下·见面]或[场景]标记，用来说明当时在哪里；你的回复不要带这些标记。\n`;
-  sys+=mode==='online'
-    ?`\n【当前：线上】${c.name}正在用手机和${u.name}发消息。像真人发消息那样回复：口语化、简短、有自己的语气习惯，可以连发几条，每条消息单独一行。只输出消息内容本身，不写动作描写、旁白或心理活动。`
-    :`\n【当前：线下】${c.name}和${u.name}在现实中相处。用小说式叙述描写${c.name}的动作、神态、语言和周围环境，可以写${c.name}的心理活动；绝不替${u.name}说话或决定${u.name}的行动。篇幅约${st.storyLength}字。`;
-  const arr=[];
+  const lastTs=lastRealTs();
+  if(st.timeAware)sys+=`\n【现在的时间】${fmtFull(now)}${lastTs&&now-lastTs>60e3?`\n距离上一条消息过去了${fmtGap(now-lastTs)}。`:''}\n${c.name}的作息、状态和话题要符合这个时间。\n`;
+  sys+=`\n对话记录中，${u.name}的话会带有[线上·手机消息]、[线下·见面]或[场景]标记，用来说明当时在哪里${st.timeAware?'、过了多久':''}；你的回复不要带这些标记。\n`;
+  sys+=mode==='online'?`\n【当前：线上】${P.online||DEFAULT_PRESET.online}`:`\n【当前：线下】${P.offline||DEFAULT_PRESET.offline}`;
+  const arr=[];let prev=0;
+  const add=(role,content)=>{const p=arr.at(-1);if(p&&p.role===role)p.content+='\n'+content;else arr.push({role,content})};
   for(const m of S.messages.slice(S.memory.upTo).slice(-st.contextSize)){
+    if(st.timeAware&&prev&&m.ts-prev>30*6e4)add('user',`[场景] （时间来到${fmtFull(m.ts)}，距上一条过了${fmtGap(m.ts-prev)}）`);
+    prev=m.ts;
     const role=m.role==='assistant'?'assistant':'user';
-    const content=role==='assistant'?m.content:`${m.role==='event'?'[场景]':m.mode==='online'?'[线上·手机消息]':'[线下·见面]'} ${m.content}`;
-    const p=arr.at(-1);if(p&&p.role===role)p.content+='\n'+content;else arr.push({role,content});
+    add(role,role==='assistant'?m.content:`${m.role==='event'?'[场景]':m.mode==='online'?'[线上·手机消息]':'[线下·见面]'} ${m.content}`);
   }
-  if(extra||!arr.length||arr.at(-1).role==='assistant'){const x=`[提示] ${extra||'继续'}`;const p=arr.at(-1);if(p&&p.role==='user')p.content+='\n'+x;else arr.push({role:'user',content:x})}
+  if(extra||!arr.length||arr.at(-1).role==='assistant')add('user',`[提示] ${extra||'继续'}`);
   if(arr[0].role==='assistant')arr.unshift({role:'user',content:'[开始]'});
-  return [{role:'system',content:macro(sys)},...arr.map(m=>({role:m.role,content:macro(m.content)}))];
+  const msgs=[{role:'system',content:mac(sys)},...arr.map(m=>({role:m.role,content:mac(m.content)}))];
+  if(P.post?.trim())msgs.push({role:'system',content:mac(P.post)});
+  return msgs;
 }
 const clean=t=>t.replace(/<think>[\s\S]*?<\/think>/g,'').replace(/^\s*\[(线上|线下|场景|提示)[^\]]*\]\s*/gm,'').trim();
 
@@ -612,17 +921,25 @@ async function callAPI(messages,opt={}){
   const j=await r.json();const c=j.choices?.[0]?.message?.content;if(!c)throw new Error('接口没有返回内容');return c;
 }
 let busy=false,pending=null;
-async function generate(mode,extra){
-  if(busy){pending={mode,extra};return}
-  busy=true;setTyping(mode,true);
+async function generate(mode,extra,o={}){
+  if(busy){if(!o.pro)pending={mode,extra};return}
+  busy=true;if(!o.ts)setTyping(mode,true);
   try{
-    const out=clean(await callAPI(buildPrompt(mode,extra)));
+    const now=o.ts||Date.now(),P=activePreset();
+    const out=clean(await callAPI(buildPrompt(mode,extra,now),{temperature:P.temperature??undefined}));
+    const pro=o.pro?uid():undefined;
     if(mode==='online'){
       const parts=out.split(/\n+/).map(s=>s.trim()).filter(Boolean).slice(0,8);
-      for(const p of parts){await sleep(350+Math.min(p.length*55,1400));pushMsg('online','assistant',p);renderChat()}
+      for(let i=0;i<parts.length;i++){
+        if(o.ts)pushMsg('online','assistant',parts[i],{ts:o.ts+i*20e3,pro});
+        else{await sleep(350+Math.min(parts[i].length*55,1400));pushMsg('online','assistant',parts[i],{pro})}
+        if(chatOpen())renderChat();
+      }
+      if(!chatOpen()&&parts.length)showBanner(parts.at(-1),parts.length);
     }else{pushMsg('offline','assistant',out);renderStory()}
+    if($('#app-world').classList.contains('open'))wbRender();
     maybeSummarize();
-  }catch(e){toast(e.message,4500)}
+  }catch(e){if(!o.pro)toast(e.message,4500)}
   finally{busy=false;setTyping(mode,false);if(pending){const p=pending;pending=null;generate(p.mode,p.extra)}}
 }
 function setTyping(mode,on){
@@ -745,7 +1062,8 @@ $('#cardImport').onclick=async()=>{
     const d=j.data||j;
     Object.assign(S.char,{name:d.name||d.char_name||'TA',description:d.description||d.char_persona||'',personality:d.personality||'',scenario:d.scenario||d.world_scenario||'',first_mes:d.first_mes||d.char_greeting||'',mes_example:d.mes_example||d.example_dialogue||'',book:d.character_book||null});
     if(isPng)S.char.avatar=await fileToImg(f,400,'image/png');
-    save('char');renderChar();toast(`已导入「${S.char.name}」`);
+    let extra='';if(d.character_book?.entries){try{const b=addBook(d.character_book,`${S.char.name}的世界书`,'card:'+S.char.name);extra=`，自带的世界书（${b.entries.length} 条）也放进世界书了`}catch(_){}}
+    save('char');renderChar();toast(`已导入「${S.char.name}」${extra}`,3500);
   }catch(e){toast('导入失败：'+e.message,4000)}
 };
 $('#useFirst').onclick=()=>{readCharForm();if(!S.char.first_mes)return toast('还没有填开场白');pushMsg('offline','assistant',S.char.first_mes);openApp('story')};
@@ -790,8 +1108,9 @@ $('#clearMem').onclick=async()=>{if(await actionSheet([{label:'确定清空长�
 /* ========== 启动 ========== */
 (async()=>{
   try{await load()}catch(e){toast('本地存储打不开：'+e.message,6000);for(const k in DEFAULTS)S[k]??=structuredClone(DEFAULTS[k])}
-  tick();applyTheme();renderHome();
+  presetList();tick();applyTheme();renderHome();
   if(!S.settings.showLock)$('#lock').classList.add('hide');
+  setTimeout(checkProactive,2500);
 })();
 </script>
 </body>
