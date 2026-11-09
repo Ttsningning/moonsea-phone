@@ -24,9 +24,9 @@
 html,body{margin:0;height:100%;background:#040a16;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overflow:hidden}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 input,textarea,select{font:inherit;color:var(--text)}
-#phone{position:relative;width:100%;max-width:440px;height:100dvh;margin:0 auto;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
+#phone{position:fixed;inset:0;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
 @media (min-width:520px){
-  #phone{height:min(900px,96dvh);margin-top:2dvh;border-radius:46px;box-shadow:0 0 0 10px #0d1424,0 30px 80px rgba(0,0,0,.6)}
+  #phone{position:relative;inset:auto;width:440px;height:min(900px,96dvh);margin:2dvh auto 0;border-radius:46px;box-shadow:0 0 0 10px #0d1424,0 30px 80px rgba(0,0,0,.6)}
   :root{--top:34px;--bot:14px}
   .fakebar{display:flex!important}
 }
@@ -43,17 +43,27 @@ input,textarea,select{font:inherit;color:var(--text)}
 @keyframes float{50%{transform:translateY(-6px)}}
 
 /* home */
-#home{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--top) + 18px) 20px calc(var(--bot) + 14px)}
-.widget{border-radius:26px;padding:16px;display:flex;gap:14px;align-items:center}
-.widget .av{width:58px;height:58px;border-radius:18px}
-.widget .nm{font-size:18px;font-weight:600}
-.widget .last{font-size:13px;color:var(--muted);margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 10px;margin-top:26px}
-.appbtn{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
-.ico{width:60px;height:60px;border-radius:17px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.08));border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 16px rgba(0,0,0,.25)}
+#home{position:absolute;inset:0;display:flex;flex-direction:column;padding:calc(var(--top) + 14px) 18px calc(var(--bot) + 6px);overflow:hidden}
+#home .glass{background:rgba(10,28,62,.30);border-color:rgba(255,255,255,.28)}
+#home,#home .appbtn{text-shadow:0 1px 6px rgba(0,20,60,.45)}
+.clockw{text-align:center;padding:6px 0 14px}
+.clockw .t{font-size:64px;font-weight:200;letter-spacing:1px;line-height:1}
+.clockw .d{font-size:14px;margin-top:6px;opacity:.92}
+.wrow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.wsq{border-radius:24px;padding:14px;aspect-ratio:1/1;display:flex;flex-direction:column;min-width:0;text-align:left}
+.wsq .av{width:46px;height:46px;border-radius:15px;font-size:19px}
+.wsq .nm{font-size:16px;font-weight:600;margin-top:8px}
+.wsq .last{font-size:12.5px;margin-top:4px;opacity:.9;line-height:1.45;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.wsq .lbl{font-size:12px;opacity:.85}
+.wsq .big{font-size:40px;font-weight:300;line-height:1.1;margin-top:auto}
+.wsq .big small{font-size:14px;margin-left:3px}
+.wsq .stat{font-size:12px;opacity:.88;margin-top:6px;line-height:1.5}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 8px;margin-top:22px}
+.appbtn{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px}
+.ico{width:60px;height:60px;border-radius:17px;display:grid;place-items:center;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.30),rgba(255,255,255,.06)),rgba(10,30,70,.30);border:1px solid rgba(255,255,255,.32);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 16px rgba(0,20,60,.25)}
 .ico img{width:100%;height:100%;object-fit:cover}
-.ico svg{width:30px;height:30px;stroke:#eaf2ff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.dock{margin-top:auto;border-radius:30px;padding:12px 14px;display:flex;justify-content:space-around}
+.ico svg{width:30px;height:30px;stroke:#f2f7ff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 1px 2px rgba(0,20,60,.35))}
+.dock{margin-top:auto;border-radius:30px;padding:12px 10px;display:flex;justify-content:space-around}
 .dock .appbtn span{display:none}
 
 /* apps */
@@ -112,13 +122,13 @@ input,textarea,select{font:inherit;color:var(--text)}
 /* sheet & toast */
 #mask{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.45);display:none}
 #mask.show{display:block}
-#sheet{position:absolute;left:10px;right:10px;bottom:calc(var(--bot) + 10px);z-index:91;border-radius:22px;padding:8px;transform:translateY(130%);transition:transform .3s cubic-bezier(.2,.8,.2,1);background:rgba(20,36,66,.92)}
-#sheet.show{transform:none}
+#sheet{position:absolute;left:10px;right:10px;bottom:calc(var(--bot) + 10px);z-index:91;border-radius:22px;padding:8px;transform:translateY(calc(100% + 80px));visibility:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),visibility 0s .3s;background:rgba(20,36,66,.92)}
+#sheet.show{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.2,.8,.2,1)}
 #sheet button.opt{display:block;width:100%;padding:14px;border-radius:14px;font-size:16px;text-align:center}
 #sheet button.opt:active{background:var(--glass2)}
 #sheet textarea{width:100%;min-height:200px;max-height:50dvh;padding:12px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.07);outline:none;font-size:15px;line-height:1.6;resize:vertical}
-#toast{position:absolute;left:50%;top:calc(var(--top) + 14px);z-index:99;transform:translate(-50%,-150%);transition:transform .3s;max-width:86%;padding:10px 16px;border-radius:14px;font-size:13.5px;background:rgba(20,36,66,.95);border:1px solid var(--line);line-height:1.5}
-#toast.show{transform:translate(-50%,0)}
+#toast{position:absolute;visibility:hidden;left:50%;top:calc(var(--top) + 14px);z-index:99;transform:translate(-50%,-150%);transition:transform .3s;max-width:86%;padding:10px 16px;border-radius:14px;font-size:13.5px;background:rgba(20,36,66,.95);border:1px solid var(--line);line-height:1.5}
+#toast.show{transform:translate(-50%,0);visibility:visible}
 @keyframes dots{0%{content:''}33%{content:'·'}66%{content:'··'}100%{content:'···'}}
 </style>
 </head>
@@ -128,7 +138,11 @@ input,textarea,select{font:inherit;color:var(--text)}
   <div class="fakebar"><span id="fbTime">--:--</span><span>●●● 5G ▮</span></div>
 
   <div id="home">
-    <div class="widget glass" id="widget"></div>
+    <div class="clockw"><div class="t" id="homeTime">--:--</div><div class="d" id="homeDate"></div></div>
+    <div class="wrow">
+      <button class="wsq glass" id="widget" data-open="chat"></button>
+      <button class="wsq glass" id="statw" data-open="memory"></button>
+    </div>
     <div class="grid" id="grid"></div>
     <div class="dock glass" id="dock"></div>
   </div>
@@ -300,8 +314,11 @@ function applyTheme(){
 }
 function renderHome(){
   const last=[...S.messages].reverse().find(m=>m.role==='assistant');
-  $('#widget').innerHTML=`${avHTML('char')}<div style="min-width:0"><div class="nm">${esc(S.char.name)}</div><div class="last">${last?esc(last.content):'还没有聊过天，点「消息」打个招呼吧。'}</div></div>`;
-  $('#widget').querySelector('.av').style.cssText='width:58px;height:58px;border-radius:18px;font-size:22px';
+  $('#widget').innerHTML=`${avHTML('char')}<div class="nm">${esc(S.char.name)}</div><div class="last">${last?esc(last.content):'还没有聊过天，点这里打个招呼吧。'}</div>`;
+  const first=S.messages[0]?.ts,days=first?Math.floor((Date.now()-new Date(new Date(first).toDateString()))/864e5)+1:0;
+  const on=S.messages.filter(m=>m.mode==='online'&&m.role!=='event').length,off=S.messages.filter(m=>m.mode==='offline'&&m.role!=='event').length;
+  $('#statw').innerHTML=days?`<div class="lbl">和 ${esc(S.char.name)} 相识</div><div class="big">${days}<small>天</small></div><div class="stat">消息 ${on} 条 · 见面 ${off} 段</div>`
+    :`<div class="lbl">我们的故事</div><div class="big">0<small>天</small></div><div class="stat">从第一句话开始计算</div>`;
   const btn=a=>`<button class="appbtn" data-open="${a.id}">${appIcon(a.id)}<span>${a.name}</span></button>`;
   $('#grid').innerHTML=APPS.filter(a=>!['chat','story','memory','settings'].includes(a.id)).map(btn).join('');
   $('#dock').innerHTML=APPS.filter(a=>['chat','story','memory','settings'].includes(a.id)).map(btn).join('');
@@ -312,7 +329,7 @@ function openApp(id){$$('.app').forEach(a=>a.classList.toggle('open',a.id==='app
 function closeApps(){$$('.app').forEach(a=>a.classList.remove('open'));renderHome()}
 
 /* ========== 锁屏 ========== */
-function tick(){const d=new Date(),hm=d.toTimeString().slice(0,5);$('#lockTime').textContent=hm;$('#fbTime').textContent=hm;$('#lockDate').textContent=`${d.getMonth()+1}月${d.getDate()}日 星期${'日一二三四五六'[d.getDay()]}`}
+function tick(){const d=new Date(),hm=d.toTimeString().slice(0,5);$('#lockTime').textContent=hm;$('#homeTime').textContent=hm;$('#fbTime').textContent=hm;$('#lockDate').textContent=$('#homeDate').textContent=`${d.getMonth()+1}月${d.getDate()}日 星期${'日一二三四五六'[d.getDay()]}`}
 setInterval(tick,15000);
 (()=>{const l=$('#lock');let y0=null;l.addEventListener('click',()=>l.classList.add('hide'));l.addEventListener('touchstart',e=>y0=e.touches[0].clientY,{passive:true});l.addEventListener('touchmove',e=>{if(y0!==null&&y0-e.touches[0].clientY>40){l.classList.add('hide');y0=null}},{passive:true})})();
 
