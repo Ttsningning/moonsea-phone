@@ -25,10 +25,10 @@
          linear-gradient(180deg,#081329 0%,#12294f 40%,#1d4677 60%,#0f2e52 61%,#0a2040 78%,#06142a 100%);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{touch-action:manipulation;margin:0;padding:0;background:var(--under,#06142a);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overscroll-behavior:none}
+html,body{height:100vh;overflow:hidden;touch-action:manipulation;margin:0;padding:0;background:var(--under,#06142a);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overscroll-behavior:none}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 input,textarea,select{font:inherit;color:var(--text)}
-#phone{position:fixed;inset:0;min-height:-webkit-fill-available;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
+#phone{position:absolute;top:0;left:0;right:0;height:100vh;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
 @media (min-width:520px){
   #phone{position:relative;inset:auto;width:440px;height:min(900px,96dvh);margin:2dvh auto 0;border-radius:46px;box-shadow:0 0 0 10px #0d1424,0 30px 80px rgba(0,0,0,.6)}
   :root{--top:34px;--bot:14px}
@@ -2509,8 +2509,8 @@ function fitPhone(){
   if(pad||innerHeight<innerWidth*.9){ph.style.height='';fitH=0;return}
   const typing=document.activeElement?.matches?.('input:not([type=file]),textarea');
   if(typing&&fitH)return;
-  const de=document.documentElement,H=Math.max(sh,de.clientHeight,innerHeight);
-  if(H!==fitH||ph.style.height!==H+'px'){fitH=H;ph.style.height=H+'px';rs.setProperty('--app-h',H+'px')}
+  /* 外壳统一用 CSS 的 100vh 撑满，不再用 JS 写死像素高度 */
+  if(ph.style.height){ph.style.height='';fitH=0}
 }
 /* 键盘收起后 iOS 会把视口卡在缩小的状态（底部出现黑边），把整个手机隐藏再显示一次，逼它重新量 */
 let peakH=innerHeight;
