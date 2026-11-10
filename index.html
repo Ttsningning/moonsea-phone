@@ -552,7 +552,7 @@ input,textarea,select{font:inherit;color:var(--text)}
 .field label{display:block;font-size:12.5px;color:var(--muted);margin-bottom:5px}
 .field input,.field textarea,.field select{width:100%;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.07);outline:none;font-size:15px}
 .field textarea{min-height:90px;resize:vertical;line-height:1.5}
-.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.5}
+.card .hint,.field .hint{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.5}
 .btns{display:flex;flex-wrap:wrap;gap:8px}
 .btn{padding:9px 14px;border-radius:12px;background:var(--glass2);border:1px solid var(--line);font-size:14px}
 .btn.pri{background:linear-gradient(135deg,var(--me1),var(--me2));color:var(--meink);font-weight:600;border:0}
@@ -562,7 +562,7 @@ input,textarea,select{font:inherit;color:var(--text)}
 .icongrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .icongrid .appbtn{font-size:12px}
 .thumb{width:100%;aspect-ratio:9/16;max-height:150px;border-radius:12px;background:var(--wall);background-size:cover;background-position:center;border:1px solid var(--line)}
-.row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(68px,1fr));gap:10px}
 
 /* sheet & toast */
 #mask{position:absolute;inset:0;z-index:90;background:rgba(0,0,0,.45);display:none}
@@ -575,6 +575,65 @@ input,textarea,select{font:inherit;color:var(--text)}
 #toast{position:absolute;visibility:hidden;left:50%;top:calc(var(--top) + 14px);z-index:99;transform:translate(-50%,-150%);transition:transform .3s;max-width:86%;padding:10px 16px;border-radius:14px;font-size:13.5px;background:rgba(20,36,66,.95);border:1px solid var(--line);line-height:1.5}
 #toast.show{transform:translate(-50%,0);visibility:visible}
 @keyframes dots{0%{content:''}33%{content:'·'}66%{content:'··'}100%{content:'···'}}
+
+
+/* 查手机 / 淘宝 / 美团 */
+.pkempty{text-align:center;color:var(--muted);padding:40px 16px;line-height:1.9;font-size:14px}.pkempty .btn{margin-top:14px}.pkempty .hint{margin-top:10px;font-size:11.5px}
+.pkat{font-size:12px;color:var(--muted);margin:0 2px 10px}.pkat a{color:var(--accent)}
+.pkchat{border-radius:16px;margin-bottom:10px;overflow:hidden}.pkchat summary{display:flex;gap:10px;align-items:center;padding:12px 14px;list-style:none;cursor:pointer}.pkchat summary::-webkit-details-marker{display:none}
+.pkchat .tt{min-width:0;flex:1}.pkchat .tt b{display:block;font-size:15px}.pkchat .tt small{display:block;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkav{flex:none;width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:600;background:linear-gradient(135deg,#f6d9e8,#d9c8f2);color:#6a4a7e}
+.pkmsgs{padding:4px 12px 12px}.pkm{display:flex;margin:6px 0}.pkm span{max-width:78%;padding:7px 11px;border-radius:14px;background:var(--glass2);font-size:14px;line-height:1.5}.pkm.me{justify-content:flex-end}.pkm.me span{background:linear-gradient(135deg,var(--me1),var(--me2));color:var(--meink)}
+.pkmemo h4{margin:0 0 6px;font-size:15px}.pkmemo div{font-size:14px;line-height:1.7;white-space:pre-wrap}
+.pksq{padding:9px 2px;border-bottom:1px dashed var(--line);font-size:14px}.pksq:last-child{border:0}
+.pkalbum{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pkalbum .tphoto{width:auto}
+.pkcart{flex:none;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;background:var(--glass2)}
+.li .t{flex:1;min-width:0}.li .t b{display:block;font-size:14.5px;line-height:1.35}.pp{display:block;color:#e2566e;font-weight:700;font-size:14px;margin-top:3px}
+.shsearch{display:flex;gap:8px;margin-bottom:10px}.shsearch input{flex:1;min-width:0;padding:10px 14px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.55);outline:none;font-size:15px}
+.shtags{display:flex;gap:8px;overflow-x:auto;margin-bottom:12px;scrollbar-width:none}.chip2{flex:none;padding:6px 12px;border-radius:99px;background:var(--glass2);border:1px solid var(--line);font-size:12.5px}
+.plist{display:grid;grid-template-columns:1fr 1fr;gap:10px}.pcard{display:flex;flex-direction:column;text-align:left;border-radius:16px;padding:10px;gap:4px}
+.pcard .pe{height:84px;border-radius:12px;display:grid;place-items:center;font-size:46px;background:linear-gradient(160deg,rgba(255,255,255,.7),rgba(240,225,250,.5))}
+.pcard b{font-size:13px;font-weight:500;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.pcard small{font-size:11px;color:var(--muted)}
+.qty{display:flex;align-items:center;gap:8px;flex:none}.qty button{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ffd36b,#ffb347);color:#5a3a00;font-weight:700}.qty i{font-style:normal;min-width:14px;text-align:center}
+.fbar{position:sticky;bottom:calc(var(--bot) + 6px);display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:18px;margin-top:12px}.fbar small{color:var(--muted);font-size:11px}
+.ocard{display:flex;align-items:center;gap:10px;width:236px;padding:10px 12px 10px 10px;border-radius:16px;background:linear-gradient(135deg,#fff3e2,#ffe0e8);color:#5a3a3a;position:relative;box-shadow:0 3px 10px rgba(80,40,90,.15)}
+.ocard.food{background:linear-gradient(135deg,#fff6d6,#ffe6b8)}.ocard .oi{font-size:30px;flex:none;width:44px;height:44px;display:grid;place-items:center;background:rgba(255,255,255,.7);border-radius:12px}
+.ocard .ot{min-width:0;flex:1}.ocard small{display:block;font-size:11px;color:#a07070}.ocard b{display:block;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.ocard span{font-size:12px;color:#c0566a}
+.ocard em{position:absolute;right:10px;top:8px;font-style:normal;font-size:10px;color:#c39a8a}
+/* ===== 小王子：淡色页面 + 透明玻璃 ===== */
+.pk-prince .app,.pk-prince #sheet,.pk-prince #wsheet,.pk-prince #banner{--text:#4b3763;--muted:#8a76a6;--accent:#b35e8c;--gold:#c08a2e;--line:rgba(150,120,190,.28);
+  --glass:rgba(255,255,255,.42);--glass2:rgba(255,255,255,.62);--tabub:rgba(255,255,255,.7);--chatov:rgba(255,250,255,.08);
+  --hdbg:rgba(255,255,255,.3);--inbg:rgba(255,255,255,.42);--sheetbg:rgba(250,245,255,.86);color:var(--text);text-shadow:none}
+.pk-prince .app{background:var(--pagebg) 22% 100%/cover no-repeat,#e6dcf2;backdrop-filter:none;-webkit-backdrop-filter:none}
+.pk-prince .app.bg{background-size:cover}
+.pk-prince .app>header{position:relative;background:var(--hdbg);border-bottom:0;backdrop-filter:blur(14px) saturate(130%);-webkit-backdrop-filter:blur(14px) saturate(130%);box-shadow:0 1px 0 rgba(255,255,255,.6)}
+.pk-prince .app>header::after{content:'';position:absolute;left:50%;bottom:-9px;width:170px;height:18px;transform:translateX(-50%);background:url(themes/prince/deco/div-rose.webp) center/contain no-repeat;pointer-events:none;z-index:3}
+.pk-prince .app>header .title{font-family:"Songti SC","STSong",serif;font-weight:700;letter-spacing:.04em;color:#6a4a7e}
+.pk-prince .app>header .hbtn{color:#9a5a86}
+.pk-prince .glass,.pk-prince .card{background:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.7);backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%);box-shadow:0 6px 18px rgba(120,90,170,.12),inset 0 1px 0 rgba(255,255,255,.7)}
+.pk-prince .card h3{color:#8a4f7a;font-family:"Songti SC","STSong",serif;display:flex;align-items:center;gap:6px}
+.pk-prince .card h3::before{content:'';flex:none;width:22px;height:18px;background:url(themes/prince/deco/i-crown.webp) center/contain no-repeat}
+.pk-prince .field input,.pk-prince .field textarea,.pk-prince .field select,.pk-prince #sheet textarea,.pk-prince .inputbar textarea{background:rgba(255,255,255,.6);border-color:rgba(170,140,210,.35)}
+.pk-prince ::placeholder{color:#a898bd}
+.pk-prince .btn{background:rgba(255,255,255,.6);border-color:rgba(170,140,210,.3)}
+.pk-prince .btn.danger{color:#c2405c}
+.pk-prince .tag{background:rgba(214,170,90,.18);color:#a8742a}.pk-prince .tag.blue{background:rgba(179,94,140,.12);color:#a5527f}
+.pk-prince .sw,.pk-prince .chk input{-webkit-appearance:none;appearance:none;width:52px;height:25px;border-radius:0;background:url(themes/prince/deco/tog-off.webp) center/contain no-repeat;border:0;margin:0;flex:none}
+.pk-prince .sw::after{display:none}
+.pk-prince .sw.on,.pk-prince .chk input:checked{background-image:url(themes/prince/deco/tog-on.webp)}
+.pk-prince .tabbar{background:rgba(255,255,255,.45);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.7)}
+.pk-prince .tabbar button.on{color:#a5527f}
+.pk-prince .av{background:linear-gradient(135deg,#f6d9e8,#d9c8f2);color:#6a4a7e}
+.pk-prince .ta .bubble{border-color:rgba(255,255,255,.85);box-shadow:0 2px 8px rgba(120,90,170,.1)}
+.pk-prince #wsheet .grab{background:rgba(120,90,170,.25)}
+.pk-prince #wsheet::before,.pk-prince #wsheet::after{content:'';position:absolute;top:-14px;width:84px;height:78px;background:center/contain no-repeat;pointer-events:none;z-index:2}
+.pk-prince #wsheet::before{left:-6px;background-image:url(themes/prince/deco/corner-l.webp)}.pk-prince #wsheet::after{right:-6px;background-image:url(themes/prince/deco/corner-r.webp)}
+.pk-prince #toast{background:rgba(255,248,255,.92);color:#4b3763;border-color:rgba(170,140,210,.35);box-shadow:0 6px 20px rgba(80,50,120,.2)}
+.pk-prince #mask{background:rgba(70,50,110,.28)}
+.pk-prince .tlabel,.pk-prince .evt{text-shadow:0 1px 2px rgba(255,255,255,.8)}
+.pk-prince .gift2 small{text-shadow:0 1px 2px rgba(255,255,255,.8)}
+.pk-prince .pdiv{display:block;height:22px;margin:16px auto;background:url(themes/prince/deco/div-moon.webp) center/contain no-repeat;opacity:.9}
+.pk-prince .empty{color:var(--muted)}
 </style>
 </head>
 <body>
@@ -600,6 +659,19 @@ input,textarea,select{font:inherit;color:var(--text)}
     <div class="body" id="chatList"></div>
     <div class="inputbar"><button class="plusb" id="chatPlus" aria-label="更多">＋</button><textarea id="chatInput" rows="1" placeholder="发消息…"></textarea><button class="send alt" id="chatSend">✦</button></div>
     <div id="plusPanel"></div>
+  </section>
+  <section class="app" id="app-peek">
+    <header><button class="hbtn" data-back>‹ 返回</button><div class="title" id="peekTitle">查手机</div><button class="hbtn" id="peekRe">刷新</button></header>
+    <div class="body pad" id="peekBody"></div>
+    <nav class="tabbar" id="peekTabs"><button data-pt="chats" class="on"><i>💬</i>聊天</button><button data-pt="memo"><i>📝</i>备忘录</button><button data-pt="search"><i>🔍</i>搜索</button><button data-pt="album"><i>🖼️</i>相册</button><button data-pt="cart"><i>🛒</i>购物车</button></nav>
+  </section>
+  <section class="app" id="app-shop">
+    <header><button class="hbtn" data-back>‹ 返回</button><div class="title">淘宝</div><button class="hbtn" id="shopOrders">订单</button></header>
+    <div class="body pad" id="shopBody"></div>
+  </section>
+  <section class="app" id="app-food">
+    <header><button class="hbtn" data-back>‹ 返回</button><div class="title" id="foodTitle">美团外卖</div><button class="hbtn" id="foodOrders">订单</button></header>
+    <div class="body pad" id="foodBody"></div>
   </section>
   <section class="app" id="app-diary">
     <header><button class="hbtn" data-back>‹ 返回</button><div class="title" id="diaryTitle">日记</div><span class="hbtn"></span></header>
@@ -650,7 +722,7 @@ input,textarea,select{font:inherit;color:var(--text)}
         <div class="field"><label>开场白</label><textarea data-c="first_mes"></textarea><div class="hint">可在下方用开场白开始一段线下剧情。</div></div>
         <div class="field"><label>对话示例</label><textarea data-c="mes_example"></textarea></div>
         <div class="field"><label>外貌（生图用）</label><textarea data-c="look" style="min-height:70px" placeholder="比如：黑色短发、深邃眼睛、高个子、常穿黑色西装"></textarea></div>
-        <div class="field"><label>语音音色</label><input data-c="voice" placeholder="用语音接口时填音色名，比如 alloy / onyx"><div class="hint">不填就用设置里的默认音色。用系统朗读时可以填系统声音名里的一个词。</div></div>
+        <div class="field"><label>语音音色</label><input data-c="voice" placeholder="MiniMax 填 voice_id（如 male-qn-jingying），OpenAI 兼容填 alloy 之类"><div class="hint">不填就用设置里的默认音色。用系统朗读时可以填系统声音名里的一个词。</div></div>
         <div class="btns" id="charBtns"><button class="btn pri" id="charChat">和TA聊天</button><button class="btn danger" id="charDel">删除角色</button></div>
       </div>
       <div class="card glass" id="meCard">
@@ -678,6 +750,7 @@ input,textarea,select{font:inherit;color:var(--text)}
           <div><div class="thumb" id="thWall"></div><div class="btns" style="margin-top:8px"><button class="btn" data-img="wallpaper">桌面</button></div></div>
           <div><div class="thumb" id="thLock"></div><div class="btns" style="margin-top:8px"><button class="btn" data-img="lockWallpaper">锁屏</button></div></div>
           <div><div class="thumb" id="thChat"></div><div class="btns" style="margin-top:8px"><button class="btn" data-img="chatBg">聊天</button></div></div>
+          <div id="thPageW"><div class="thumb" id="thPage"></div><div class="btns" style="margin-top:8px"><button class="btn" data-img="pageBg">页面</button></div></div>
         </div>
         <div class="hint" style="margin-top:10px;font-size:11.5px;color:var(--muted)">长按对应按钮可恢复成主题自带的壁纸。</div>
         <div class="hint" style="margin-top:12px;font-size:12px;color:var(--muted)">内置壁纸（点一下选择用在哪里）</div><div class="wpgal" id="wpGal"></div>
@@ -720,10 +793,23 @@ input,textarea,select{font:inherit;color:var(--text)}
       </div>
       <div class="card glass">
         <h3>语音</h3>
-        <div class="field"><label>TA 的语音条用什么读</label><select data-s="ttsMode"><option value="system">手机自带朗读（免费）</option><option value="api">语音接口（OpenAI 兼容 /audio/speech）</option></select></div>
+        <div class="field"><label>TA 的语音条用什么读</label><select data-s="ttsMode"><option value="system">手机自带朗读（免费）</option><option value="minimax">MiniMax 语音（国内版）</option><option value="api">语音接口（OpenAI 兼容 /audio/speech）</option></select></div>
+        <div data-show="ttsMode=api">
         <div class="field"><label>语音接口地址（留空就用主体 AI 的）</label><input data-s="ttsBase" placeholder="https://api.openai.com/v1"></div>
         <div class="field"><label>语音接口密钥（留空就用主体 AI 的）</label><input data-s="ttsKey" type="password"></div>
-        <div class="two"><div class="field"><label>模型</label><input data-s="ttsModel" placeholder="tts-1"></div><div class="field"><label>默认音色</label><input data-s="ttsVoice" placeholder="alloy"></div></div>
+        <div class="two"><div class="field"><label>模型</label><input data-s="ttsModel" list="ttsModelList" placeholder="tts-1"><datalist id="ttsModelList"></datalist></div><div class="field"><label>默认音色</label><input data-s="ttsVoice" placeholder="alloy"></div></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn" data-fm="tts">拉取模型</button></div>
+        </div>
+        <div data-show="ttsMode=minimax">
+        <div class="field"><label>MiniMax 接口地址</label><input data-s="mmHost" placeholder="https://api.minimaxi.com"></div>
+        <div class="field"><label>API Key</label><input data-s="mmKey" type="password"></div>
+        <div class="field"><label>GroupId（账户管理 → 基本信息里能看到，有的 Key 不填也行）</label><input data-s="mmGroup"></div>
+        <div class="two"><div class="field"><label>模型</label><input data-s="mmModel" list="mmModelList"><datalist id="mmModelList"><option value="speech-02-hd"><option value="speech-02-turbo"><option value="speech-01-hd"><option value="speech-01-turbo"></datalist></div><div class="field"><label>语速</label><input data-s="mmSpeed" type="number" step="0.1" min="0.5" max="2"></div></div>
+        <div class="field"><label>默认音色 voice_id</label><input data-s="mmVoice" list="mmVoiceList"><datalist id="mmVoiceList"></datalist></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn" id="mmVoices">拉取音色</button></div>
+        </div>
+        <div class="field" data-hide="ttsMode=system"><label>试听这句话</label><input id="ttsTestText" value="今天的星星好亮，我想把最亮的那颗摘给你。"></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn pri" id="ttsTest">试听</button></div>
         <div class="hint">语音生成一次会存下来，重复播放不再花钱。每个角色的音色在「角色」里单独设。</div>
       </div>
       <div class="card glass">
@@ -739,15 +825,33 @@ input,textarea,select{font:inherit;color:var(--text)}
         <h3>识图（看懂你发的照片）</h3>
         <div class="field"><label>识图接口地址（留空就用主体 AI 的）</label><input data-s="visBase" placeholder="https://..."></div>
         <div class="field"><label>识图密钥（留空就用主体 AI 的）</label><input data-s="visKey" type="password"></div>
-        <div class="field"><label>识图模型（留空就用主体模型）</label><input data-s="visModel" placeholder="gpt-4o-mini / gemini-2.0-flash / qwen-vl-plus"></div>
+        <div class="field"><label>识图模型（留空就用主体模型）</label><input data-s="visModel" list="visModelList" placeholder="gpt-4o-mini / gemini-2.0-flash / qwen-vl-plus"><datalist id="visModelList"></datalist></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn" data-fm="vis">拉取模型</button></div>
         <div class="hint">发照片时会先让这个模型看一眼、写下照片内容，TA 就是靠这段描述「看」照片的。主体模型不支持看图的话（比如 DeepSeek），这里要单独填一个能看图的模型。</div>
       </div>
       <div class="card glass">
         <h3>生图（TA 拍照片 · 剧情配图）</h3>
-        <div class="field"><label>生图接口地址（OpenAI 兼容 /images/generations，留空就用主体 AI 的）</label><input data-s="imgBase" placeholder="https://..."></div>
+        <div class="field"><label>用哪家生图</label><select data-s="imgProv"><option value="openai">通用接口（OpenAI 兼容 /images/generations）</option><option value="nai">NovelAI（官方 / 第三方中转）</option></select></div>
+        <div data-show="imgProv=openai">
+        <div class="field"><label>生图接口地址（留空就用主体 AI 的）</label><input data-s="imgBase" placeholder="https://..."></div>
         <div class="field"><label>生图密钥（留空就用主体 AI 的）</label><input data-s="imgKey" type="password"></div>
-        <div class="two"><div class="field"><label>生图模型</label><input data-s="imgModel" placeholder="gpt-image-1 / dall-e-3 / flux"></div><div class="field"><label>尺寸</label><input data-s="imgSize" placeholder="1024x1024"></div></div>
+        <div class="two"><div class="field"><label>生图模型</label><input data-s="imgModel" list="imgModelList" placeholder="gpt-image-1 / flux"><datalist id="imgModelList"></datalist></div><div class="field"><label>尺寸</label><input data-s="imgSize" placeholder="1024x1024"></div></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn" data-fm="img">拉取模型</button></div>
         <div class="field"><label>画风（每张图都会带上）</label><input data-s="imgStyle"></div>
+        </div>
+        <div data-show="imgProv=nai">
+        <div class="field"><label>接口地址（留空走 NovelAI 官方；用第三方就填中转给的地址）</label><input data-s="naiHost" placeholder="https://image.novelai.net"></div>
+        <div class="field"><label>Token / 密钥（官方在 NovelAI 账户设置 → Get Persistent API Token）</label><input data-s="naiKey" type="password" placeholder="pst-..."></div>
+        <div class="two"><div class="field"><label>模型</label><select data-s="naiModel"><option value="nai-diffusion-4-5-full">V4.5 Full</option><option value="nai-diffusion-4-5-curated">V4.5 Curated</option><option value="nai-diffusion-4-full">V4 Full</option><option value="nai-diffusion-4-curated-preview">V4 Curated</option><option value="nai-diffusion-3">V3</option><option value="nai-diffusion-furry-3">Furry V3</option></select></div>
+          <div class="field"><label>尺寸</label><select data-s="naiSize"><option value="832x1216">竖图 832×1216</option><option value="1216x832">横图 1216×832</option><option value="1024x1024">方图 1024×1024</option><option value="512x768">小竖图 512×768</option></select></div></div>
+        <div class="two"><div class="field"><label>采样器</label><select data-s="naiSampler"><option value="k_euler_ancestral">Euler Ancestral</option><option value="k_euler">Euler</option><option value="k_dpmpp_2s_ancestral">DPM++ 2S Ancestral</option><option value="k_dpmpp_2m_sde">DPM++ 2M SDE</option><option value="k_dpmpp_2m">DPM++ 2M</option><option value="k_dpmpp_sde">DPM++ SDE</option></select></div>
+          <div class="field"><label>步数 / 引导</label><div class="two"><input data-s="naiSteps" type="number" min="1" max="50"><input data-s="naiScale" type="number" step="0.5" min="0" max="10"></div></div></div>
+        <div class="field"><label>固定正面词（画师串、画风，每张图都带，英文 tag）</label><textarea data-s="naiPos" placeholder="artist:xxx, best quality, amazing quality, very aesthetic, absurdres"></textarea></div>
+        <div class="field"><label>负面词</label><textarea data-s="naiNeg"></textarea></div>
+        <div class="hint" style="margin-bottom:12px">NAI 只认英文 tag：TA 拍照、剧情配图时，会先用主体 AI 把画面翻成 tag 再交给 NAI。</div>
+        </div>
+        <div class="field"><label>生图测试（写一句想看的画面，中文也行）</label><input id="imgTestText" value="星空下的小王子和狐狸，坐在玫瑰旁边"></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn pri" id="imgTest">生图测试</button></div>
         <label class="chk"><input type="checkbox" data-s="storyAutoImg">见面剧情每段自动配图（比较费钱）</label>
         <div class="hint">不填生图模型也能玩：TA 发的照片会变成「文字照片」卡片。角色长什么样，在「角色」里的「外貌」填，生图时会带上。</div>
       </div>
@@ -817,9 +921,9 @@ const DB={db:null,
   get(k){return new Promise((res,rej)=>{const q=this.db.transaction('kv').objectStore('kv').get(k);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})},
   set(k,v){return new Promise((res,rej)=>{const t=this.db.transaction('kv','readwrite');t.objectStore('kv').put(v,k);t.oncomplete=res;t.onerror=()=>rej(t.error)})}};
 const DEFAULTS={
-  settings:{baseUrl:'',apiKey:'',model:'',temperature:0.9,maxTokens:1200,contextSize:40,summaryEvery:50,storyLength:400,replyDelay:2,showLock:true,timeAware:true,diaryCaught:true,ttsMode:'system',ttsBase:'',ttsKey:'',ttsModel:'tts-1',ttsVoice:'alloy',visBase:'',visKey:'',visModel:'',imgBase:'',imgKey:'',imgModel:'',imgSize:'1024x1024',imgStyle:'精致的日系动漫插画风格，柔和光线',storyAutoImg:false,ghRepo:'',ghToken:'',ghAuto:true,ghLast:0,proactive:true,proMin:2,proMax:6,quietStart:1,quietEnd:8},
+  settings:{baseUrl:'',apiKey:'',model:'',temperature:0.9,maxTokens:1200,contextSize:40,summaryEvery:50,storyLength:400,replyDelay:2,showLock:true,timeAware:true,diaryCaught:true,ttsMode:'system',ttsBase:'',ttsKey:'',ttsModel:'tts-1',ttsVoice:'alloy',visBase:'',visKey:'',visModel:'',imgBase:'',imgKey:'',imgModel:'',imgSize:'1024x1024',imgStyle:'精致的日系动漫插画风格，柔和光线',storyAutoImg:false,imgProv:'openai',naiHost:'',naiKey:'',naiModel:'nai-diffusion-4-5-full',naiSize:'832x1216',naiSampler:'k_euler_ancestral',naiSteps:28,naiScale:5,naiPos:'',naiNeg:'lowres, bad anatomy, bad hands, text, error, missing fingers, worst quality, low quality, blurry, watermark',mmHost:'https://api.minimaxi.com',mmKey:'',mmGroup:'',mmModel:'speech-02-hd',mmVoice:'female-shaonv',mmSpeed:1,ghRepo:'',ghToken:'',ghAuto:true,ghLast:0,proactive:true,proMin:2,proMax:6,quietStart:1,quietEnd:8},
   user:{name:'我',persona:'',avatar:''},
-  stickers:[],moments:[],diaries:{},wallet:{balance:5200},
+  stickers:[],moments:[],diaries:{},wallet:{balance:5200},orders:[],peek:{},
   theme:{wallpaper:'',lockWallpaper:'',chatBg:'',icons:{}},
   home:{pages:null},
   world:{books:[],scanDepth:4,budget:4000,last:[]},
@@ -850,6 +954,9 @@ Object.defineProperty(S,'memory',{get:()=>curT()?.mem||{summary:'',upTo:0},set:v
 
 /* ========== 图标 ========== */
 const SVG={
+  peek:'<svg viewBox="0 0 24 24"><rect x="6" y="3" width="10" height="18" rx="2"/><circle cx="16" cy="14" r="3.5"/><path d="M18.5 16.5L21 19"/></svg>',
+  shop:'<svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>',
+  food:'<svg viewBox="0 0 24 24"><path d="M4 12h16a8 8 0 0 1-16 0z"/><path d="M9 8c0-2 2-2 2-4M13 8c0-2 2-2 2-4"/></svg>',
   chat:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/></svg>',
   story:'<svg viewBox="0 0 24 24"><path d="M15.5 4.5a7.5 7.5 0 1 0 4 13.6A8 8 0 0 1 15.5 4.5z"/><path d="M3 21c3-1.5 6-1.5 9 0s6 1.5 9 0"/></svg>',
   memory:'<svg viewBox="0 0 24 24"><path d="M12 3l2.3 4.8 5.2.7-3.8 3.6.9 5.2L12 14.8 7.4 17.3l.9-5.2L4.5 8.5l5.2-.7z"/></svg>',
@@ -859,7 +966,7 @@ const SVG={
   preset:'<svg viewBox="0 0 24 24"><path d="M5 5v14M12 5v14M19 5v14"/><circle cx="5" cy="9" r="2" fill="#0b1a33"/><circle cx="12" cy="15" r="2" fill="#0b1a33"/><circle cx="19" cy="8" r="2" fill="#0b1a33"/></svg>',
   games:'<svg viewBox="0 0 24 24"><path d="M5 4.5h10.5a2 2 0 0 1 2 2V20H7a2 2 0 0 1-2-2z"/><path d="M5 18a2 2 0 0 1 2-2h10.5"/><path d="M10.5 7.5l1 2.1 2.2.3-1.6 1.5.4 2.2-2-1.1-2 1.1.4-2.2-1.6-1.5 2.2-.3z"/></svg>',
   settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>'};
-const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'world',name:'世界书'},{id:'preset',name:'预设'},{id:'games',name:'游戏'},{id:'settings',name:'设置'}];
+const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'world',name:'世界书'},{id:'preset',name:'预设'},{id:'games',name:'游戏'},{id:'peek',name:'查手机'},{id:'shop',name:'淘宝'},{id:'food',name:'美团'},{id:'settings',name:'设置'}];
 const DOCK=['chat','story','memory','settings'];
 const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'},{id:'2048',name:'2048',sub:'小王子陪你凑 2048，从一颗星星合成到月亮。五套皮肤：小王子、粉色毛绒、红格子田园、金棕酒馆、珍珠玫瑰。',src:'games/2048.html',cover:'games/2048/prince/t2048.webp',fit:'contain',bg:'url(games/2048/prince/bg.jpg) center/cover'}];
 const appIcon=id=>{const c=S.theme.icons[id],p=curPack().icons?.[id];return c?`<div class="ico"><img src="${c}"></div>`:p?`<div class="ico pk"><img src="${p}" alt=""></div>`:`<div class="ico">${SVG[id]}</div>`};
@@ -869,9 +976,9 @@ const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar
 const PRINCE_ST=['a00','a01','a02','a03','a04','a05','a08','a09','a10','a11','a12','a13','a16','a17','a18','a19','a20','a21','a22','a23','a25','a28','a29','a30','a32','a33','a35','a36','b00','b01','b02','b03','b04','b05','b07','b08','b09','b12','b13','b14','b15','b16','b17','b18','b19','b21','b22','b23','b24','b27','b28','b30','b32'].map(n=>`themes/prince/st/${n}.webp`);
 const PACKS={
   moonsea:{name:'月光海',desc:'玻璃质感的月夜海面',vars:{}},
-  prince:{name:'小王子',desc:'毛线星球、狐狸与玫瑰',cover:'themes/prince/wall.jpg',wall:'themes/prince/wall.jpg',chat:'themes/prince/chat.jpg',mcover:'themes/prince/cover.jpg',
+  prince:{name:'小王子',desc:'毛线星球、狐狸与玫瑰',cover:'themes/prince/wall.jpg',wall:'themes/prince/wall.jpg',chat:'themes/prince/chat.jpg',mcover:'themes/prince/cover.jpg',page:'themes/prince/page.jpg',pages:['themes/prince/page.jpg','themes/prince/page2.jpg'],
     art:{rpOpen:'themes/prince/rp-open.webp',tfOpen:'themes/prince/rp-fox.webp',bnTf:'themes/prince/bn-transfer.webp',bnRp:'themes/prince/bn-redpack.webp'},
-    icons:Object.fromEntries(['chat','story','memory','char','world','preset','theme','games','settings'].map(k=>[k,`themes/prince/i-${k}.png`])),
+    icons:Object.fromEntries(['chat','story','memory','char','world','preset','theme','games','settings','peek','shop','food'].map(k=>[k,`themes/prince/i-${k}.png`])),
     stickers:PRINCE_ST,walls:['themes/prince/wall.jpg','themes/prince/wall2.jpg'],woodfish:{idle:'themes/prince/wf-idle.webp',hit:'themes/prince/wf-hit.webp'},
     decor:[['a17',2,2],['b19',1,1],['a13',1,1],['a08',2,1],['b24',2,2],['a10',2,1]],
     vars:{'--accent':'#f6d79a','--gold':'#ffe4a3','--muted':'#dccfe9','--text':'#fff9f0','--line':'rgba(255,236,200,.30)','--glass':'rgba(255,240,220,.12)','--glass2':'rgba(255,240,220,.2)',
@@ -888,6 +995,7 @@ function applyTheme(){
   for(const k in P.vars)root.setProperty(k,P.vars[k]);
   const H=document.documentElement;for(const k in PACKS)H.classList.toggle('pk-'+k,P===PACKS[k]);
   const t={...S.theme,wallpaper:S.theme.wallpaper||P.wall||'',lockWallpaper:S.theme.lockWallpaper||P.lock||'',chatBg:S.theme.chatBg||P.chat||''},ph=$('#phone');
+  const pg=S.theme.pageBg||P.page;if(pg)root.setProperty('--pagebg',`url(${pg})`);else root.removeProperty('--pagebg');
   ph.style.background=t.wallpaper?`center/cover url(${t.wallpaper})`:'';document.documentElement.style.backgroundImage='';bottomColor(t.wallpaper);
   $('#lock').style.background=t.lockWallpaper?`center/cover url(${t.lockWallpaper})`:(t.wallpaper?`center/cover url(${t.wallpaper})`:'');
   for(const id of ['chat','story']){const a=$('#app-'+id);if(t.chatBg){a.classList.add('bg');a.style.backgroundImage=`linear-gradient(var(--chatov),var(--chatov)),url(${t.chatBg})`}else{a.classList.remove('bg');a.style.backgroundImage=''}}
@@ -1395,7 +1503,7 @@ function threadOf(cid){return S.threads.find(t=>t.type==='single'&&t.members[0]=
 const charAv=(c,cls='av')=>c?.avatar?`<img class="${cls}" src="${c.avatar}" alt="">`:`<div class="${cls}">${esc((c?.name||'?').slice(0,1))}</div>`;
 function threadAv(T,cls='av'){if(!isGroup(T))return charAv(charById(T.members[0]),cls);const cs=tChars(T).slice(0,4);return `<div class="${cls} gav">${cs.map(c=>charAv(c,'gi')).join('')}</div>`}
 function syncUnread(){S.state.unread=S.threads.reduce((a,t)=>a+(t.unread||0),0)}
-function preview(m){if(!m)return '';const nm=m.who&&isGroup(curT())?'':'';switch(m.type){case 'image':return '[照片]';case 'voice':return '[语音]';case 'sticker':return '[表情包]';case 'redpacket':return '[红包] '+(m.data?.note||'');case 'transfer':return '[转账] ¥'+(+m.data?.amount||0).toFixed(2);default:return nm+m.content}}
+function preview(m){if(!m)return '';const nm=m.who&&isGroup(curT())?'':'';switch(m.type){case 'image':return '[照片]';case 'voice':return '[语音]';case 'sticker':return '[表情包]';case 'redpacket':return '[红包] '+(m.data?.note||'');case 'transfer':return '[转账] ¥'+(+m.data?.amount||0).toFixed(2);case 'order':return (m.data?.kind==='food'?'[外卖] ':'[礼物] ')+(m.data?.name||'');default:return nm+m.content}}
 
 /* ========== 时间 & 主动消息 & 通知 ========== */
 const PERIOD=h=>h<5?'凌晨':h<8?'清晨':h<11?'上午':h<13?'中午':h<17?'下午':h<19?'傍晚':h<23?'晚上':'深夜';
@@ -1455,7 +1563,7 @@ $('#gameClose').onclick=()=>{$('#gameView').classList.remove('open');const f=$('
 /* ========== App 页面栈 ========== */
 const STACK=[];
 document.addEventListener('click',e=>{const o=e.target.closest('[data-open]');if(o&&!editing())openApp(o.dataset.open);if(e.target.closest('[data-back]'))popApp()});
-const RENDER={world:()=>{wb.book=wb.entry=null;wbRender()},preset:()=>{ps.edit=null;psRender()},games:renderGames,chat:renderChat,story:renderStory,memory:renderMemory,char:renderChar,theme:renderTheme,settings:renderSettings,msgs:()=>renderMsgs(),diary:renderDiary};
+const RENDER={world:()=>{wb.book=wb.entry=null;wbRender()},preset:()=>{ps.edit=null;psRender()},games:renderGames,chat:renderChat,story:renderStory,memory:renderMemory,char:renderChar,theme:renderTheme,settings:renderSettings,msgs:()=>renderMsgs(),diary:renderDiary,peek:renderPeek,shop:renderShop,food:renderFood};
 function openApp(id){
   if(id==='chat'&&!STACK.length&&!openApp._direct)id='msgs';openApp._direct=false;
   const el=$('#app-'+id);if(!el)return;
@@ -1464,7 +1572,7 @@ function openApp(id){
   $$('.app:not(#gameView)').forEach(a=>a.classList.toggle('open',STACK.includes(a.id.slice(4))));
   RENDER[id]?.();if(id==='chat')clearUnread(curT());underColor();
 }
-function popApp(){const id=STACK.pop();if(id){$('#app-'+id)?.classList.remove('open');if(id==='diary')afterDiary()}const top=STACK.at(-1);if(top)RENDER[top]?.();else renderHome();underColor()}
+function popApp(){const id=STACK.pop();if(id){$('#app-'+id)?.classList.remove('open');if(id==='diary')afterDiary();if(id==='peek')afterPeek()}const top=STACK.at(-1);if(top)RENDER[top]?.();else renderHome();underColor()}
 function closeApps(){STACK.length=0;$$('.app:not(#gameView)').forEach(a=>a.classList.remove('open'));renderHome();underColor()}
 function openThread(tid){const T=S.threads.find(t=>t.id===tid);if(!T)return;S.state.cur=tid;save('state');openApp._direct=true;openApp('chat')}
 
@@ -1511,6 +1619,7 @@ function msgLine(T,m){
   else if(m.type==='sticker')body=`[表情包:${m.content}]`;
   else if(m.type==='redpacket')body=m.role==='user'?`[红包 ¥${(+D.amount).toFixed(2)}，祝福语：${D.note||'恭喜发财'}（${D.status==='claimed'?`已被${charById(D.by)?.name||''}领取`:D.status==='returned'?'已退还':'还没被领取'}）]`:`[红包:${D.amount}:${D.note||''}]`;
   else if(m.type==='transfer')body=m.role==='user'?`[转账 ¥${(+D.amount).toFixed(2)}，备注：${D.note||'无'}（${D.status==='claimed'?'已收款':D.status==='returned'?'已退还':'还没收款'}）]`:`[转账:${D.amount}:${D.note||''}]`;
+  else if(m.type==='order')body=m.role==='user'?`[${D.kind==='food'?'点了外卖':'在淘宝下单'}给你：${D.name}，¥${(+D.price).toFixed(2)}（${D.status==='delivered'?'已送达':'配送中'}）]`:`[${D.kind==='food'?'外卖':'礼物'}:${D.name}:${D.price}]`;
   if(m.role==='assistant')return isGroup(T)&&m.mode==='online'?`【${nm}】${body}`:body;
   return `${m.role==='event'?'[场景]':m.mode==='online'?'[线上·手机消息]':'[线下·见面]'} ${body}`;
 }
@@ -1542,7 +1651,7 @@ function buildPrompt(T,mode,extra,now=Date.now()){
     sys+=grp?`\n【当前：线上群聊】大家正在群里发消息。像真人在群里聊天那样：口语化、简短，可以几个人接连发言、互相回应，不是每个人每次都要说话，按性格决定谁说话。每条消息单独一行，开头用【名字】标明是谁发的，例如：\n【${cs[0]?.name||'甲'}】哈哈哈\n【${cs[1]?.name||cs[0]?.name||'乙'}】你又来\n只输出消息本身，不写动作描写或旁白。`
       :`\n【当前：线上】${P.online||DEFAULT_PRESET.online}`;
     const memes=allMemes().map(x=>x.name).slice(0,60).join('、');
-    sys+=`\n\n【手机消息的特殊格式】在合适的时候（不要每次都用）可以单独一行写：\n[语音] 要说的话 —— 发一条语音\n[表情包:名字] —— 发表情包，名字只能从这些里选：${memes}\n[照片:画面描述] —— 拍一张照片发过去，描述要具体（拍了什么、构图、光线、氛围）\n[红包:金额:祝福语] —— 发红包，例如 [红包:52.00:想你了]\n[转账:金额:备注] —— 转账\n如果${u.name}发来了还没被领取的红包或转账，可以单独一行写 [领取] 收下，或者 [退还] 退回去${grp?'（群里谁领就由谁那一行写）':''}。`;
+    sys+=`\n\n【手机消息的特殊格式】在合适的时候（不要每次都用）可以单独一行写：\n[语音] 要说的话 —— 发一条语音\n[表情包:名字] —— 发表情包，名字只能从这些里选：${memes}\n[照片:画面描述] —— 拍一张照片发过去，描述要具体（拍了什么、构图、光线、氛围）\n[红包:金额:祝福语] —— 发红包，例如 [红包:52.00:想你了]\n[转账:金额:备注] —— 转账\n[礼物:物品名:价格] —— 在淘宝给${u.name}买东西寄过去（偶尔、有理由时才用）\n[外卖:店名·菜品:价格] —— 给${u.name}点外卖（比如知道对方没吃饭、熬夜、心情不好）\n如果${u.name}发来了还没被领取的红包或转账，可以单独一行写 [领取] 收下，或者 [退还] 退回去${grp?'（群里谁领就由谁那一行写）':''}。`;
   }else sys+=`\n【当前：线下】${grp?`${cs.map(c=>c.name).join('、')}和${u.name}在现实中相处。用小说式叙述描写他们的动作、神态、语言和环境，可以写心理活动；绝不替${u.name}说话或决定${u.name}的行动。篇幅约${st.storyLength}字。`:(P.offline||DEFAULT_PRESET.offline)}`;
   const arr=[];let prev=0;
   const add=(role,content)=>{const p=arr.at(-1);if(p&&p.role===role)p.content+='\n'+content;else arr.push({role,content})};
@@ -1586,6 +1695,9 @@ function parseLine(T,line,lastWho){
   if(r=line.match(/^\[(照片|图片|自拍)[:：]\s*([^\]]+)\]$/))return {who,type:'image',content:r[2].trim(),data:{gen:'pending'}};
   if(r=line.match(/^\[表情包[:：]\s*([^\]]+)\]$/)){const x=memeByName(r[1]);return x?{who,type:'sticker',content:x.name,data:{img:x.img}}:null}
   if(r=line.match(/^\[(红包|转账)[:：]\s*([\d.]+)\s*(?:[:：]\s*([^\]]*))?\]$/))return {who,type:r[1]==='红包'?'redpacket':'transfer',content:r[3]||'',data:{amount:(+r[2]||8.88).toFixed(2),note:(r[3]||'').trim(),status:'pending'}};
+  if(r=line.match(/^\[(礼物|外卖)[:：]\s*([^:：\]]+)(?:[:：]\s*([\d.]+))?\]$/)){const kind=r[1]==='外卖'?'food':'shop',price=(+r[3]||(kind==='food'?38:99)).toFixed(2),name=r[2].trim();
+    const o={id:uid(),kind,name,price,dir:'in',cid:who,at:Date.now(),eta:Date.now()+(kind==='food'?(4+Math.random()*4):(15+Math.random()*20))*60e3,status:'paid',icon:kind==='food'?'🍱':'🎁'};S.orders.unshift(o);save('orders');
+    return {who,type:'order',content:name,data:{kind,name,price,oid:o.id,status:'paid',icon:o.icon}}}
   return {who,content:line};
 }
 let busy=false,pending=null;
@@ -1664,7 +1776,8 @@ $('#msgsBody').addEventListener('click',async e=>{
   const th=e.target.closest('[data-th]');if(th)return openThread(th.dataset.th);
   if(e.target.closest('[data-me]')){charEdit='me';return openApp('char')}
   const ch=e.target.closest('[data-ch]');if(ch){const c=charById(ch.dataset.ch);
-    const i=await actionSheet([{label:'发消息'},{label:'见面'},{label:'偷看TA的日记'},{label:'编辑资料'},{label:'删除这个角色',danger:true}],c.name);
+    const i=await actionSheet([{label:'发消息'},{label:'见面'},{label:'偷看TA的日记'},{label:'编辑资料'},{label:'删除这个角色',danger:true},{label:'查TA的手机'}],c.name);
+    if(i===5)openPeek(c.id);
     if(i===0)openThread(threadOf(c.id).id);
     if(i===1){S.state.cur=threadOf(c.id).id;save('state');openApp('story')}
     if(i===2)openDiary(c.id);
@@ -1701,6 +1814,8 @@ function bubbleHTML(T,m,i){
   if(m.type==='image')return photoHTML(m,i);
   if(m.type==='sticker')return `<div class="stk" data-i="${i}"><img src="${D.img||memeByName(m.content)?.img||''}" alt="${esc(m.content)}"></div>`;
   if(m.type==='voice'){const sec=Math.max(1,Math.min(60,Math.round(m.content.length/4)));return `<div class="bubble voice" data-i="${i}" data-voice="${i}" style="width:${Math.min(70+sec*5,210)}px"><span class="vw"><i></i><i></i><i></i></span><span class="vs">${sec}''</span></div>${m.showText?`<div class="vtext">${esc(m.content)}</div>`:''}`}
+  if(m.type==='order'){const f=D.kind==='food',o=S.orders.find(x=>x.id===D.oid),st=(o?.status||D.status)==='delivered'?'已送达':f?'骑手配送中':'已发货';
+    return `<div class="ocard ${f?'food':'shop'}" data-i="${i}" data-order="${i}"><div class="oi">${esc(D.icon||(f?'🍱':'🎁'))}</div><div class="ot"><small>${f?(me?'我给你点的外卖':'给你点了外卖'):(me?'我送你的礼物':'送你一份礼物')}</small><b>${esc(D.name)}</b><span>¥${(+D.price).toFixed(2)} · ${st}</span></div><em>${f?'美团外卖':'淘宝'}</em></div>`}
   if(m.type==='redpacket'||m.type==='transfer'){const rp=m.type==='redpacket',st=D.status,A=curPack().art;
     if(A){const sub=st==='claimed'?(rp?'已被领取':'已收款'):st==='returned'?'已退还':rp?(me?'等待对方领取':'点开领取红包'):(me?'等待对方收款':'点开收款');
       return `<div class="gift2 ${rp?'rp':'tf'} ${st!=='pending'?'done':''}" data-i="${i}" data-gift="${i}"><div class="g2a" style="background-image:url(${rp?A.bnRp:A.bnTf})"><b>${rp?esc(D.note||'大吉大利'):'¥'+(+D.amount).toFixed(2)}</b></div><small>${rp?'🧧':'¥'} ${sub}${!rp&&D.note&&D.note!=='转账给你'?' · '+esc(D.note):''}</small></div>`}
@@ -1738,11 +1853,11 @@ $('#chatSend').onclick=()=>{
 $('#chatMore').onclick=async()=>{
   const T=curT(),grp=isGroup(T);
   const opts=[{label:'🌙 见面（线下剧情）',k:'story'},{label:'📖 长期记忆',k:'mem'}];
-  if(!grp)opts.push({label:'🔍 偷看TA的日记',k:'diary'});
+  if(!grp)opts.push({label:'🔍 偷看TA的日记',k:'diary'},{label:'📱 查TA的手机',k:'peek'});
   if(grp)opts.push({label:'👥 群成员和群名',k:'grp'});
   opts.push({label:'🧹 清空这里的聊天和剧情',k:'clear',danger:true});
   const i=await actionSheet(opts,tName(T));if(i<0)return;const k=opts[i].k;
-  if(k==='story')openApp('story');if(k==='mem')openApp('memory');if(k==='diary')openDiary(T.members[0]);
+  if(k==='story')openApp('story');if(k==='mem')openApp('memory');if(k==='diary')openDiary(T.members[0]);if(k==='peek')openPeek(T.members[0]);
   if(k==='grp'){const r=await formSheet('群设置',[{k:'name',t:'text',l:'群名'},{k:'members',t:'multi',l:'群成员',opts:S.chars.map(c=>[c.id,c.name])}],{name:T.name,members:[...T.members]});
     if(r&&r.members?.length){const add=r.members.filter(x=>!T.members.includes(x));T.name=(r.name||'').trim();T.members=r.members;saveThreads();if(add.length)pushMsg(T,'online','event',`${S.user.name}邀请${add.map(x=>charById(x)?.name).join('、')}加入了群聊`);renderChat()}}
   if(k==='clear'){if(await actionSheet([{label:'确定清空',danger:true}])!==0)return;T.msgs=[];T.mem.upTo=0;saveMsgs(T);saveMem(T);renderChat()}
@@ -1785,6 +1900,7 @@ async function playVoice(T,m,el){
   const st=S.settings,c=charById(m.who)||charById(T.members[0]);
   const done=()=>{el?.classList.remove('play');if(vPlaying===el)vPlaying=null};
   try{
+    if(!m.audio&&st.ttsMode==='minimax'&&m.role!=='user'){m.audio=await mmSpeak(m.content,c?.voice);saveMsgs(T)}
     if(m.audio||(st.ttsMode==='api'&&m.role!=='user')){
       if(!m.audio){const base=(st.ttsBase||st.baseUrl).replace(/\/+$/,''),key=st.ttsKey||st.apiKey;
         const r=await fetch(base+'/audio/speech',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:st.ttsModel||'tts-1',input:m.content,voice:c?.voice||st.ttsVoice||'alloy'})});
@@ -1830,6 +1946,7 @@ async function openGift(i){
   L.addEventListener('click',e=>{if(lp){lp=0;return}const el=e.target.closest('[data-i]');if(!el)return;const i=+el.dataset.i,T=curT(),m=T.msgs[i];
     if(el.dataset.voice!==undefined){if(vPlaying===el)return stopVoice();return playVoice(T,m,el)}
     if(el.dataset.gift!==undefined)return openGift(i);
+    if(el.dataset.order!==undefined){const D=T.msgs[i].data||{},o=S.orders.find(x=>x.id===D.oid);return toast(o?`${D.name} · ${o.status==='delivered'?'已送达':'预计 '+new Date(o.eta).toTimeString().slice(0,5)+' 送达'}`:D.name)}
     if(el.dataset.pic!==undefined){const im=el.querySelector('img');if(im)return showViewer(im.src);return}
     if(!m.type)msgMenu(i)});
 })();
@@ -1964,7 +2081,7 @@ async function replyComment(p,cid,text){
 }
 
 /* ========== 识图 & 生图 ========== */
-const imgReady=()=>{const s=S.settings;return !!(s.imgModel&&(s.imgKey||s.apiKey)&&(s.imgBase||s.baseUrl))};
+const imgReady=()=>{const s=S.settings;if(s.imgProv==='nai')return !!s.naiKey;return !!(s.imgModel&&(s.imgKey||s.apiKey)&&(s.imgBase||s.baseUrl))};
 async function caption(img){
   const s=S.settings,base=(s.visBase||s.baseUrl||'').replace(/\/+$/,''),key=s.visKey||s.apiKey,model=s.visModel||s.model;
   if(!base||!key||!model)throw new Error('还没设置识图模型');
@@ -1974,6 +2091,7 @@ async function caption(img){
   const j=await r.json();const t=j.choices?.[0]?.message?.content;if(!t)throw new Error('识图没有返回内容');return clean(t);
 }
 async function genImage(desc,c){
+  if(S.settings.imgProv==='nai')return naiImage(desc,c);
   const s=S.settings,base=(s.imgBase||s.baseUrl).replace(/\/+$/,''),key=s.imgKey||s.apiKey;
   const look=c?.look?`画面中如果出现${c.name}，外貌是：${c.look}。`:'';const ulook=S.user.look?`画面中如果出现${S.user.name}，外貌是：${S.user.look}。`:'';
   const r=await fetch(base+'/images/generations',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:s.imgModel,prompt:`${desc}。${look}${ulook}${s.imgStyle||''}`,n:1,size:s.imgSize||'1024x1024'})});
@@ -1982,6 +2100,92 @@ async function genImage(desc,c){
   const src=d.b64_json?'data:image/png;base64,'+d.b64_json:d.url;if(!src)throw new Error('生图没有返回图片');
   try{const b=await (await fetch(src)).blob();return await new Promise(res=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1024/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL('image/jpeg',.88))};im.onerror=()=>res(src);im.src=URL.createObjectURL(b)})}catch(_){return src}
 }
+
+/* ---------- NovelAI 生图 ---------- */
+async function unzipFirst(buf){
+  const u=new Uint8Array(buf),dv=new DataView(buf);
+  if(u[0]===0x89&&u[1]===0x50)return new Blob([u],{type:'image/png'});
+  if(u[0]===0xff&&u[1]===0xd8)return new Blob([u],{type:'image/jpeg'});
+  if(!(u[0]===0x50&&u[1]===0x4b))throw new Error('NAI 返回的不是图片：'+new TextDecoder().decode(u.slice(0,160)));
+  let e=u.length-22;while(e>=0&&dv.getUint32(e,true)!==0x06054b50)e--;
+  let off=0,csize=0,method=0;
+  if(e>=0){const cd=dv.getUint32(e+16,true);method=dv.getUint16(cd+10,true);csize=dv.getUint32(cd+20,true);off=dv.getUint32(cd+42,true)}
+  else{method=dv.getUint16(8,true);csize=dv.getUint32(18,true)}
+  const n=dv.getUint16(off+26,true),x=dv.getUint16(off+28,true),start=off+30+n+x,data=u.slice(start,start+csize);
+  if(method===0)return new Blob([data],{type:'image/png'});
+  const ds=new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+  return new Blob([await new Response(ds).arrayBuffer()],{type:'image/png'});
+}
+async function toTags(desc,c){
+  const look=[c?.look?`${c.name}的外貌：${c.look}`:'',S.user.look?`${S.user.name}的外貌：${S.user.look}`:''].filter(Boolean).join('\n');
+  if(!S.settings.baseUrl||!S.settings.apiKey)return desc;
+  try{const r=await callAPI([{role:'system',content:'你是 NovelAI 绘图提示词助手。把画面描述改写成英文 danbooru 风格 tag，用逗号分隔，先写人数（如 1boy, 1girl, 1boy 1girl）、再写人物外貌、动作表情、服装、场景、光线、构图。只输出 tag，不要解释，不要中文，不超过 60 个 tag。'},{role:'user',content:`画面：${desc}\n${look}`}],{max_tokens:300,temperature:.4});
+    const t=clean(r).replace(/\n/g,', ').replace(/^tags?[:：]\s*/i,'');return /[a-z]/i.test(t)?t:desc}catch(_){return desc}
+}
+async function naiImage(desc,c,raw){
+  const s=S.settings;if(!s.naiKey)throw new Error('还没填 NovelAI 的 Token');
+  const host=(s.naiHost||'https://image.novelai.net').replace(/\/+$/,''),url=/\/ai\/generate-image$/.test(host)?host:host+'/ai/generate-image';
+  const tags=raw?desc:await toTags(desc,c),prompt=[tags,s.naiPos].filter(Boolean).join(', '),neg=s.naiNeg||'';
+  const [w,h]=(s.naiSize||'832x1216').split('x').map(Number),v4=/diffusion-4/.test(s.naiModel),seed=Math.floor(Math.random()*4294967295);
+  const P={width:w,height:h,scale:+s.naiScale||5,sampler:s.naiSampler||'k_euler_ancestral',steps:+s.naiSteps||28,n_samples:1,ucPreset:0,qualityToggle:true,seed,negative_prompt:neg,noise_schedule:v4?'karras':'native'};
+  if(v4)Object.assign(P,{params_version:3,cfg_rescale:0,dynamic_thresholding:false,legacy:false,legacy_v3_extend:false,add_original_image:true,prefer_brownian:true,deliberate_euler_ancestral_bug:false,characterPrompts:[],use_coords:false,
+    v4_prompt:{caption:{base_caption:prompt,char_captions:[]},use_coords:false,use_order:true},v4_negative_prompt:{caption:{base_caption:neg,char_captions:[]},legacy_uc:false}});
+  else Object.assign(P,{sm:false,sm_dyn:false});
+  let r;try{r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+s.naiKey},body:JSON.stringify({input:prompt,model:s.naiModel,action:'generate',parameters:P})})}
+  catch(e){throw new Error('连不上 NAI：浏览器可能拦下了这个网址（跨域），可以换成第三方中转地址再试')}
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`NAI 报错 ${r.status}：${t.slice(0,160)}`)}
+  const blob=await unzipFirst(await r.arrayBuffer());
+  return await new Promise((res,rej)=>{const im=new Image();im.onload=()=>{const k=Math.min(1,1024/Math.max(im.width,im.height)),cv=document.createElement('canvas');cv.width=im.width*k;cv.height=im.height*k;cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);res(cv.toDataURL('image/jpeg',.9))};im.onerror=()=>rej(new Error('图片解不开'));im.src=URL.createObjectURL(blob)});
+}
+/* ---------- MiniMax 语音 ---------- */
+const MM_VOICES=[['female-shaonv','少女'],['female-yujie','御姐'],['female-chengshu','成熟女性'],['female-tianmei','甜美女性'],['male-qn-qingse','青涩青年'],['male-qn-jingying','精英青年'],['male-qn-badao','霸道青年'],['male-qn-daxuesheng','青年大学生'],['presenter_male','男性主持人'],['presenter_female','女性主持人'],['audiobook_male_1','男性有声书1'],['audiobook_female_1','女性有声书1']];
+function mmUrl(path){const s=S.settings;return (s.mmHost||'https://api.minimaxi.com').replace(/\/+$/,'').replace(/\/v1$/,'')+path+(s.mmGroup?`?GroupId=${encodeURIComponent(s.mmGroup)}`:'')}
+async function mmSpeak(text,voice){
+  const s=S.settings;if(!s.mmKey)throw new Error('还没填 MiniMax 的 API Key');
+  let r;try{r=await fetch(mmUrl('/v1/t2a_v2'),{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+s.mmKey},body:JSON.stringify({model:s.mmModel||'speech-02-hd',text,stream:false,
+    voice_setting:{voice_id:voice||s.mmVoice||'female-shaonv',speed:+s.mmSpeed||1,vol:1,pitch:0},audio_setting:{sample_rate:32000,bitrate:128000,format:'mp3',channel:1}})})}
+  catch(e){throw new Error('连不上 MiniMax：浏览器可能拦下了这个网址（跨域）')}
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok||j.base_resp?.status_code)throw new Error(`MiniMax 报错 ${j.base_resp?.status_code||r.status}：${j.base_resp?.status_msg||''}`);
+  const hex=(j.data?.audio||'').replace(/^0x/,'').replace(/\s/g,'');
+  if(hex){const b=new Uint8Array(hex.length>>1);for(let i=0;i<b.length;i++)b[i]=parseInt(hex.substr(i*2,2),16);
+    return await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(new Blob([b],{type:'audio/mpeg'}))})}
+  if(j.data?.url)return j.data.url;throw new Error('MiniMax 没有返回音频');
+}
+async function mmVoiceList(){
+  const s=S.settings;let out=[];
+  try{const r=await fetch(mmUrl('/v1/get_voice'),{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+s.mmKey},body:JSON.stringify({voice_type:'all'})});
+    const j=await r.json();for(const k of ['system_voice','voice_cloning','voice_generation','music_generation'])for(const v of j[k]||[])out.push([v.voice_id,v.voice_name||v.description?.[0]||(k==='system_voice'?'':'我的音色')])}catch(_){}
+  return out;
+}
+/* ---------- 拉取模型（通用） ---------- */
+async function fetchModelIds(base,key){
+  base=(base||'').replace(/\/+$/,'');if(!base||!key)throw new Error('先填接口地址和密钥');
+  const r=await fetch(base+'/models',{headers:{Authorization:'Bearer '+key}});if(!r.ok)throw new Error('接口报错 '+r.status);
+  return ((await r.json()).data||[]).map(m=>m.id);
+}
+const FM={tts:()=>[S.settings.ttsBase||S.settings.baseUrl,S.settings.ttsKey||S.settings.apiKey,'ttsModelList','ttsModel'],vis:()=>[S.settings.visBase||S.settings.baseUrl,S.settings.visKey||S.settings.apiKey,'visModelList','visModel'],img:()=>[S.settings.imgBase||S.settings.baseUrl,S.settings.imgKey||S.settings.apiKey,'imgModelList','imgModel']};
+function pickList(title,items,onPick){
+  const s=$('#sheet');s.innerHTML=`<div style="padding:8px 8px 4px;font-weight:600;text-align:center">${esc(title)}</div><div style="max-height:56dvh;overflow-y:auto">${items.map(([v,n],i)=>`<button class="opt" data-k="${i}" style="font-size:14.5px;text-align:left">${esc(v)}${n?`<small style="color:var(--muted);margin-left:8px">${esc(n)}</small>`:''}</button>`).join('')}</div><button class="opt" data-k="-1" style="color:var(--muted)">取消</button>`;
+  s.onclick=e=>{const b=e.target.closest('[data-k]');if(!b)return;closeSheet();const k=+b.dataset.k;if(k>=0)onPick(items[k][0])};
+  $('#mask').classList.add('show');s.classList.add('show');
+}
+$$('[data-fm]').forEach(b=>b.onclick=async()=>{const [base,key,list,field]=FM[b.dataset.fm]();toast('拉取中…',6000);
+  try{const ids=await fetchModelIds(base,key);$('#'+list).innerHTML=ids.map(i=>`<option value="${esc(i)}">`).join('');toast(`拉到 ${ids.length} 个模型`);
+    if(ids.length)pickList('选一个模型',ids.map(i=>[i,'']),v=>{S.settings[field]=v;save('settings');renderSettings();toast('已选 '+v)})}catch(e){toast(e.message,4000)}});
+$('#mmVoices').onclick=async()=>{if(!S.settings.mmKey)return toast('先填 MiniMax 的 API Key');toast('拉取中…',6000);
+  let L=await mmVoiceList();const got=L.length;if(!got)L=MM_VOICES;else{const have=new Set(L.map(v=>v[0]));for(const v of MM_VOICES)if(!have.has(v[0]))L.push(v)}
+  $('#mmVoiceList').innerHTML=L.map(([v])=>`<option value="${esc(v)}">`).join('');toast(got?`拉到 ${got} 个音色`:'没拉到音色列表，先给你常用的几个');
+  pickList('选默认音色',L,v=>{S.settings.mmVoice=v;save('settings');renderSettings();toast('默认音色：'+v)})};
+$('#ttsTest').onclick=async()=>{const st=S.settings,txt=$('#ttsTestText').value.trim()||'你好呀';
+  try{toast('生成中…',8000);let src;
+    if(st.ttsMode==='minimax')src=await mmSpeak(txt);
+    else if(st.ttsMode==='api'){const base=(st.ttsBase||st.baseUrl).replace(/\/+$/,''),key=st.ttsKey||st.apiKey;const r=await fetch(base+'/audio/speech',{method:'POST',headers:{'Content-Type':'application/json',Authorization:'Bearer '+key},body:JSON.stringify({model:st.ttsModel||'tts-1',input:txt,voice:st.ttsVoice||'alloy'})});if(!r.ok)throw new Error('语音接口报错 '+r.status);src=URL.createObjectURL(await r.blob())}
+    else{const u=new SpeechSynthesisUtterance(txt);u.lang='zh-CN';speechSynthesis.speak(u);toast('用手机自带朗读');return}
+    stopVoice();vAudio=new Audio(src);await vAudio.play();toast('▶ 正在播放')}catch(e){toast(e.message,5000)}};
+$('#imgTest').onclick=async()=>{if(!imgReady())return toast('先把生图设置填完整');const d=$('#imgTestText').value.trim()||'星空下的小王子和狐狸';
+  toast('画画中…一般要十几秒',30000);try{const img=await genImage(d,null);toast('画好啦');showViewer(img)}catch(e){toast(e.message,6000)}};
+function updShow(){const st=S.settings;$$('[data-show]').forEach(el=>{const [k,v]=el.dataset.show.split('=');el.style.display=(st[k]||'')===v?'':'none'});$$('[data-hide]').forEach(el=>{const [k,v]=el.dataset.hide.split('=');el.style.display=(st[k]||'')===v?'none':''})}
 function photoHTML(m,i){
   const D=m.data||{},src=D.img;
   if(src)return `<div class="pic" data-i="${i}" data-pic><img src="${src}" alt="照片"></div>`;
@@ -2008,6 +2212,136 @@ $('#viewer').onclick=()=>$('#viewer').classList.remove('on');
 
 /* ========== 日记 ========== */
 let diaryChar=null,diaryCaught=null;
+/* ========== 查手机 ========== */
+let peekChar=null,peekTab='chats',peekCaught=null,peekBusy=false;
+function peekCtx(c){const T=threadOf(c.id);return `你是「${c.name}」本人。${charCtx(c)}\n\n${momentsFor(T,3)?`【朋友圈近况】\n${momentsFor(T,3)}`:''}`}
+async function genPeek(c){
+  if(!apiReady())return toast('先去「设置」填好 API～');if(peekBusy)return;peekBusy=true;renderPeek();
+  try{const u=S.user.name||'我';
+    const out=await callAPI([{role:'system',content:peekCtx(c)},{role:'user',content:`${u}趁你不注意拿起了你的手机。请生成你手机里此刻的真实内容，要贴合你的性格、生活、人际关系，以及你和${u}最近发生的事（线上线下都算），细节具体、像真的，有生活感；可以藏一些关于${u}的小心思、没说出口的在意，但不要每一条都和${u}有关。只输出 JSON：
+{"chats":[{"name":"联系人备注名","relation":"关系","msgs":[{"me":true,"t":"消息"},{"me":false,"t":"消息"}]}],
+"memo":[{"title":"备忘录标题","text":"内容"}],
+"search":["最近的搜索记录"],
+"album":[{"desc":"照片画面描述","note":"拍摄时间或备注"}],
+"cart":[{"name":"商品名","price":"价格数字","why":"为什么加购（自己心里想的）"}]}
+要求：chats 4 个（其中一个可以是和${u}的置顶聊天，备注名要符合你对${u}的称呼；其他是朋友/家人/同事等），每个 3~6 条消息；memo 3 条；search 8 条；album 5 张；cart 4 件。`}],{temperature:1,max_tokens:2600});
+    const j=parseJSON(out);if(!j.chats)throw new Error('没翻到东西');S.peek[c.id]={...j,at:Date.now()};save('peek');
+    if(S.settings.diaryCaught&&Math.random()<.25)peekCaught={cid:c.id};
+  }catch(e){toast('没翻成：'+e.message,4000)}
+  peekBusy=false;renderPeek();
+}
+function renderPeek(){
+  const T=curT(),cs=tChars(T);let c=charById(peekChar)||cs[0]||S.chars[0];peekChar=c.id;const P=S.peek[c.id];
+  $('#peekTitle').innerHTML=`${esc(c.name)}的手机${S.chars.length>1?' <small style="font-size:11px;color:var(--muted)">点我换人</small>':''}`;
+  $$('#peekTabs button').forEach(b=>b.classList.toggle('on',b.dataset.pt===peekTab));
+  const B=$('#peekBody');
+  if(peekBusy){B.innerHTML=`<div class="pkempty">🔍<br>正在偷偷解锁${esc(c.name)}的手机…</div>`;return}
+  if(!P){B.innerHTML=`<div class="pkempty">📱<br>${esc(c.name)}的手机就放在桌上，屏幕还亮着。<br><button class="btn pri" id="peekGo">偷偷拿起来看看</button><div class="hint">内容由 AI 按 TA 的人设和你们最近的事现编。${S.settings.diaryCaught?'有可能被 TA 发现哦。':''}</div></div>`;$('#peekGo').onclick=()=>genPeek(c);return}
+  const ago=Math.round((Date.now()-P.at)/6e4),head=`<div class="pkat">上次翻看：${ago<1?'刚刚':ago<60?ago+' 分钟前':Math.round(ago/60)+' 小时前'}</div>`;
+  let h='';
+  if(peekTab==='chats')h=(P.chats||[]).map((ch,k)=>`<details class="pkchat glass"><summary><span class="pkav">${esc((ch.name||'?').slice(0,1))}</span><span class="tt"><b>${esc(ch.name)}</b><small>${esc(ch.relation||'')} · ${esc(ch.msgs?.at(-1)?.t||'')}</small></span></summary><div class="pkmsgs">${(ch.msgs||[]).map(m=>`<div class="pkm ${m.me?'me':''}"><span>${esc(m.t)}</span></div>`).join('')}</div></details>`).join('');
+  if(peekTab==='memo')h=(P.memo||[]).map(m=>`<div class="card glass pkmemo"><h4>${esc(m.title)}</h4><div>${esc(m.text)}</div></div>`).join('');
+  if(peekTab==='search')h=`<div class="card glass">${(P.search||[]).map(q=>`<div class="pksq">🔍 ${esc(q)}</div>`).join('')}</div>`;
+  if(peekTab==='album')h=`<div class="pkalbum">${(P.album||[]).map(a=>`<div class="tphoto"><div>${esc(a.desc)}</div><small>${esc(a.note||'PHOTO')}</small></div>`).join('')}</div>`;
+  if(peekTab==='cart')h=(P.cart||[]).map(x=>`<div class="li glass"><div class="pkcart">🛍️</div><div class="t"><b>${esc(x.name)}</b><small>${esc(x.why||'')}</small></div><span class="tag">¥${esc(String(x.price))}</span></div>`).join('');
+  B.innerHTML=head+(h||'<div class="pkempty">这里空空的</div>');
+}
+$('#peekTabs').onclick=e=>{const b=e.target.closest('[data-pt]');if(!b)return;peekTab=b.dataset.pt;renderPeek();$('#peekBody').scrollTop=0};
+$('#peekRe').onclick=()=>{const c=charById(peekChar);if(c)genPeek(c)};
+$('#peekTitle').onclick=async()=>{if(S.chars.length<2)return;const k=await actionSheet(S.chars.map(c=>({label:c.name})));if(k>=0){peekChar=S.chars[k].id;renderPeek()}};
+function openPeek(cid){peekChar=cid;openApp('peek')}
+function afterPeek(){
+  if(!peekCaught)return;const c=charById(peekCaught.cid),T=threadOf(c.id);peekCaught=null;
+  setTimeout(()=>generate(T,'online',`${c.name}发现${S.user.name}偷偷翻了自己的手机（聊天记录、备忘录、搜索记录、相册、购物车都可能被看到了）。${c.name}主动给${S.user.name}发消息，用符合性格的方式反应——害羞、嘴硬、质问、心虚、调侃或者假装没事都可以。`,{pro:true}),4000+Math.random()*6000);
+}
+/* ========== 订单通用 ========== */
+const money=v=>'¥'+(+v).toFixed(2);
+async function chooseTo(){const L=[...S.chars.map(c=>({label:'送给 '+c.name,id:c.id})),{label:'买给自己',id:'me'}];const k=await actionSheet(L);return k<0?null:L[k].id}
+function placeOrder({kind,name,price,icon,desc,shop},to){
+  price=+(+price).toFixed(2);if(!(price>0))price=kind==='food'?30:99;
+  if(price>S.wallet.balance){toast(`零钱不够啦（余额 ${money(S.wallet.balance)}）`);return null}
+  S.wallet.balance=+(S.wallet.balance-price).toFixed(2);save('wallet');
+  const o={id:uid(),kind,name,price:price.toFixed(2),icon:icon||(kind==='food'?'🍱':'🎁'),desc:desc||'',shop:shop||'',dir:to==='me'?'self':'out',cid:to==='me'?null:to,at:Date.now(),
+    eta:Date.now()+(kind==='food'?(3+Math.random()*4):(12+Math.random()*18))*60e3,status:'paid'};
+  S.orders.unshift(o);save('orders');
+  if(o.dir==='out'){const T=threadOf(to);pushMsg(T,'online','user',name,{type:'order',data:{kind,name,price:o.price,oid:o.id,icon:o.icon,status:'paid'}});
+    toast(`已下单，${kind==='food'?'骑手正在路上':'已发货'}～`);setTimeout(()=>generate(T,'online',`${S.user.name}刚刚${kind==='food'?'在美团给你点了外卖':'在淘宝给你买了东西'}：「${name}」（${money(price)}${shop?'，'+shop:''}）。东西还没送到，你刚看到下单通知。用符合性格的方式回应。`),1500)}
+  else toast('已下单，记得查收～');
+  return o;
+}
+function checkOrders(){
+  const now=Date.now();let ch=false;
+  for(const o of S.orders||[]){if(o.status==='delivered'||now<o.eta)continue;o.status='delivered';ch=true;
+    if(o.dir==='out'){const T=threadOf(o.cid),c=charById(o.cid);if(!T||!c)continue;
+      T.msgs.forEach(m=>{if(m.data?.oid===o.id)m.data.status='delivered'});saveMsgs(T);
+      generate(T,'online',`你刚刚收到了${S.user.name}${o.kind==='food'?'点的外卖':'买的东西'}：「${o.name}」，已经送到你手上了。用符合性格的方式发消息给${S.user.name}，可以说说感受、吃/用了之后怎样，愿意的话拍张照片 [照片:…] 发过去。`,{pro:true})}
+    else if(o.dir==='in'){const c=charById(o.cid);toast(`${c?.name||'TA'}给你的「${o.name}」送到啦`,4000);const T=threadOf(o.cid);if(T){T.msgs.forEach(m=>{if(m.data?.oid===o.id)m.data.status='delivered'});saveMsgs(T)}}
+    else toast(`你的「${o.name}」送到啦`,3500)}
+  if(ch){save('orders');if($('#app-chat').classList.contains('open'))renderChat()}
+}
+setInterval(checkOrders,20e3);setTimeout(checkOrders,4000);
+function ordersHTML(kind){const L=(S.orders||[]).filter(o=>o.kind===kind);if(!L.length)return '<div class="pkempty">还没有订单</div>';
+  return L.map(o=>{const c=charById(o.cid),who=o.dir==='out'?`送给 ${c?.name||'TA'}`:o.dir==='in'?`${c?.name||'TA'} 送你的`:'自己的';
+    return `<div class="li glass"><div class="pkcart">${esc(o.icon)}</div><div class="t"><b>${esc(o.name)}</b><small>${who} · ${new Date(o.at).toLocaleString('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})} · ${o.status==='delivered'?'已送达':(kind==='food'?'配送中':'运输中')+'，约 '+new Date(o.eta).toTimeString().slice(0,5)+' 到'}</small></div><span class="tag">${money(o.price)}</span></div>`}).join('')}
+async function aiList(prompt,max=2200){const c=charById(curT().members[0]);const out=await callAPI([{role:'system',content:`你是购物/外卖 App 的内容生成器，只输出 JSON。${c?`\n参考：用户的对象是「${c.name}」，${charCtx(c).slice(0,800)}`:''}`},{role:'user',content:prompt}],{temperature:1,max_tokens:max});return parseJSON(out)}
+/* ========== 淘宝 ========== */
+const shop={q:'',items:null,busy:false,view:'home'};
+async function shopLoad(q){
+  if(!apiReady())return toast('先去「设置」填好 API～');shop.q=q;shop.busy=true;shop.view='home';renderShop();
+  try{const c=charById(curT().members[0]);
+    const j=await aiList(q?`用户在淘宝搜索「${q}」。生成 8 个真实感的搜索结果。`:`生成 8 个淘宝首页「猜你喜欢」商品，一半是适合送给${c?.name||'对象'}的（贴合 TA 的性格爱好），一半是生活好物/小惊喜。`+` 只输出 JSON 数组：[{"name":"商品标题（像淘宝那样带卖点，30字内）","price":数字,"shop":"店铺名","sold":"月销量如 2000+","emoji":"一个最贴切的 emoji","desc":"一句话详情"}]`);
+    shop.items=(Array.isArray(j)?j:j.items||[]).slice(0,10)}catch(e){toast('没加载出来：'+e.message,4000)}
+  shop.busy=false;renderShop();
+}
+function renderShop(){
+  const B=$('#shopBody');
+  if(shop.view==='orders'){B.innerHTML=`<button class="btn" id="shopBack">‹ 回去逛</button><span class="pdiv"></span>`+ordersHTML('shop');$('#shopBack').onclick=()=>{shop.view='home';renderShop()};return}
+  B.innerHTML=`<form class="shsearch" id="shopForm"><input id="shopQ" placeholder="搜索宝贝" value="${esc(shop.q)}"><button class="btn pri">搜索</button></form>
+    <div class="shtags">${['给TA的礼物','情侣款','零食','香水','毛绒玩具','花'].map(t=>`<button class="chip2" data-q="${t}">${t}</button>`).join('')}</div>
+    <div class="pkat">零钱 ${money(S.wallet.balance)}${shop.q?` · 「${esc(shop.q)}」的结果 <a href="#" id="shopHome">回首页</a>`:' · 猜你喜欢'}</div>
+    ${shop.busy?'<div class="pkempty">🛍️<br>正在加载…</div>':shop.items?`<div class="plist">${shop.items.map((x,k)=>`<button class="pcard glass" data-k="${k}"><div class="pe">${esc(x.emoji||'🎁')}</div><b>${esc(x.name)}</b><span class="pp">${money(x.price)}</span><small>${esc(x.shop||'')} · 月销 ${esc(String(x.sold||''))}</small></button>`).join('')}</div><button class="btn" id="shopMore" style="width:100%;margin-top:6px">换一批</button>`:'<div class="pkempty">🛍️<br><button class="btn pri" id="shopGo">逛逛首页</button></div>'}`;
+  $('#shopForm').onsubmit=e=>{e.preventDefault();shopLoad($('#shopQ').value.trim())};
+  $$('#shopBody [data-q]').forEach(b=>b.onclick=()=>shopLoad(b.dataset.q));
+  $('#shopGo')&&($('#shopGo').onclick=()=>shopLoad(''));$('#shopMore')&&($('#shopMore').onclick=()=>shopLoad(shop.q));
+  $('#shopHome')&&($('#shopHome').onclick=e=>{e.preventDefault();shopLoad('')});
+  $$('#shopBody .pcard').forEach(b=>b.onclick=async()=>{const x=shop.items[+b.dataset.k];
+    const k=await actionSheet([{label:`${x.emoji||'🎁'} ${x.name}`},{label:`立即购买 ${money(x.price)}`},{label:'取消'}]);if(k!==1)return;
+    const to=await chooseTo();if(!to)return;placeOrder({kind:'shop',name:x.name,price:x.price,icon:x.emoji,desc:x.desc,shop:x.shop},to)});
+}
+$('#shopOrders').onclick=()=>{shop.view='orders';renderShop()};
+/* ========== 美团 ========== */
+const food={stores:null,store:null,menu:null,cart:{},busy:false,view:'home'};
+async function foodStores(){
+  if(!apiReady())return toast('先去「设置」填好 API～');food.busy=true;food.view='home';renderFood();
+  try{const h=new Date().getHours(),meal=h<10?'早餐':h<14?'午餐':h<17?'下午茶':h<21?'晚餐':'夜宵';
+    const j=await aiList(`现在是${meal}时间。生成 8 家附近的外卖店铺，类型丰富（正餐、奶茶、甜品、小吃等，贴合${meal}）。只输出 JSON 数组：[{"name":"店名","emoji":"一个 emoji","tag":"品类·人均","rating":4.8,"mins":30}]`,1200);
+    food.stores=(Array.isArray(j)?j:j.stores||[]).slice(0,10)}catch(e){toast('没加载出来：'+e.message,4000)}
+  food.busy=false;renderFood();
+}
+async function foodMenu(st){
+  food.store=st;food.menu=null;food.cart={};food.view='store';food.busy=true;renderFood();
+  try{const j=await aiList(`外卖店铺「${st.name}」（${st.tag}）的菜单，8 个菜品。只输出 JSON 数组：[{"name":"菜名","price":数字,"emoji":"一个 emoji","desc":"一句描述"}]`,1200);food.menu=(Array.isArray(j)?j:j.menu||[]).slice(0,10)}catch(e){toast('菜单没加载出来：'+e.message,4000)}
+  food.busy=false;renderFood();
+}
+function renderFood(){
+  const B=$('#foodBody');$('#foodTitle').textContent=food.view==='store'&&food.store?food.store.name:'美团外卖';
+  if(food.view==='orders'){B.innerHTML=`<button class="btn" id="foodBack">‹ 回去</button><span class="pdiv"></span>`+ordersHTML('food');$('#foodBack').onclick=()=>{food.view='home';renderFood()};return}
+  if(food.busy){B.innerHTML='<div class="pkempty">🛵<br>正在加载…</div>';return}
+  if(food.view==='store'){const M=food.menu||[],n=Object.values(food.cart).reduce((a,b)=>a+b,0),tot=M.reduce((a,x,k)=>a+(food.cart[k]||0)*(+x.price||0),0);
+    B.innerHTML=`<button class="btn" id="foodBack">‹ 店铺列表</button><div class="pkat">${esc(food.store.tag||'')} · ⭐${esc(String(food.store.rating||''))} · 约 ${esc(String(food.store.mins||30))} 分钟</div>`+
+      M.map((x,k)=>`<div class="li glass"><div class="pkcart">${esc(x.emoji||'🍽️')}</div><div class="t"><b>${esc(x.name)}</b><small>${esc(x.desc||'')}</small><span class="pp">${money(x.price)}</span></div><div class="qty">${food.cart[k]?`<button data-m="${k}">−</button><i>${food.cart[k]}</i>`:''}<button data-p="${k}">＋</button></div></div>`).join('')+
+      `<div class="fbar glass"><span>${n?`已选 ${n} 件 · <b>${money(tot+3)}</b> <small>含配送费 ¥3</small>`:'还没选菜'}</span><button class="btn pri" id="foodPay" ${n?'':'disabled'}>去结算</button></div>`;
+    $('#foodBack').onclick=()=>{food.view='home';renderFood()};
+    $$('#foodBody [data-p]').forEach(b=>b.onclick=()=>{food.cart[b.dataset.p]=(food.cart[b.dataset.p]||0)+1;renderFood()});
+    $$('#foodBody [data-m]').forEach(b=>b.onclick=()=>{const k=b.dataset.m;food.cart[k]--;if(!food.cart[k])delete food.cart[k];renderFood()});
+    $('#foodPay').onclick=async()=>{const to=await chooseTo();if(!to)return;const items=Object.entries(food.cart).map(([k,q])=>`${M[k].name}${q>1?'×'+q:''}`);
+      const o=placeOrder({kind:'food',name:`${food.store.name}·${items.join('、')}`,price:tot+3,icon:food.store.emoji||M[+Object.keys(food.cart)[0]]?.emoji,shop:food.store.name},to);if(o){food.cart={};food.view='orders';renderFood()}};
+    return}
+  B.innerHTML=`<div class="pkat">零钱 ${money(S.wallet.balance)} · 附近好店</div>`+(food.stores?food.stores.map((x,k)=>`<button class="li glass" data-st="${k}"><div class="pkcart">${esc(x.emoji||'🍱')}</div><div class="t"><b>${esc(x.name)}</b><small>${esc(x.tag||'')} · ⭐${esc(String(x.rating||''))} · ${esc(String(x.mins||30))} 分钟</small></div><span class="tag">去点餐</span></button>`).join('')+'<button class="btn" id="foodMore" style="width:100%">换一批</button>':'<div class="pkempty">🛵<br><button class="btn pri" id="foodGo">看看附近有什么吃的</button></div>');
+  $('#foodGo')&&($('#foodGo').onclick=foodStores);$('#foodMore')&&($('#foodMore').onclick=foodStores);
+  $$('#foodBody [data-st]').forEach(b=>b.onclick=()=>foodMenu(food.stores[+b.dataset.st]));
+}
+$('#foodOrders').onclick=()=>{food.view='orders';renderFood()};
 function openDiary(cid){diaryChar=cid;openApp('diary')}
 function renderDiary(){
   const c=charById(diaryChar)||charById(curT().members[0]);diaryChar=c.id;const L=S.diaries[c.id]||[];
@@ -2035,7 +2369,7 @@ function afterDiary(){
 /* ========== 美化 App ========== */
 function renderTheme(){
   const t=S.theme,P=curPack(),set=(el,img)=>el.style.background=img?`center/cover url(${img})`:'';
-  set($('#thWall'),t.wallpaper||P.wall);set($('#thLock'),t.lockWallpaper||P.lock||t.wallpaper||P.wall);set($('#thChat'),t.chatBg||P.chat);
+  set($('#thWall'),t.wallpaper||P.wall);set($('#thLock'),t.lockWallpaper||P.lock||t.wallpaper||P.wall);set($('#thChat'),t.chatBg||P.chat);$('#thPageW').style.display=P.page?'':'none';set($('#thPage'),t.pageBg||P.page);
   $('#packList').innerHTML=Object.entries(PACKS).map(([k,p])=>`<button class="pack ${(t.pack||'moonsea')===k?'on':''}" data-pack="${k}"><div class="pc" ${p.cover?`style="background-image:url(${p.cover})"`:''}></div><b>${p.name}</b><small>${p.desc}</small>${(t.pack||'moonsea')===k?'<span class="on2">使用中</span>':''}</button>`).join('');
   const walls=[...new Set(Object.values(PACKS).flatMap(p=>p.walls||[]))],usedW=t.wallpaper||P.wall;
   $('#wpGal').innerHTML=walls.map(w=>`<button data-wall="${w}" class="${usedW===w?'on':''}" style="background-image:url(${w})" aria-label="壁纸"></button>`).join('');
@@ -2061,14 +2395,15 @@ $('#wpGal').addEventListener('click',async e=>{const b=e.target.closest('[data-w
 $('#appIcons').addEventListener('click',e=>{const b=e.target.closest('[data-aicon]');if(!b)return;const f=b.dataset.aicon;
   try{localStorage.setItem('ms-appicon',f)}catch(_){}document.getElementById('touchIcon').href=f;renderTheme();
   toast((navigator.standalone?'选好了。要在 Safari 里打开小手机、再添加到主屏幕，新图标才会出现':'选好了，现在点分享 →「添加到主屏幕」就是新图标'),5000)});
+$('#thPage').onclick=()=>{const L=curPack().pages||[];if(!L.length)return;const i=L.indexOf(S.theme.pageBg||curPack().page);S.theme.pageBg=L[(i+1)%L.length];save('theme');applyTheme();renderTheme()};
 $$('[data-img]').forEach(b=>{
   b.onclick=async()=>{const f=await pickFile('image/*');if(!f)return;S.theme[b.dataset.img]=await fileToImg(f,1600);save('theme');applyTheme();renderTheme()};
   longPress(b,()=>{S.theme[b.dataset.img]='';save('theme');applyTheme();renderTheme();toast('已恢复默认')});
 });
 
 /* ========== 设置 App ========== */
-function renderSettings(){renderGhStat();$$('[data-s]').forEach(el=>{const v=S.settings[el.dataset.s];if(el.type==='checkbox')el.checked=!!v;else el.value=v??''})}
-$$('[data-s]').forEach(el=>el.addEventListener('change',()=>{const k=el.dataset.s;S.settings[k]=el.type==='checkbox'?el.checked:el.type==='number'?+el.value:el.value.trim();save('settings')}));
+function renderSettings(){renderGhStat();$$('[data-s]').forEach(el=>{const v=S.settings[el.dataset.s];if(el.type==='checkbox')el.checked=!!v;else el.value=v??''});updShow()}
+$$('[data-s]').forEach(el=>el.addEventListener('change',()=>{const k=el.dataset.s;S.settings[k]=el.type==='checkbox'?el.checked:el.type==='number'?+el.value:el.value.trim();save('settings');updShow()}));
 $('#testApi').onclick=async()=>{toast('测试中…',8000);try{const r=await callAPI([{role:'user',content:'只回复四个字：连接成功'}],{max_tokens:30});toast('✓ '+clean(r).slice(0,40))}catch(e){toast(e.message,5000)}};
 $('#fetchModels').onclick=async()=>{
   const s=S.settings;if(!s.baseUrl||!s.apiKey)return toast('先填 API 地址和密钥');
@@ -2077,7 +2412,7 @@ $('#fetchModels').onclick=async()=>{
 };
 function buildBackup(lite){
   const data={app:'moonsea-phone',v:2,at:new Date().toISOString()};for(const k in DEFAULTS)data[k]=structuredClone(S[k]);
-  data.chars=S.chars;data.threads=S.threads.map(t=>lite?{...t,msgs:t.msgs.map(({audio,...m})=>m)}:t);data.settings={...data.settings,apiKey:'',ttsKey:'',visKey:'',imgKey:'',ghToken:''};return data;
+  data.chars=S.chars;data.threads=S.threads.map(t=>lite?{...t,msgs:t.msgs.map(({audio,...m})=>m)}:t);data.settings={...data.settings,apiKey:'',ttsKey:'',visKey:'',imgKey:'',naiKey:'',mmKey:'',ghToken:''};return data;
 }
 async function applyBackup(d){
   if(d.app!=='moonsea-phone')throw new Error('不是小手机的备份文件');
