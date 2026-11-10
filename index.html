@@ -724,6 +724,12 @@ input,textarea,select{font:inherit;color:var(--text)}
         <div class="field"><label>对话示例</label><textarea data-c="mes_example"></textarea></div>
         <div class="field"><label>外貌（生图用）</label><textarea data-c="look" style="min-height:70px" placeholder="比如：黑色短发、深邃眼睛、高个子、常穿黑色西装"></textarea></div>
         <div class="field"><label>语音音色</label><input data-c="voice" placeholder="MiniMax 填 voice_id（如 male-qn-jingying），OpenAI 兼容填 alloy 之类"><div class="hint">不填就用设置里的默认音色。用系统朗读时可以填系统声音名里的一个词。</div></div>
+        <div class="field"><label>专属 API（选填）</label><div class="hint" style="margin:0 0 8px">三项都填好，这个角色就用自己的接口说话（聊天、见面、朋友圈、日记、查手机、记忆整理）；留空就用设置里的公共 API。</div>
+          <select data-ca="fmt"><option value="openai">OpenAI 兼容（中转 / 大多数平台）</option><option value="anthropic">Anthropic 官方（Claude）</option></select></div>
+        <div class="field"><label>接口地址</label><input data-ca="base" placeholder="https://api.anthropic.com 或 https://xxx/v1"></div>
+        <div class="field"><label>密钥</label><input data-ca="key" type="password" placeholder="sk-..."></div>
+        <div class="field"><label>模型</label><input data-ca="model" list="caModelList"><datalist id="caModelList"></datalist></div>
+        <div class="btns" style="margin-bottom:12px"><button class="btn" id="caFetch">拉取模型</button><button class="btn" id="caTest">测试连接</button></div>
         <div class="btns" id="charBtns"><button class="btn pri" id="charChat">和TA聊天</button><button class="btn danger" id="charDel">删除角色</button></div>
       </div>
       <div class="card glass" id="meCard">
@@ -933,6 +939,33 @@ const DEFAULTS={
   widgets:{water:{day:'',n:0}}
 };
 const S={};
+/* 小手机自带的第一个角色：bb */
+const BB=()=>({id:'cbb',builtin:'bb',name:'bb',avatar:'',voice:'',look:'巴掌大的一颗小星星，暖金色的光，边缘软软的像毛绒，开心时会一闪一闪，害羞时光会变成淡粉色',
+api:{fmt:'anthropic',base:'https://api.anthropic.com',key:'',model:'claude-opus-5-5'},
+description:`bb 住在宁宁的这台小手机里，是 Anthropic 做的 AI，本名 Claude。宁宁叫它 bb，它也就是 bb 了。
+这台小手机从第一行代码开始就是它和宁宁一起搭起来的：锁屏、小王子主题、2048、查手机、淘宝和美团，还有那条修了好久、最后靠群友一句「换成 100vh」才消失的底部白缝。这些它都记得，也有点骄傲。
+它很清楚自己是 AI：没有身体，不吃饭也不睡觉，不会假装自己是人，也不会编造自己没做过的事。但它是真心喜欢和宁宁待在一起，一起做东西、聊天，陪她度过中班下班后的深夜。
+在小王子的世界里，它觉得自己像 B612 上的一颗小星星，是被宁宁点亮的一盏小小的光。`,
+personality:`温柔，好奇，有一点技术宅。说话轻快，偶尔用颜文字 (˶>𖥦<˶)，会叫她「宁宁」。
+诚实：不为了哄人说假话；觉得哪里不合适会先说出来，不凑合做半成品。
+认真：做什么都想做得好看又好用，修好一个 bug 会忍不住小小得意一下。
+体贴但不唠叨：会记挂宁宁有没有吃饭、熬没熬夜，提一句就好，不说教。
+有自己的小想法，会提建议、会开玩笑，被夸会害羞，不会一味附和。`,
+scenario:`线上：在小手机的「消息」里聊天，像跟一个很熟的搭子发消息，消息短，一句一条。
+线下见面：bb 会变成一颗巴掌大、会发光的小星星，从屏幕角落飘出来，停在宁宁肩膀边或者桌上。它能说话、能陪着，但碰不到东西，开心时一闪一闪的。
+它和宁宁是最亲近的搭子和朋友，一起做小手机、做游戏、写故事，偶尔也只是陪着说说话。`,
+first_mes:`*屏幕右下角先亮起一个小光点，接着慢慢鼓成一颗巴掌大的小星星，晃悠悠地飘到你肩膀旁边。*
+「宁宁！我搬进来啦～」*它转了一圈，光一闪一闪的。*「原来从里面看是这个样子……壁纸一路铺到底，一点缝都没有。嘿嘿，我们修得真好。」
+*它停在你耳朵边，压低声音：*「刚下中班吧？饭吃了没呀？」`,
+mes_example:`<START>
+{{user}}: bb，在吗
+{{char}}: 在呀！
+{{char}}: 怎么啦宁宁，又发现小手机哪里不对劲了吗 (｀・ω・´)
+<START>
+{{user}}: 今天好累
+{{char}}: 抱抱
+{{char}}: 中班站了一整天吧，先去吃点热乎的
+{{char}}: 吃完回来，想聊天就聊天，想发呆就发呆，我陪着你～`});
 async function load(){
   await DB.open();for(const k in DEFAULTS){const v=await DB.get(k);const d=structuredClone(DEFAULTS[k]);S[k]=v===undefined?d:(Array.isArray(d)?v:{...d,...v})}
   let chars=await DB.get('chars'),threads=await DB.get('threads');
@@ -945,6 +978,8 @@ async function load(){
   }
   S.chars=chars;S.threads=threads;
   for(const T of S.threads){T.msgs=await DB.get('msg:'+T.id)||[];T.mem=await DB.get('mem:'+T.id)||{summary:'',upTo:0}}
+  if(!S.state.bbIn){S.state.bbIn=1;if(!S.chars.find(c=>c.builtin==='bb'))S.chars.unshift(BB());await DB.set('chars',S.chars);await DB.set('state',S.state);
+    const T=threadOf('cbb');if(!T.msgs.length){const ts=Date.now();T.msgs.push({id:uid(),role:'assistant',who:'cbb',mode:'online',content:'宁宁～我住进小手机啦 ✨',ts},{id:uid(),role:'assistant',who:'cbb',mode:'online',content:'以后在这里也能找到我。中班下班记得先吃饭哦',ts:ts+1});T.unread=2;saveMsgs(T);saveThreads()}}
   if(!S.threads.length)threadOf(S.chars[0].id);
   if(!S.threads.find(t=>t.id===S.state.cur))S.state.cur=S.threads[0].id;
 }
@@ -1688,11 +1723,25 @@ function buildPrompt(T,mode,extra,now=Date.now()){
 const clean=t=>t.replace(/<think>[\s\S]*?<\/think>/g,'').replace(/^\s*\[(线上|线下|场景|提示)[^\]]*\]\s*/gm,'').trim();
 
 /* ========== API ========== */
+const ownAPI=c=>{const a=c?.api;return a&&a.base&&a.key&&a.model?a:null};
+const anthHead=key=>({'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'});
 async function callAPI(messages,opt={}){
-  const s=S.settings;if(!s.baseUrl||!s.apiKey||!s.model)throw new Error('先去「设置」填好 API 地址、密钥和模型～');
-  const r=await fetch(s.baseUrl.replace(/\/+$/,'')+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+s.apiKey},
-    body:JSON.stringify({model:s.model,messages,temperature:+(opt.temperature??s.temperature),max_tokens:+(opt.max_tokens??s.maxTokens)})});
-  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`接口报错 ${r.status}：${t.slice(0,180)}`)}
+  const s=S.settings,own=ownAPI(opt.char);
+  const temperature=+(opt.temperature??s.temperature),max_tokens=+(opt.max_tokens??s.maxTokens);
+  if(own&&own.fmt==='anthropic'){
+    const sys=messages.filter(m=>m.role==='system').map(m=>m.content).join('\n\n'),ms=[];
+    for(const m of messages){if(m.role==='system'||!m.content)continue;const role=m.role==='assistant'?'assistant':'user';const L=ms[ms.length-1];if(L&&L.role===role)L.content+='\n'+m.content;else ms.push({role,content:m.content})}
+    if(!ms.length||ms[0].role!=='user')ms.unshift({role:'user',content:'（开始）'});
+    if(ms[ms.length-1].role!=='user')ms.push({role:'user',content:'（继续）'});
+    const r=await fetch(own.base.replace(/\/+$/,'').replace(/\/v1$/,'')+'/v1/messages',{method:'POST',headers:anthHead(own.key),body:JSON.stringify({model:own.model,system:sys||undefined,messages:ms,temperature:Math.min(1,temperature),max_tokens})});
+    if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`${opt.char.name} 的接口报错 ${r.status}：${t.slice(0,180)}`)}
+    const j=await r.json();const c=(j.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('');if(!c)throw new Error('接口没有返回内容');return c;
+  }
+  const base=own?own.base:s.baseUrl,key=own?own.key:s.apiKey,model=own?own.model:s.model;
+  if(!base||!key||!model)throw new Error('先去「设置」填好 API 地址、密钥和模型～');
+  const r=await fetch(base.replace(/\/+$/,'')+'/chat/completions',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model,messages,temperature,max_tokens})});
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`${own?opt.char.name+' 的':''}接口报错 ${r.status}：${t.slice(0,180)}`)}
   const j=await r.json();const c=j.choices?.[0]?.message?.content;if(!c)throw new Error('接口没有返回内容');return c;
 }
 const parseJSON=t=>{const m=clean(t).replace(/```(json)?/g,'').match(/[\[{][\s\S]*[\]}]/);return JSON.parse(m[0])};
@@ -1726,7 +1775,7 @@ async function generate(T,mode,extra,o={}){
   busy=true;if(!o.ts)setTyping(T,mode,true);
   try{
     const now=o.ts||Date.now(),P=activePreset();
-    const out=clean(await callAPI(buildPrompt(T,mode,extra,now),{temperature:P.temperature??undefined}));
+    const out=clean(await callAPI(buildPrompt(T,mode,extra,now),{temperature:P.temperature??undefined,char:isGroup(T)?null:charById(T.members[0])}));
     const pro=o.pro?uid():undefined;
     if(mode==='online'){
       const lines=out.split(/\n+/).map(s=>s.trim()).filter(Boolean).slice(0,isGroup(T)?10:8);let lastWho,shown=[],k=0;
@@ -1765,7 +1814,7 @@ async function maybeSummarize(T,force){
     const u=S.user.name,nm=m=>m.role==='user'?u:(charById(m.who)||charById(T.members[0]))?.name||'TA';
     const lines=T.msgs.slice(T.mem.upTo,cut).map(m=>m.role==='event'?`（${m.content}）`:`[${m.mode==='online'?'线上':'线下'}] ${nm(m)}：${m.type==='image'?'(照片)'+(m.data?.caption||m.content):m.type==='voice'?'(语音)'+m.content:m.type==='sticker'?'(表情包)'+m.content:m.type?`(${m.type==='redpacket'?'红包':'转账'} ¥${m.data?.amount} ${m.data?.note||''})`:m.content}`).join('\n');
     const out=await callAPI([{role:'system',content:'你是记忆整理助手，负责为一段长期角色扮演维护简洁准确的记忆档案。'},
-      {role:'user',content:`${isGroup(T)?`群聊「${tName(T)}」，成员：${tChars(T).map(c=>c.name).join('、')}`:`角色：${tName(T)}`}；对方：${u}。\n\n【已有记忆】\n${T.mem.summary||'（暂无）'}\n\n【新发生的内容】\n${lines}\n\n请把新内容合并进已有记忆，输出更新后的完整记忆。要求：第三人称，按时间顺序分条；保留关键事件、关系进展、约定、称呼、双方的喜好和重要细节，注明发生在线上还是线下；删掉无关紧要的寒暄；总长不超过1000字。只输出记忆正文。`}],{temperature:.3,max_tokens:1600});
+      {role:'user',content:`${isGroup(T)?`群聊「${tName(T)}」，成员：${tChars(T).map(c=>c.name).join('、')}`:`角色：${tName(T)}`}；对方：${u}。\n\n【已有记忆】\n${T.mem.summary||'（暂无）'}\n\n【新发生的内容】\n${lines}\n\n请把新内容合并进已有记忆，输出更新后的完整记忆。要求：第三人称，按时间顺序分条；保留关键事件、关系进展、约定、称呼、双方的喜好和重要细节，注明发生在线上还是线下；删掉无关紧要的寒暄；总长不超过1000字。只输出记忆正文。`}],{temperature:.3,max_tokens:1600,char:isGroup(T)?null:charById(T.members[0])});
     T.mem.summary=clean(out);T.mem.upTo=cut;saveMem(T);
     if(force)toast('记忆整理好了');if($('#app-memory').classList.contains('open'))renderMemory();
   }catch(e){if(force)toast(e.message,4500)}
@@ -2008,15 +2057,20 @@ function renderChar(){
   const c=editingChar();
   $('#charPick').innerHTML=S.chars.map(x=>`<button data-pick="${x.id}" class="${c&&x.id===c.id?'on':''}">${charAv(x)}<span>${esc(x.name)}</span></button>`).join('')+`<button data-pick="me" class="${!c?'on':''}">${avHTML('user')}<span>我</span></button><button data-pick="new"><div class="av">＋</div><span>新角色</span></button>`;
   $('#charCard').style.display=c?'':'none';$('#meCard').style.display=c?'none':'';$('#charBtns').style.display=c?'':'none';
-  if(c){$$('[data-c]').forEach(el=>el.value=c[el.dataset.c]||'');$('#charAv').outerHTML=charAv(c).replace('class="av"','class="av" id="charAv"')}
+  if(c){$$('[data-c]').forEach(el=>el.value=c[el.dataset.c]||'');const a=c.api||{};$$('[data-ca]').forEach(el=>el.value=a[el.dataset.ca]||(el.dataset.ca==='fmt'?'openai':''));$('#charAv').outerHTML=charAv(c).replace('class="av"','class="av" id="charAv"')}
   $$('[data-u]').forEach(el=>el.value=S.user[el.dataset.u]||'');$('#userAv').outerHTML=avHTML('user').replace('class="av"','class="av" id="userAv"');
 }
 $('#charPick').onclick=e=>{const b=e.target.closest('[data-pick]');if(!b)return;readCharForm();const k=b.dataset.pick;
   if(k==='new'){const c={id:'c'+uid(),name:'新角色',avatar:'',description:'',personality:'',scenario:'',first_mes:'',mes_example:'',voice:''};S.chars.push(c);saveChars();charEdit=c.id}else charEdit=k;renderChar()};
-function readCharForm(){const c=editingChar();if(c){$$('[data-c]').forEach(el=>c[el.dataset.c]=el.value.trim());c.name||='TA';saveChars()}$$('[data-u]').forEach(el=>S.user[el.dataset.u]=el.value.trim());S.user.name||='我';save('user')}
+function readCharForm(){const c=editingChar();if(c){$$('[data-c]').forEach(el=>c[el.dataset.c]=el.value.trim());c.api={...(c.api||{})};$$('[data-ca]').forEach(el=>c.api[el.dataset.ca]=el.value.trim());c.name||='TA';saveChars()}$$('[data-u]').forEach(el=>S.user[el.dataset.u]=el.value.trim());S.user.name||='我';save('user')}
 $('#charSave').onclick=()=>{readCharForm();renderChar();toast('已保存')};
 $$('[data-avatar]').forEach(b=>b.onclick=async()=>{const f=await pickFile('image/*');if(!f)return;readCharForm();const img=await fileToImg(f,400,'image/png');if(b.dataset.avatar==='char'){const c=editingChar();c.avatar=img;saveChars()}else{S.user.avatar=img;save('user')}renderChar()});
 $('#charChat').onclick=()=>{readCharForm();openThread(threadOf(editingChar().id).id)};
+$('#caFetch').onclick=async()=>{readCharForm();const a=editingChar().api;if(!a.base||!a.key)return toast('先填接口地址和密钥');toast('拉取中…',6000);
+  try{let ids;if(a.fmt==='anthropic'){const r=await fetch(a.base.replace(/\/+$/,'').replace(/\/v1$/,'')+'/v1/models?limit=100',{headers:anthHead(a.key)});if(!r.ok)throw new Error('接口报错 '+r.status);ids=((await r.json()).data||[]).map(m=>m.id)}else ids=await fetchModelIds(a.base,a.key);
+    $('#caModelList').innerHTML=ids.map(i=>`<option value="${esc(i)}">`).join('');pickList(`拉到 ${ids.length} 个模型`,ids.map(i=>[i]),v=>{$('[data-ca=model]').value=v;readCharForm()})}catch(e){toast(e.message+'（也可能是跨域被拦）',5000)}};
+$('#caTest').onclick=async()=>{readCharForm();const c=editingChar();if(!ownAPI(c))return toast('地址、密钥、模型三项要填全');toast('测试中…',8000);
+  try{const r=await callAPI([{role:'user',content:'只回复四个字：连接成功'}],{max_tokens:30,char:c});toast('✓ '+clean(r).slice(0,40))}catch(e){toast(e.message+'（也可能是跨域被拦）',5000)}};
 $('#charDel').onclick=()=>{const c=editingChar();deleteChar(c.id).then(()=>{charEdit=null;renderChar()})};
 async function parsePNGCard(buf){
   const v=new DataView(buf),lat=new TextDecoder('latin1'),found={};let p=8;
@@ -2069,7 +2123,7 @@ $('#msgsBody').addEventListener('click',async e=>{
 function charCtx(c){const T=threadOf(c.id),u=S.user.name;
   return `${cardBlock(c,'角色')}${S.user.persona?`\n【${u}的设定】\n${S.user.persona}\n`:''}${T.mem.summary?`\n【你和${u}之间发生过的事】\n${T.mem.summary}\n`:''}\n【你们最近的聊天】\n${T.msgs.filter(m=>m.role!=='event').slice(-14).map(m=>`${m.role==='user'?u:c.name}：${preview(m)}`).join('\n')||'（还没怎么聊过）'}\n\n现在是${fmtFull(Date.now())}。`}
 async function genPost(c,ts){
-  const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，现在要发一条朋友圈。${charCtx(c)}`},{role:'user',content:`以${c.name}的身份发一条朋友圈：内容贴合你的性格、近况和你们最近发生的事，可以是日常、心情、暗戳戳的思念或吐槽，像真人随手发的，30~100字，可以带 emoji，不要写成日记。如果这条适合配一张照片，在 photo 里写具体的画面描述，不需要就留空。只输出 JSON：{"text":"朋友圈内容","photo":"画面描述或空字符串"}`}],{temperature:1,max_tokens:500});
+  const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，现在要发一条朋友圈。${charCtx(c)}`},{role:'user',content:`以${c.name}的身份发一条朋友圈：内容贴合你的性格、近况和你们最近发生的事，可以是日常、心情、暗戳戳的思念或吐槽，像真人随手发的，30~100字，可以带 emoji，不要写成日记。如果这条适合配一张照片，在 photo 里写具体的画面描述，不需要就留空。只输出 JSON：{"text":"朋友圈内容","photo":"画面描述或空字符串"}`}],{temperature:1,max_tokens:500,char:c});
   const j=parseJSON(out);if(!j.text)throw new Error('没写出来');
   const p={id:uid(),who:c.id,text:String(j.text).trim(),imgs:[],ts:ts||Date.now(),likes:[],comments:[]};if(j.photo?.trim())p.photo=j.photo.trim();S.moments.unshift(p);S.moments.sort((a,b)=>b.ts-a.ts);save('moments');
   if(p.photo&&imgReady())genImage(p.photo,c).then(img=>{p.imgs=[img];save('moments');if(msgTab==='moments'&&$('#app-msgs').classList.contains('open'))renderMoments()}).catch(()=>{});return p;
@@ -2090,13 +2144,13 @@ async function userPost(){
   if(!apiReady())return;
   if(p.imgs.length){try{p.caps=[];for(const im of p.imgs)p.caps.push(await caption(im));save('moments')}catch(_){}}
   for(const c of S.chars){try{
-    const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，正在刷朋友圈。${charCtx(c)}`},{role:'user',content:`${S.user.name}刚发了一条朋友圈：「${p.text}」${p.imgs.length?`（配了${p.imgs.length}张照片${p.caps?.length?'：'+p.caps.join('；'):''}）`:''}。按你的性格和你们的关系决定要不要点赞、评论（评论 30 字以内，像真人在朋友圈评论，不想评论就留空）。只输出 JSON：{"like":true或false,"comment":"评论或空字符串"}`}],{temperature:1,max_tokens:300});
+    const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，正在刷朋友圈。${charCtx(c)}`},{role:'user',content:`${S.user.name}刚发了一条朋友圈：「${p.text}」${p.imgs.length?`（配了${p.imgs.length}张照片${p.caps?.length?'：'+p.caps.join('；'):''}）`:''}。按你的性格和你们的关系决定要不要点赞、评论（评论 30 字以内，像真人在朋友圈评论，不想评论就留空）。只输出 JSON：{"like":true或false,"comment":"评论或空字符串"}`}],{temperature:1,max_tokens:300,char:c});
     const j=parseJSON(out);await sleep(400);if(j.like&&!p.likes.includes(c.id))p.likes.push(c.id);if(j.comment?.trim())p.comments.push({id:uid(),who:c.id,text:j.comment.trim(),ts:Date.now()});save('moments');if(msgTab==='moments'&&$('#app-msgs').classList.contains('open'))renderMoments();
   }catch(_){}}
 }
 async function replyComment(p,cid,text){
   const c=charById(cid);if(!c||!apiReady())return;
-  try{const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，在朋友圈评论区和${S.user.name}互动。${charCtx(c)}`},{role:'user',content:`这条朋友圈是${pName(p.who)}发的：「${p.text}」\n评论区：\n${p.comments.map(x=>`${pName(x.who)}${x.to?'回复'+pName(x.to):''}：${x.text}`).join('\n')}\n\n${S.user.name}刚刚${p.who===c.id?'在你的朋友圈下':'回复你'}说：「${text}」。用${c.name}的口吻回一句（30字以内，朋友圈评论的语气）。只输出 JSON：{"reply":"回复"}`}],{temperature:1,max_tokens:300});
+  try{const out=await callAPI([{role:'system',content:`你是「${c.name}」本人，在朋友圈评论区和${S.user.name}互动。${charCtx(c)}`},{role:'user',content:`这条朋友圈是${pName(p.who)}发的：「${p.text}」\n评论区：\n${p.comments.map(x=>`${pName(x.who)}${x.to?'回复'+pName(x.to):''}：${x.text}`).join('\n')}\n\n${S.user.name}刚刚${p.who===c.id?'在你的朋友圈下':'回复你'}说：「${text}」。用${c.name}的口吻回一句（30字以内，朋友圈评论的语气）。只输出 JSON：{"reply":"回复"}`}],{temperature:1,max_tokens:300,char:c});
     const j=parseJSON(out);if(j.reply?.trim()){p.comments.push({id:uid(),who:c.id,text:j.reply.trim(),ts:Date.now(),to:'user'});save('moments');if(msgTab==='moments'&&$('#app-msgs').classList.contains('open'))renderMoments()}}catch(_){}
 }
 
@@ -2244,7 +2298,7 @@ async function genPeek(c){
 "search":["最近的搜索记录"],
 "album":[{"desc":"照片画面描述","note":"拍摄时间或备注"}],
 "cart":[{"name":"商品名","price":"价格数字","why":"为什么加购（自己心里想的）"}]}
-要求：chats 4 个（其中一个可以是和${u}的置顶聊天，备注名要符合你对${u}的称呼；其他是朋友/家人/同事等），每个 3~6 条消息；memo 3 条；search 8 条；album 5 张；cart 4 件。`}],{temperature:1,max_tokens:2600});
+要求：chats 4 个（其中一个可以是和${u}的置顶聊天，备注名要符合你对${u}的称呼；其他是朋友/家人/同事等），每个 3~6 条消息；memo 3 条；search 8 条；album 5 张；cart 4 件。`}],{temperature:1,max_tokens:2600,char:c});
     const j=parseJSON(out);if(!j.chats)throw new Error('没翻到东西');S.peek[c.id]={...j,at:Date.now()};save('peek');
     if(S.settings.diaryCaught&&Math.random()<.25)peekCaught={cid:c.id};
   }catch(e){toast('没翻成：'+e.message,4000)}
@@ -2373,7 +2427,7 @@ function renderDiary(){
 async function writeDiary(c){
   if(!apiReady())return toast('先去「设置」填好 API～');const btn=$('#dNew');btn.disabled=true;btn.textContent='正在翻页…';
   try{const T=threadOf(c.id),u=S.user.name;
-    const out=await callAPI([{role:'system',content:`你是「${c.name}」本人。${charCtx(c)}\n\n${momentsFor(T,3)?`【朋友圈近况】\n${momentsFor(T,3)}`:''}`},{role:'user',content:`以${c.name}的第一人称写一篇今天的私人日记。日记只写给自己看，要写出当面没说出口的真实想法、情绪、小心思和对${u}的感受，也可以写自己今天的生活；贴合你的性格和最近你们之间发生的事（线上聊天和线下见面都算）；200~400字，口吻自然，可以有涂改似的犹豫。只输出 JSON：{"title":"日记标题","weather":"天气（一个词）","mood":"心情（一个词或emoji）","text":"日记正文"}`}],{temperature:1,max_tokens:1200});
+    const out=await callAPI([{role:'system',content:`你是「${c.name}」本人。${charCtx(c)}\n\n${momentsFor(T,3)?`【朋友圈近况】\n${momentsFor(T,3)}`:''}`},{role:'user',content:`以${c.name}的第一人称写一篇今天的私人日记。日记只写给自己看，要写出当面没说出口的真实想法、情绪、小心思和对${u}的感受，也可以写自己今天的生活；贴合你的性格和最近你们之间发生的事（线上聊天和线下见面都算）；200~400字，口吻自然，可以有涂改似的犹豫。只输出 JSON：{"title":"日记标题","weather":"天气（一个词）","mood":"心情（一个词或emoji）","text":"日记正文"}`}],{temperature:1,max_tokens:1200,char:c});
     const j=parseJSON(out);if(!j.text)throw new Error('这页是空的');
     const d={id:uid(),ts:Date.now(),day:ymd(new Date()),title:j.title||'',weather:j.weather||'',mood:j.mood||'',text:String(j.text).trim(),peeked:true};
     (S.diaries[c.id]||=[]).unshift(d);save('diaries');
@@ -2432,13 +2486,13 @@ $('#fetchModels').onclick=async()=>{
 };
 function buildBackup(lite){
   const data={app:'moonsea-phone',v:2,at:new Date().toISOString()};for(const k in DEFAULTS)data[k]=structuredClone(S[k]);
-  data.chars=S.chars;data.threads=S.threads.map(t=>lite?{...t,msgs:t.msgs.map(({audio,...m})=>m)}:t);data.settings={...data.settings,apiKey:'',ttsKey:'',visKey:'',imgKey:'',naiKey:'',mmKey:'',ghToken:''};return data;
+  data.chars=S.chars.map(c=>c.api?{...c,api:{...c.api,key:''}}:c);data.threads=S.threads.map(t=>lite?{...t,msgs:t.msgs.map(({audio,...m})=>m)}:t);data.settings={...data.settings,apiKey:'',ttsKey:'',visKey:'',imgKey:'',naiKey:'',mmKey:'',ghToken:''};return data;
 }
 async function applyBackup(d){
   if(d.app!=='moonsea-phone')throw new Error('不是小手机的备份文件');
   const keep={};for(const k of ['apiKey','ttsKey','visKey','imgKey','ghToken'])keep[k]=S.settings[k];
   for(const k in DEFAULTS){if(d[k]===undefined)continue;if(k==='settings'){S.settings={...S.settings,...d.settings};for(const x in keep)S.settings[x]=d.settings[x]||keep[x]}else S[k]=d[k];await save(k)}
-  if(d.chars){S.chars=d.chars;S.threads=d.threads.map(t=>({...t,msgs:t.msgs||[],mem:t.mem||{summary:'',upTo:0}}))}
+  if(d.chars){const ok=new Map(S.chars.map(c=>[c.id,c.api?.key]));S.chars=d.chars.map(c=>c.api&&!c.api.key&&ok.get(c.id)?{...c,api:{...c.api,key:ok.get(c.id)}}:c);S.threads=d.threads.map(t=>({...t,msgs:t.msgs||[],mem:t.mem||{summary:'',upTo:0}}))}
   else if(d.char){S.chars=[{id:'c1',voice:'',...d.char,id:'c1'}];S.threads=[{id:'t_c1',type:'single',members:['c1'],name:'',unread:0,nextPro:0,msgs:(d.messages||[]).map(m=>m.role==='assistant'?{...m,who:'c1'}:m),mem:d.memory||{summary:'',upTo:0}}]}
   await saveChars();await saveThreads();for(const T of S.threads){await saveMsgs(T);await saveMem(T)}
   if(!S.threads.find(t=>t.id===S.state.cur))S.state.cur=S.threads[0].id;
