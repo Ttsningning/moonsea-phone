@@ -25,7 +25,7 @@
          linear-gradient(180deg,#081329 0%,#12294f 40%,#1d4677 60%,#0f2e52 61%,#0a2040 78%,#06142a 100%);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:#06142a;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overscroll-behavior:none}
+html,body{margin:0;padding:0;background:var(--under,#06142a);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;overscroll-behavior:none}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 input,textarea,select{font:inherit;color:var(--text)}
 #phone{position:fixed;inset:0;min-height:-webkit-fill-available;overflow:hidden;background:var(--wall);background-size:cover;background-position:center}
@@ -439,8 +439,8 @@ input,textarea,select{font:inherit;color:var(--text)}
 #home.editing .hi{animation:wig .32s ease-in-out infinite alternate}
 #home.editing .hi:nth-child(2n){animation-delay:-.16s}
 @keyframes wig{from{transform:rotate(-1.4deg)}to{transform:rotate(1.4deg)}}
-.hi .x{display:none;position:absolute;left:-6px;top:-6px;z-index:3;width:24px;height:24px;border-radius:50%;background:rgba(235,240,250,.95);color:#1d2b44;font-size:18px;line-height:22px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
-#home.editing .hi .x{display:block}
+.hi .x{display:none;position:absolute;left:-6px;top:-6px;z-index:3;width:24px;height:24px;min-width:0;padding:0;border:0;box-sizing:border-box;aspect-ratio:1;-webkit-appearance:none;appearance:none;border-radius:50%;background:rgba(235,240,250,.95);color:#1d2b44;font-size:18px;line-height:22px;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+#home.editing .hi .x{display:grid;place-items:center}
 .hi.drag{animation:none!important;z-index:20;opacity:.9;transition:none}
 .hi.drag>*{transform:scale(1.06)}
 /* 添加小组件面板 */
@@ -855,7 +855,7 @@ const SVG={
   settings:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/></svg>'};
 const APPS=[{id:'chat',name:'消息'},{id:'story',name:'见面'},{id:'memory',name:'记忆'},{id:'char',name:'角色'},{id:'theme',name:'美化'},{id:'world',name:'世界书'},{id:'preset',name:'预设'},{id:'games',name:'游戏'},{id:'settings',name:'设置'}];
 const DOCK=['chat','story','memory','settings'];
-const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'},{id:'2048',name:'2048',sub:'毛绒猫猫陪你凑 2048。四套皮肤：粉色毛绒、红格子田园、金棕酒馆、珍珠玫瑰。',src:'games/2048.html',cover:'games/2048/pink/t2048.webp',fit:'contain',bg:'radial-gradient(120% 90% at 50% 0%,#fff6f1,#f8dcd6 55%,#eec6c4)'}];
+const GAMES=[{id:'denglin',name:'登临',sub:'范德林谋杀案 · 新婚寡妇 × 嫉恶如仇的探员。她有无懈可击的不在场证明，你有一整夜。',src:'games/denglin.html',cover:'games/denglin-cover.jpg'},{id:'2048',name:'2048',sub:'小王子陪你凑 2048，从一颗星星合成到月亮。五套皮肤：小王子、粉色毛绒、红格子田园、金棕酒馆、珍珠玫瑰。',src:'games/2048.html',cover:'games/2048/prince/t2048.webp',fit:'contain',bg:'url(games/2048/prince/bg.jpg) center/cover'}];
 const appIcon=id=>{const c=S.theme.icons[id],p=curPack().icons?.[id];return c?`<div class="ico"><img src="${c}"></div>`:p?`<div class="ico pk"><img src="${p}" alt=""></div>`:`<div class="ico">${SVG[id]}</div>`};
 const avHTML=(who,cls='av')=>{const p=who==='char'?S.char:S.user;return p.avatar?`<img class="${cls}" src="${p.avatar}">`:`<div class="${cls}">${esc((p.name||'?').slice(0,1))}</div>`};
 
@@ -1016,7 +1016,7 @@ const WG={
       return `${box(it,'w-wf '+(it.w===1?'tiny':''))}<div class="fill w-wf ${it.w===1?'tiny':''}"><svg viewBox="0 0 120 96"><ellipse cx="60" cy="56" rx="52" ry="36" fill="#b5651d"/><ellipse cx="60" cy="52" rx="48" ry="31" fill="#d4873a"/><path d="M22 58q38 14 76 0" stroke="#7a3e10" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="34" cy="42" r="5" fill="#7a3e10"/><rect x="80" y="2" width="8" height="40" rx="4" transform="rotate(35 84 22)" fill="#8b5a2b"/><ellipse cx="98" cy="10" rx="10" ry="7" transform="rotate(35 98 10)" fill="#a0522d"/></svg><b>功德 ${it.data?.n||0}</b></div></div>`}},
   g2048:{name:'2048',sizes:[[2,2],[4,2]],tap:()=>openGame('2048'),render:it=>{
       const ls=k=>{try{return localStorage.getItem('w2048_'+k)}catch(_){return null}};let st=null;try{st=JSON.parse(ls('state')||'null')}catch(_){}
-      const sk=['pink','gingham','gold','pearl'].includes(ls('skin'))?ls('skin'):'pink',C=G2048C[sk],best=+(ls('best')||0),T=v=>`games/2048/${sk}/t${Math.min(v,2048)}.webp`;
+      const sk=G2048C[ls('skin')]?ls('skin'):'prince',C=G2048C[sk],best=+(ls('best')||0),T=v=>`games/2048/${sk}/t${Math.min(v,sk==='prince'?4096:2048)}.webp`;
       const board=st&&st.c?.some(Boolean)?`<div class="g4b" style="background:${C.bg}">${st.c.map(v=>`<i style="background:${C.cell}">${v?`<img src="${T(v)}" alt="">`:''}</i>`).join('')}</div>`:'';
       if(it.w===4)return `<div class="wg w-2048" style="background:${C.page};color:${C.ink}">${board||`<div class="g4e" style="background:${C.bg}"><img src="${T(2048)}" alt=""></div>`}<div class="g4i"><img src="${T(2048)}" alt=""><div>分数 <b>${st?.s||0}</b></div><div>最高 <b>${best}</b></div><small>${board?'点我继续玩':'点我开一局'}</small></div></div>`;
       return board?`<div class="wg w-2048 sq" style="background:${C.page}">${board}</div>`:`<div class="wg w-2048 sq" style="background:${C.page};display:grid;place-items:center"><img src="${T(2048)}" style="width:82%" alt=""><small style="position:absolute;bottom:6cqmin;color:${C.ink};font-size:max(10px,7cqmin)">点我开玩</small></div>`}},
@@ -1025,7 +1025,7 @@ const WG={
   dice:{name:'骰子',th:1,sizes:[[1,1]],tap:(it,el)=>{const n=1+Math.floor(Math.random()*6);it.data={...it.data,n};save('home');const d=el.querySelector('.die');d.classList.remove('roll');void d.offsetWidth;d.classList.add('roll');setTimeout(()=>{d.innerHTML=pips(n)},180)},
     render:it=>`${box(it,'w-dice')}<div class="die">${pips(it.data?.n||6)}</div></div>`}
 };
-const G2048C={pink:{page:'radial-gradient(120% 90% at 50% 0%,#fff6f1,#f8dcd6 55%,#eec6c4)',bg:'#efc9c5',cell:'#fff3ee',ink:'#8a4848'},gingham:{page:'radial-gradient(120% 90% at 50% 0%,#fffaf0,#f5e6cf 60%,#e9cfae)',bg:'#e3c9a4',cell:'#fff8ec',ink:'#6b3a24'},gold:{page:'radial-gradient(120% 90% at 50% 0%,#5a3a22,#3a2414 60%,#24150b)',bg:'#2a190d',cell:'#4a2e1a',ink:'#f6dfae'},pearl:{page:'radial-gradient(120% 90% at 50% 0%,#6a2131,#40121d 60%,#260a11)',bg:'#2e0c14',cell:'#5a1a28',ink:'#fbe2e6'}};
+const G2048C={prince:{page:'linear-gradient(rgba(30,26,70,.25),rgba(30,26,70,.25)),url(games/2048/prince/bg.jpg) center/cover,#3c3a72',bg:'rgba(255,244,226,.85)',cell:'rgba(240,222,196,.9)',ink:'#fff3d6'},pink:{page:'radial-gradient(120% 90% at 50% 0%,#fff6f1,#f8dcd6 55%,#eec6c4)',bg:'#efc9c5',cell:'#fff3ee',ink:'#8a4848'},gingham:{page:'radial-gradient(120% 90% at 50% 0%,#fffaf0,#f5e6cf 60%,#e9cfae)',bg:'#e3c9a4',cell:'#fff8ec',ink:'#6b3a24'},gold:{page:'radial-gradient(120% 90% at 50% 0%,#5a3a22,#3a2414 60%,#24150b)',bg:'#2a190d',cell:'#4a2e1a',ink:'#f6dfae'},pearl:{page:'radial-gradient(120% 90% at 50% 0%,#6a2131,#40121d 60%,#260a11)',bg:'#2e0c14',cell:'#5a1a28',ink:'#fbe2e6'}};
 function refreshItem(it){const hi=document.querySelector(`.hi[data-id="${it.id}"]`);if(!hi)return;const old=hi.querySelector('.wg');if(old)old.outerHTML=WG[it.kind].render(it)}
 async function refreshWeather(it,force){
   const D=it.data;if(!D?.city)return;if(!force&&D.wx&&Date.now()-D.wx.at<30*6e4)return;
@@ -1456,10 +1456,10 @@ function openApp(id){
   const i=STACK.indexOf(id);if(i>=0)STACK.splice(i+1);else STACK.push(id);
   STACK.forEach((k,j)=>{const a=$('#app-'+k);if(a)a.style.zIndex=20+j});
   $$('.app:not(#gameView)').forEach(a=>a.classList.toggle('open',STACK.includes(a.id.slice(4))));
-  RENDER[id]?.();if(id==='chat')clearUnread(curT());
+  RENDER[id]?.();if(id==='chat')clearUnread(curT());underColor();
 }
-function popApp(){const id=STACK.pop();if(id){$('#app-'+id)?.classList.remove('open');if(id==='diary')afterDiary()}const top=STACK.at(-1);if(top)RENDER[top]?.();else renderHome()}
-function closeApps(){STACK.length=0;$$('.app:not(#gameView)').forEach(a=>a.classList.remove('open'));renderHome()}
+function popApp(){const id=STACK.pop();if(id){$('#app-'+id)?.classList.remove('open');if(id==='diary')afterDiary()}const top=STACK.at(-1);if(top)RENDER[top]?.();else renderHome();underColor()}
+function closeApps(){STACK.length=0;$$('.app:not(#gameView)').forEach(a=>a.classList.remove('open'));renderHome();underColor()}
 function openThread(tid){const T=S.threads.find(t=>t.id===tid);if(!T)return;S.state.cur=tid;save('state');openApp._direct=true;openApp('chat')}
 
 /* ========== 锁屏 ========== */
@@ -2139,10 +2139,11 @@ let fitH=0;
 function fitPhone(){
   const ph=$('#phone'),rs=document.documentElement.style,ua=navigator.userAgent||'';
   const ios=/iPhone|iPad|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
-  const pwa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches;
-  if(!ios||!pwa){ph.style.height='';return}
   const sw=Math.min(screen.width,screen.height),sh=Math.max(screen.width,screen.height),notch=sh/sw>=1.9,pad=/iPad/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   const top=pad?24:notch?(sh>=852&&sw>=393?59:47):20,bot=pad?20:notch?34:0;
+  /* 有的 iOS 版本主屏模式下认不出 standalone，但视口正好比屏幕矮一个状态栏，这种也算 */
+  const pwa=navigator.standalone===true||matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||(innerWidth===sw&&Math.abs(sh-innerHeight-top)<=3);
+  if(!ios||!pwa){ph.style.height='';return}
   rs.setProperty('--top',`max(env(safe-area-inset-top,0px),${top}px)`);rs.setProperty('--bot',`max(env(safe-area-inset-bottom,0px),${bot}px)`);
   if(pad||innerHeight<innerWidth*.9){ph.style.height='';fitH=0;return}
   const typing=document.activeElement?.matches?.('input:not([type=file]),textarea');
@@ -2167,11 +2168,18 @@ addEventListener('orientationchange',()=>setTimeout(remeasure,300));addEventList
 document.addEventListener('focusout',()=>setTimeout(remeasure,180));document.addEventListener('visibilitychange',()=>{if(!document.hidden)setTimeout(remeasure,100)});
 setInterval(fitPhone,1500);
 /* 万一还有缝，用壁纸最底下那一行的颜色填上 */
+let WB=null;
 function bottomColor(url){
-  if(!url){document.documentElement.style.backgroundColor='';return}
+  WB=null;underColor();if(!url)return;
   const im=new Image();im.onload=()=>{try{const c=document.createElement('canvas');c.width=16;c.height=16;const x=c.getContext('2d');x.drawImage(im,0,0,16,16);
     const d=x.getImageData(0,15,16,1).data;let r=0,g=0,b=0;for(let i=0;i<64;i+=4){r+=d[i];g+=d[i+1];b+=d[i+2]}
-    document.documentElement.style.backgroundColor=`rgb(${r>>4},${g>>4},${b>>4})`}catch(_){}};im.src=url;
+    WB=[r>>4,g>>4,b>>4];underColor()}catch(_){}};im.src=url;
+}
+/* 底部缝隙的颜色：主屏用壁纸底色，打开 App 时用输入栏/页面的颜色叠在壁纸上 */
+function underColor(){
+  const H=document.documentElement;let c=WB;
+  if(c&&STACK.length){const m=getComputedStyle(H).getPropertyValue('--inbg').match(/[\d.]+/g);if(m&&m.length>=3){const a=m[3]!=null?+m[3]:1;c=c.map((v,i)=>Math.round(+m[i]*a+v*(1-a)))}}
+  H.style.setProperty('--under',c?`rgb(${c})`:'');
 }
 
 if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost'))navigator.serviceWorker.register('sw.js').catch(()=>{});

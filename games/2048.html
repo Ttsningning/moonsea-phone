@@ -10,7 +10,7 @@
   'use strict';
 
   var BASE = '2048/';
-  var VALS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
+  var VALS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096];
 
   /* ---------- 皮肤配置 ----------
      grid: 棋盘图里 4×4 格子区域（占图片宽高的比例）
@@ -51,7 +51,15 @@
       win: [[0.70, 0.81, 'again'], [0.82, 0.94, 'home']]
     }
   };
-  var ORDER = ['pink', 'gingham', 'gold', 'pearl'];
+  SKINS.prince = {
+    name: '小王子', ratio: 458 / 382, title: false,
+    grid: [0.147, 0.154, 0.846, 0.903], gap: [0.023, 0.026],
+    bg: 'linear-gradient(rgba(30,26,70,.18),rgba(30,26,70,.18)),url(2048/prince/bg.jpg) center/cover no-repeat,#3c3a72',
+    ink: '#fff3d6', chip: '#fff6e6', chipInk: '#8a5a2b', line: '#e8c78a',
+    scoreText: [0.62, 0.64], scoreInk: '#8a5a2b', setIcon: 'ic_settings', num: true, max: 4096,
+    over: [[0.76, 0.95, 'again']], win: [], noSubOver: true
+  };
+  var ORDER = ['prince', 'pink', 'gingham', 'gold', 'pearl'];
 
   /* ---------- 小工具 ---------- */
   function ls(k, v) {
@@ -66,10 +74,10 @@
     if (html != null) e.innerHTML = html;
     return e;
   }
-  var VER = '3';
+  var VER = '4';
   function img(skin, name) { return BASE + skin + '/' + name + '.webp?v=' + VER; }
 
-  var skinKey = SKINS[ls('skin')] ? ls('skin') : 'pink';
+  var skinKey = SKINS[ls('skin')] ? ls('skin') : 'prince';
   var S = SKINS[skinKey];
   var soundOn = ls('sound') !== '0';
   var autoEnter = ls('auto') === '1';
@@ -135,6 +143,11 @@
     '#w2048 .sk{display:grid;grid-template-columns:1fr 1fr;gap:8px}',
     '#w2048 .sk button{border:2px solid var(--line);background:transparent;color:inherit;border-radius:12px;padding:6px 4px;cursor:pointer;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:4px}',
     '#w2048 .sk button img{width:46px;height:46px;object-fit:contain}#w2048 .sk button.cur{background:rgba(255,255,255,.18);border-width:3px}',
+    '#w2048 .tile b{display:none}#w2048.num .tile{container-type:size}',
+    '#w2048.num .tile b{display:block;position:absolute;left:50%;bottom:4%;transform:translateX(-50%);font-size:clamp(9px,17cqw,15px);font-weight:800;line-height:1.2;padding:0 .45em;border-radius:99px;background:rgba(255,248,232,.92);color:#8a5a2b;box-shadow:0 1px 3px rgba(80,50,20,.25);font-family:Georgia,"Songti SC",serif;pointer-events:none}',
+    '#w2048.sk-prince .ttext{color:#ffe7a8;text-shadow:0 2px 0 #c58a3e,0 0 14px rgba(255,220,140,.6);font-style:italic}',
+    '#w2048.sk-prince .tip{text-shadow:0 1px 4px rgba(20,16,50,.8)}',
+    '#w2048.sk-prince .ib{width:58px;height:52px}#w2048.sk-prince .bb{height:52px}',
     '#w2048 .row{display:flex;align-items:center;justify-content:space-between;font-size:14px}'
   ].join('');
   document.head.appendChild(css);
@@ -184,11 +197,13 @@
     KX = (tw + S.gap[0]) / tw * 100; KY = (th + S.gap[1]) / th * 100;
     var icon = skinKey === 'pink' ? 'btn_settings' : (skinKey === 'pearl' ? 'ic_help' : 'ic_settings');
     $('.set').innerHTML = (skinKey === 'pink' || skinKey === 'pearl') ? '<span class="cb" style="display:flex;align-items:center;height:38px;padding:0 10px;font-size:13px">换肤</span>' : '<img src="' + img(skinKey, icon) + '">';
+    if (S.setIcon) $('.set').innerHTML = '<img src="' + img(skinKey, S.setIcon) + '">';
     if (skinKey === 'pearl') $('.set').innerHTML = '<span class="cb" style="display:flex;align-items:center;height:38px;padding:0 10px;font-size:13px">换肤</span>';
     $('.snd').innerHTML = '<img src="' + img(skinKey, 'ic_sound') + '">';
     $('.snd').classList.toggle('off', !soundOn);
     $('.restart').innerHTML = '<img src="' + img(skinKey, 'btn_restart') + '" alt="重新开始">';
-    VALS.forEach(function (v) { new Image().src = img(skinKey, 't' + v); });
+    VALS.forEach(function (v) { if (v <= (S.max || 2048)) new Image().src = img(skinKey, 't' + v); });
+    root.classList.toggle('num', !!S.num); root.classList.toggle('sk-' + skinKey, true); ORDER.forEach(function (k) { if (k !== skinKey) root.classList.remove('sk-' + k); });
     redraw(true);
   }
 
@@ -283,7 +298,7 @@
       var n = nodes[t.id];
       if (!n) {
         n = el('div', 'tile');
-        n.appendChild(el('img'));
+        n.appendChild(el('img')); n.appendChild(el('b'));
         grid.appendChild(n); nodes[t.id] = n;
         if (t.isNew && !hard) n.classList.add('new');
       }
@@ -294,7 +309,8 @@
         setTimeout(function (g) { return function () { g.remove(); }; }(gone), 120);
         delete nodes[t.from];
       }
-      var im = n.firstChild, src = img(skinKey, 't' + Math.min(t.v, 2048));
+      var im = n.firstChild, src = img(skinKey, 't' + Math.min(t.v, S.max || 2048));
+      if (n.lastChild.textContent !== String(t.v)) n.lastChild.textContent = t.v;
       if (im.getAttribute('src') !== src) im.src = src;
       n.style.transform = pos(i);
       n.style.zIndex = t.v;
@@ -321,7 +337,7 @@
     var sub = box.querySelector('.sub');
     sub.innerHTML = kind === 'win'
       ? '<button class="cb" data-a="keep">继续玩</button><button class="cb" data-a="again">再来一局</button>'
-      : '<button class="cb" data-a="again">再来一局</button>';
+      : (S.noSubOver ? '' : '<button class="cb" data-a="again">再来一局</button>');
     sub.onclick = function (e) { var a = e.target.getAttribute('data-a'); if (a) act(a, kind); };
     dlg.classList.add('on');
   }
