@@ -56,7 +56,7 @@
     grid: [0.147, 0.154, 0.846, 0.903], gap: [0.023, 0.026],
     bg: 'linear-gradient(rgba(30,26,70,.18),rgba(30,26,70,.18)),url(2048/prince/bg.jpg) center/cover no-repeat,#3c3a72',
     ink: '#fff3d6', chip: '#fff6e6', chipInk: '#8a5a2b', line: '#e8c78a',
-    scoreText: [0.62, 0.64], scoreInk: '#8a5a2b', setIcon: 'ic_settings', num: true, max: 4096,
+    scoreText: [0.62, 0.64], scoreInk: '#8a5a2b', setIcon: 'ic_settings', max: 2048,
     over: [[0.76, 0.95, 'again']], win: [], noSubOver: true
   };
   var ORDER = ['prince', 'pink', 'gingham', 'gold', 'pearl'];
@@ -74,7 +74,7 @@
     if (html != null) e.innerHTML = html;
     return e;
   }
-  var VER = '4';
+  var VER = '5';
   function img(skin, name) { return BASE + skin + '/' + name + '.webp?v=' + VER; }
 
   var skinKey = SKINS[ls('skin')] ? ls('skin') : 'prince';
@@ -144,7 +144,7 @@
     '#w2048 .sk button{border:2px solid var(--line);background:transparent;color:inherit;border-radius:12px;padding:6px 4px;cursor:pointer;font-size:13px;display:flex;flex-direction:column;align-items:center;gap:4px}',
     '#w2048 .sk button img{width:46px;height:46px;object-fit:contain}#w2048 .sk button.cur{background:rgba(255,255,255,.18);border-width:3px}',
     '#w2048 .tile b{display:none}#w2048.num .tile{container-type:size}',
-    '#w2048.num .tile b{display:block;position:absolute;left:50%;bottom:4%;transform:translateX(-50%);font-size:clamp(9px,17cqw,15px);font-weight:800;line-height:1.2;padding:0 .45em;border-radius:99px;background:rgba(255,248,232,.92);color:#8a5a2b;box-shadow:0 1px 3px rgba(80,50,20,.25);font-family:Georgia,"Songti SC",serif;pointer-events:none}',
+    '#w2048 .tile.big{container-type:size}#w2048.num .tile b,#w2048 .tile.big b{display:block;position:absolute;left:50%;bottom:5%;min-width:50%;text-align:center;transform:translateX(-50%);font-size:clamp(9px,17cqw,15px);font-weight:800;line-height:1.2;padding:0 .45em;border-radius:99px;background:rgba(255,248,232,.92);color:#8a5a2b;box-shadow:0 1px 3px rgba(80,50,20,.25);font-family:Georgia,"Songti SC",serif;pointer-events:none}',
     '#w2048.sk-prince .ttext{color:#ffe7a8;text-shadow:0 2px 0 #c58a3e,0 0 14px rgba(255,220,140,.6);font-style:italic}',
     '#w2048.sk-prince .tip{text-shadow:0 1px 4px rgba(20,16,50,.8)}',
     '#w2048.sk-prince .ib{width:58px;height:52px}#w2048.sk-prince .bb{height:52px}',
@@ -311,6 +311,7 @@
       }
       var im = n.firstChild, src = img(skinKey, 't' + Math.min(t.v, S.max || 2048));
       if (n.lastChild.textContent !== String(t.v)) n.lastChild.textContent = t.v;
+      n.classList.toggle('big', t.v > (S.max || 2048));
       if (im.getAttribute('src') !== src) im.src = src;
       n.style.transform = pos(i);
       n.style.zIndex = t.v;
