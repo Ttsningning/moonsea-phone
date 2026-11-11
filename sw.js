@@ -1,5 +1,5 @@
 // 月光海小手机：离线缓存。先用缓存秒开，同时后台拉新版本，下次打开生效。
-const C='moonsea-v16';
+const C='moonsea-v17';
 const SHELL=['./','./index.html','./manifest.json','./icon.png'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.addAll(SHELL)).catch(()=>{}))});
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const k of await caches.keys())if(k!==C)await caches.delete(k);await self.clients.claim()})()));

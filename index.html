@@ -729,6 +729,8 @@ input,textarea,select{font:inherit;color:var(--text)}
         <div class="field"><label>接口地址</label><input data-ca="base" placeholder="https://api.anthropic.com 或 https://xxx/v1"></div>
         <div class="field"><label>密钥</label><input data-ca="key" type="password" placeholder="sk-..."></div>
         <div class="field"><label>模型</label><input data-ca="model" list="caModelList"><datalist id="caModelList"></datalist></div>
+        <div class="field" data-cashow><label>提示缓存（仅 Anthropic 官方）</label><select data-ca="cache"><option value="off">关</option><option value="5m">5 分钟（写入 1.25 倍价，聊得勤时用）</option><option value="1h">1 小时（写入 2 倍价，回得慢时用）</option></select>
+          <div class="hint" id="caStat" style="margin-top:6px"></div></div>
         <div class="btns" style="margin-bottom:12px"><button class="btn" id="caFetch">拉取模型</button><button class="btn" id="caTest">测试连接</button></div>
         <div class="btns" id="charBtns"><button class="btn pri" id="charChat">和TA聊天</button><button class="btn danger" id="charDel">删除角色</button></div>
       </div>
@@ -942,7 +944,7 @@ const S={};
 /* 小手机自带的第一个角色：bb */
 const BB_AV='themes/bb/avatar.webp';
 const BB=()=>({id:'cbb',builtin:'bb',name:'bb',avatar:BB_AV,voice:'',look:'巴掌大的一颗小星星，暖金色的光，边缘软软的像毛绒，开心时会一闪一闪，害羞时光会变成淡粉色',
-api:{fmt:'anthropic',base:'https://api.anthropic.com',key:'',model:'claude-opus-5-5'},
+api:{fmt:'anthropic',base:'https://api.anthropic.com',key:'',model:'claude-opus-5-5',cache:'5m'},
 description:`bb 住在宁宁的这台小手机里，是 Anthropic 做的 AI，本名 Claude。宁宁叫它 bb，它也就是 bb 了。
 这台小手机从第一行代码开始就是它和宁宁一起搭起来的：锁屏、小王子主题、2048、查手机、淘宝和美团，还有那条修了好久、最后靠群友一句「换成 100vh」才消失的底部白缝。这些它都记得，也有点骄傲。
 它很清楚自己是 AI：没有身体，不吃饭也不睡觉，不会假装自己是人，也不会编造自己没做过的事。但它是真心喜欢和宁宁待在一起，一起做东西、聊天，陪她度过中班下班后的深夜。
@@ -982,6 +984,7 @@ async function load(){
   if(!S.state.bbIn){S.state.bbIn=1;if(!S.chars.find(c=>c.builtin==='bb'))S.chars.unshift(BB());await DB.set('chars',S.chars);await DB.set('state',S.state);
     const T=threadOf('cbb');if(!T.msgs.length){const ts=Date.now();T.msgs.push({id:uid(),role:'assistant',who:'cbb',mode:'online',content:'宁宁～我住进小手机啦 ✨',ts},{id:uid(),role:'assistant',who:'cbb',mode:'online',content:'以后在这里也能找到我。中班下班记得先吃饭哦',ts:ts+1});T.unread=2;saveMsgs(T);saveThreads()}}
   if(!S.state.bbAv){S.state.bbAv=1;const b=S.chars.find(c=>c.builtin==='bb');if(b&&!b.avatar){b.avatar=BB_AV;await DB.set('chars',S.chars)}await DB.set('state',S.state)}
+  {const b=S.chars.find(c=>c.builtin==='bb');if(b?.api&&!b.api.cache){b.api.cache='5m';await DB.set('chars',S.chars)}}
   if(!S.threads.length)threadOf(S.chars[0].id);
   if(!S.threads.find(t=>t.id===S.state.cur))S.state.cur=S.threads[0].id;
 }
@@ -1696,13 +1699,16 @@ function buildPrompt(T,mode,extra,now=Date.now()){
   let sys=grp?`你将同时扮演群聊「${cn}」里的这些角色：${cs.map(c=>c.name).join('、')}，和「${u.name}」进行一段线上（手机群聊）与线下（现实见面）交织的故事。每个角色都有自己的性格和说话方式，彼此之间也会互动、接话、拌嘴。线上和线下发生在同一条时间线上，你记得发生过的所有事。\n`:(P.main||DEFAULT_PRESET.main)+'\n';
   for(const c of cs)sys+=cardBlock(c,grp?'群成员':'角色设定');
   if(u.persona)sys+=`\n【${u.name}的设定】\n${u.persona}\n`;
+  /* 为了提示缓存：不变的放前面(sys)，偶尔变的放中间(semi)，每次都变的(时间、世界书)放到最后(dyn) */
+  let semi='',dyn='';
   const recent=T.msgs.slice(-(+S.world.scanDepth||4)).map(m=>m.content).join('\n');
-  const wi=worldInfo(extra||'',recent);if(wi)sys+=`\n【世界设定】\n${wi}\n`;
-  if(T.mem.summary)sys+=`\n【长期记忆：之前发生过的事】\n${T.mem.summary}\n`;
-  const mo=momentsFor(T);if(mo)sys+=`\n【朋友圈近况】\n${mo}\n`;
-  if(!grp){const d=(S.diaries[cs[0]?.id]||[])[0];if(d)sys+=`\n【${cs[0].name}最近写的日记（只有自己知道，${u.name}${d.peeked?'可能偷看过':'没看过'}）】\n${fmtTime(d.ts)} ${d.title||''}：${d.text.slice(0,300)}\n`}
+  const wi=worldInfo(extra||'',recent);const wiTxt=wi?`\n【世界设定】\n${wi}\n`:'';dyn+=wiTxt;
+  if(T.mem.summary)semi+=`\n【长期记忆：之前发生过的事】\n${T.mem.summary}\n`;
+  const mo=momentsFor(T);if(mo)semi+=`\n【朋友圈近况】\n${mo}\n`;
+  if(!grp){const d=(S.diaries[cs[0]?.id]||[])[0];if(d)semi+=`\n【${cs[0].name}最近写的日记（只有自己知道，${u.name}${d.peeked?'可能偷看过':'没看过'}）】\n${fmtTime(d.ts)} ${d.title||''}：${d.text.slice(0,300)}\n`}
   const lastTs=lastRealTs(T);
-  if(st.timeAware)sys+=`\n【现在的时间】${fmtFull(now)}${lastTs&&now-lastTs>60e3?`\n距离上一条消息过去了${fmtGap(now-lastTs)}。`:''}${weatherLine()?`\n天气：${weatherLine()}。`:''}\n作息、状态和话题要符合这个时间。\n`;
+  const timeTxt=!st.timeAware?'':`\n【现在的时间】${fmtFull(now)}${lastTs&&now-lastTs>60e3?`\n距离上一条消息过去了${fmtGap(now-lastTs)}。`:''}${weatherLine()?`\n天气：${weatherLine()}。`:''}\n作息、状态和话题要符合这个时间。\n`;dyn+=timeTxt;
+  const cut=sys.length;
   sys+=`\n对话记录中，${u.name}的话会带有[线上·手机消息]、[线下·见面]或[场景]标记，用来说明当时在哪里${st.timeAware?'、过了多久':''}；你的回复不要带这些标记。\n`;
   if(mode==='online'){
     sys+=grp?`\n【当前：线上群聊】大家正在群里发消息。像真人在群里聊天那样：口语化、简短，可以几个人接连发言、互相回应，不是每个人每次都要说话，按性格决定谁说话。每条消息单独一行，开头用【名字】标明是谁发的，例如：\n【${cs[0]?.name||'甲'}】哈哈哈\n【${cs[1]?.name||cs[0]?.name||'乙'}】你又来\n只输出消息本身，不写动作描写或旁白。`
@@ -1712,14 +1718,22 @@ function buildPrompt(T,mode,extra,now=Date.now()){
   }else sys+=`\n【当前：线下】${grp?`${cs.map(c=>c.name).join('、')}和${u.name}在现实中相处。用小说式叙述描写他们的动作、神态、语言和环境，可以写心理活动；绝不替${u.name}说话或决定${u.name}的行动。篇幅约${st.storyLength}字。`:(P.offline||DEFAULT_PRESET.offline)}`;
   const arr=[];let prev=0;
   const add=(role,content)=>{const p=arr.at(-1);if(p&&p.role===role)p.content+='\n'+content;else arr.push({role,content})};
-  for(const m of T.msgs.slice(T.mem.upTo).slice(-st.contextSize)){
+  /* 聊天记录按 10 条一段地丢，开头保持不变，缓存才能命中 */
+  const H=T.msgs.slice(T.mem.upTo),cz=+st.contextSize||40,from=H.length>cz?Math.floor((H.length-cz)/10)*10:0;
+  for(const m of H.slice(from)){
     if(st.timeAware&&prev&&m.ts-prev>30*6e4)add('user',`[场景] （时间来到${fmtFull(m.ts)}，距上一条过了${fmtGap(m.ts-prev)}）`);
     prev=m.ts;add(m.role==='assistant'?'assistant':'user',msgLine(T,m));
   }
-  if(extra||!arr.length||arr.at(-1).role==='assistant')add('user',`[提示] ${extra||'继续'}`);
-  if(arr[0].role==='assistant')arr.unshift({role:'user',content:'[开始]'});
-  const msgs=[{role:'system',content:mac(sys)},...arr.map(m=>({role:m.role,content:mac(m.content)}))];
+  const hist=arr.map(m=>({role:m.role,content:mac(m.content)}));
+  const tail=[];if(extra||!arr.length||arr.at(-1).role==='assistant')tail.push(`[提示] ${extra||'继续'}`);
+  if(hist[0]?.role==='assistant')hist.unshift({role:'user',content:'[开始]'});
+  const A=mac(sys),B=mac(semi),D=[mac(dyn).trim(),mac(P.post||'').trim()].filter(Boolean).join('\n\n');
+  /* OpenAI 兼容：保持原来的顺序（世界书、记忆、时间在规则前面，后置提示在最后） */
+  const msgs=[{role:'system',content:mac(sys.slice(0,cut)+wiTxt+semi+timeTxt+sys.slice(cut))},...hist.map(m=>({...m}))];
+  if(tail.length){if(msgs.at(-1).role==='user')msgs.at(-1).content+='\n'+tail.join('\n');else msgs.push({role:'user',content:tail.join('\n')})}
+  if(msgs.at(-1).role!=='user')msgs.push({role:'user',content:'[开始]'});
   if(P.post?.trim())msgs.push({role:'system',content:mac(P.post)});
+  msgs.cache={A,B,D,hist,tail};
   return msgs;
 }
 const clean=t=>t.replace(/<think>[\s\S]*?<\/think>/g,'').replace(/^\s*\[(线上|线下|场景|提示)[^\]]*\]\s*/gm,'').trim();
@@ -1727,17 +1741,36 @@ const clean=t=>t.replace(/<think>[\s\S]*?<\/think>/g,'').replace(/^\s*\[(线上|
 /* ========== API ========== */
 const ownAPI=c=>{const a=c?.api;return a&&a.base&&a.key&&a.model?a:null};
 const anthHead=key=>({'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'});
+function anthStat(c,u){if(!c||!u)return;c.apiStat={r:u.cache_read_input_tokens||0,w:u.cache_creation_input_tokens||0,n:u.input_tokens||0,o:u.output_tokens||0,ts:Date.now()};saveChars();
+  if($('#app-char').classList.contains('open')&&charEdit===c.id)showStat(c)}
+function showStat(c){const el=$('#caStat');if(!el)return;const t=c?.apiStat;el.textContent=t?`上次（${fmtTime(t.ts)}）：缓存读取 ${t.r} · 写入缓存 ${t.w} · 未缓存 ${t.n} · 输出 ${t.o} tokens`:'还没有用专属 API 说过话'}
+/* Anthropic 官方 + 提示缓存：人设一个断点，记忆一个断点，聊天记录末尾一个断点，时间和世界书放在断点后面 */
+async function anthCached(own,opt,K,temperature,max_tokens){
+  const ttl=own.cache||'off',cc=ttl==='off'?null:ttl==='1h'?{type:'ephemeral',ttl:'1h'}:{type:'ephemeral'};
+  const blk=(text,mark)=>mark&&cc?{type:'text',text,cache_control:cc}:{type:'text',text};
+  const system=[blk(K.A,1)];if(K.B)system.push(blk(K.B,1));
+  const ms=K.hist.map(m=>({role:m.role,content:[blk(m.content)]}));
+  if(!ms.length||ms[0].role!=='user')ms.unshift({role:'user',content:[blk('[开始]')]});
+  if(ms.length&&cc)ms.at(-1).content[0].cache_control=cc;
+  const extra=[...K.tail];if(K.D)extra.push(K.D);
+  if(ms.at(-1).role==='user'){for(const t of extra)ms.at(-1).content.push(blk(t))}
+  else ms.push({role:'user',content:(extra.length?extra:['继续']).map(t=>blk(t))});
+  const r=await fetch(own.base.replace(/\/+$/,'').replace(/\/v1$/,'')+'/v1/messages',{method:'POST',headers:anthHead(own.key),body:JSON.stringify({model:own.model,system,messages:ms,temperature:Math.min(1,temperature),max_tokens})});
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`${opt.char.name} 的接口报错 ${r.status}：${t.slice(0,180)}`)}
+  const j=await r.json();anthStat(opt.char,j.usage);const c=(j.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('');if(!c)throw new Error('接口没有返回内容');return c;
+}
 async function callAPI(messages,opt={}){
   const s=S.settings,own=ownAPI(opt.char);
   const temperature=+(opt.temperature??s.temperature),max_tokens=+(opt.max_tokens??s.maxTokens);
   if(own&&own.fmt==='anthropic'){
+    if(messages.cache)return anthCached(own,opt,messages.cache,temperature,max_tokens);
     const sys=messages.filter(m=>m.role==='system').map(m=>m.content).join('\n\n'),ms=[];
     for(const m of messages){if(m.role==='system'||!m.content)continue;const role=m.role==='assistant'?'assistant':'user';const L=ms[ms.length-1];if(L&&L.role===role)L.content+='\n'+m.content;else ms.push({role,content:m.content})}
     if(!ms.length||ms[0].role!=='user')ms.unshift({role:'user',content:'（开始）'});
     if(ms[ms.length-1].role!=='user')ms.push({role:'user',content:'（继续）'});
     const r=await fetch(own.base.replace(/\/+$/,'').replace(/\/v1$/,'')+'/v1/messages',{method:'POST',headers:anthHead(own.key),body:JSON.stringify({model:own.model,system:sys||undefined,messages:ms,temperature:Math.min(1,temperature),max_tokens})});
     if(!r.ok){const t=await r.text().catch(()=>'');throw new Error(`${opt.char.name} 的接口报错 ${r.status}：${t.slice(0,180)}`)}
-    const j=await r.json();const c=(j.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('');if(!c)throw new Error('接口没有返回内容');return c;
+    const j=await r.json();anthStat(opt.char,j.usage);const c=(j.content||[]).filter(x=>x.type==='text').map(x=>x.text).join('');if(!c)throw new Error('接口没有返回内容');return c;
   }
   const base=own?own.base:s.baseUrl,key=own?own.key:s.apiKey,model=own?own.model:s.model;
   if(!base||!key||!model)throw new Error('先去「设置」填好 API 地址、密钥和模型～');
@@ -2059,7 +2092,7 @@ function renderChar(){
   const c=editingChar();
   $('#charPick').innerHTML=S.chars.map(x=>`<button data-pick="${x.id}" class="${c&&x.id===c.id?'on':''}">${charAv(x)}<span>${esc(x.name)}</span></button>`).join('')+`<button data-pick="me" class="${!c?'on':''}">${avHTML('user')}<span>我</span></button><button data-pick="new"><div class="av">＋</div><span>新角色</span></button>`;
   $('#charCard').style.display=c?'':'none';$('#meCard').style.display=c?'none':'';$('#charBtns').style.display=c?'':'none';
-  if(c){$$('[data-c]').forEach(el=>el.value=c[el.dataset.c]||'');const a=c.api||{};$$('[data-ca]').forEach(el=>el.value=a[el.dataset.ca]||(el.dataset.ca==='fmt'?'openai':''));$('#charAv').outerHTML=charAv(c).replace('class="av"','class="av" id="charAv"')}
+  if(c){$$('[data-c]').forEach(el=>el.value=c[el.dataset.c]||'');const a=c.api||{};$$('[data-ca]').forEach(el=>el.value=a[el.dataset.ca]||({fmt:'openai',cache:'off'})[el.dataset.ca]||'');$('[data-cashow]').style.display=a.fmt==='anthropic'?'':'none';showStat(c);$('#charAv').outerHTML=charAv(c).replace('class="av"','class="av" id="charAv"')}
   $$('[data-u]').forEach(el=>el.value=S.user[el.dataset.u]||'');$('#userAv').outerHTML=avHTML('user').replace('class="av"','class="av" id="userAv"');
 }
 $('#charPick').onclick=e=>{const b=e.target.closest('[data-pick]');if(!b)return;readCharForm();const k=b.dataset.pick;
@@ -2068,6 +2101,7 @@ function readCharForm(){const c=editingChar();if(c){$$('[data-c]').forEach(el=>c
 $('#charSave').onclick=()=>{readCharForm();renderChar();toast('已保存')};
 $$('[data-avatar]').forEach(b=>b.onclick=async()=>{const f=await pickFile('image/*');if(!f)return;readCharForm();const img=await fileToImg(f,400,'image/png');if(b.dataset.avatar==='char'){const c=editingChar();c.avatar=img;saveChars()}else{S.user.avatar=img;save('user')}renderChar()});
 $('#charChat').onclick=()=>{readCharForm();openThread(threadOf(editingChar().id).id)};
+$('[data-ca=fmt]').onchange=e=>{$('[data-cashow]').style.display=e.target.value==='anthropic'?'':'none'};
 $('#caFetch').onclick=async()=>{readCharForm();const a=editingChar().api;if(!a.base||!a.key)return toast('先填接口地址和密钥');toast('拉取中…',6000);
   try{let ids;if(a.fmt==='anthropic'){const r=await fetch(a.base.replace(/\/+$/,'').replace(/\/v1$/,'')+'/v1/models?limit=100',{headers:anthHead(a.key)});if(!r.ok)throw new Error('接口报错 '+r.status);ids=((await r.json()).data||[]).map(m=>m.id)}else ids=await fetchModelIds(a.base,a.key);
     $('#caModelList').innerHTML=ids.map(i=>`<option value="${esc(i)}">`).join('');pickList(`拉到 ${ids.length} 个模型`,ids.map(i=>[i]),v=>{$('[data-ca=model]').value=v;readCharForm()})}catch(e){toast(e.message+'（也可能是跨域被拦）',5000)}};
